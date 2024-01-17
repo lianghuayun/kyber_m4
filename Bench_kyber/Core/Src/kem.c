@@ -47,13 +47,12 @@ int crypto_kem_enc(unsigned char *ct, unsigned char *ss, const unsigned char *pk
   unsigned char buf[2*KYBER_SYMBYTES];                          
 
   randombytes(buf, KYBER_SYMBYTES);
-  printf("\n");
-  printf("pt: ");        
-  for (i = 0; i < 32; i++) printf("%02x", buf[i]); 
+  for (i = 0; i < 32; i++) buf[i] = 0; 
   sha3_256(buf,buf,KYBER_SYMBYTES);                                           /* Don't release system RNG output */
 
   sha3_256(buf+KYBER_SYMBYTES, pk, KYBER_PUBLICKEYBYTES);                     /* Multitarget countermeasure for coins + contributory KEM */
   sha3_512(kr, buf, 2*KYBER_SYMBYTES);
+
   printf("\n");
   printf("pt: ");        
   for (i = 0; i < 32; i++) printf("%02x", buf[i]);
@@ -101,9 +100,7 @@ int crypto_kem_dec(unsigned char *ss, const unsigned char *ct, const unsigned ch
     buf[KYBER_SYMBYTES+i] = sk[KYBER_SECRETKEYBYTES-2*KYBER_SYMBYTES+i];      /* Save hash by storing H(pk) in sk */
 
   sha3_512(kr, buf, 2*KYBER_SYMBYTES);
-  printf("\n");
-  printf("pt: ");        
-  for (i = 0; i < 32; i++) printf("%02x", kr[i]);   
+ 
   indcpa_enc(cmp, buf, pk, kr+KYBER_SYMBYTES);                                /* coins are in kr+KYBER_SYMBYTES */
 
   fail = verify(ct, cmp, KYBER_CIPHERTEXTBYTES);

@@ -98,7 +98,7 @@ int main(void)
 	  }else{
 			times++;
 			if(times%1000==0)
-			{
+			{     
         crypto_kem_keypair(senda, sk_a);
         printf("\n");
         printf("senda: ");
@@ -108,35 +108,13 @@ int main(void)
         for (i = 0; i < 32; i++) printf("%02x", sk_a[i]);
 
         crypto_kem_enc(sendb, key_b, senda);
-        printf("\n");
-        printf("key_b: ");
-        for (i = 0; i < 32; i++) printf("%02x", key_b[i]);
 
         crypto_kem_dec(key_a, sendb, sk_a);
-        printf("\n");
-        printf("key_a: ");
-        for (i = 0; i < 32; i++) printf("%02x", key_a[i]);
         printf("\n");
 
 
         free(senda);
         free(sendb);
-        /*
-        ntt(a);
-        crypto_kem_keypair(senda, sk_a);
-        crypto_kem_enc(sendb, key_b, senda);
-        crypto_kem_dec(key_a, sendb, sk_a);
-        printf("key_b: ");
-        for (i = 0; i < 32; i++) printf("%02x", key_b[i]);
-        printf("\n");
-        printf("key_a: ");
-        for (i = 0; i < 32; i++) printf("%02x", key_a[i]);
-        printf("\n");
-
-        free(a);
-        free(senda);
-        free(sendb);*/
-
 
         HAL_GPIO_TogglePin(GPIOE, LED0_Pin);
 			}

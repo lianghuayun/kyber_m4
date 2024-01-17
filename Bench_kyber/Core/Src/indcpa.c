@@ -190,24 +190,46 @@ void indcpa_keypair(unsigned char *pk,
   unsigned char *noiseseed = buf+KYBER_SYMBYTES;
   int i;
   unsigned char nonce=0;
+  printf("\n");
+  printf("publicseed: ");        
+  for (i = 0; i < 32; i++) printf("%02x", publicseed[i]);
+  printf("\n");
+  printf("noiseseed: ");        
+  for (i = 0; i < 32; i++) printf("%02x", noiseseed[i]);
+  randombytes(buf, KYBER_SYMBYTES+KYBER_SYMBYTES);
+   printf("\n");
+    printf("\n");
+  for (i = 0; i < 64.; i++) {
+    if(i<32)buf[i]=0;
+    printf("%02x", buf[i]);
+  }
 
-  randombytes(buf, KYBER_SYMBYTES);
-  sha3_512(buf, buf, KYBER_SYMBYTES);
-
+   printf("\n");
+  printf("\n");
+  printf("publicseed: ");        
+  for (i = 0; i < 32; i++) printf("%02x", publicseed[i]);
+  printf("\n");
+  printf("noiseseed: ");        
+  for (i = 0; i < 32; i++) printf("%02x", noiseseed[i]);
+  sha3_512(buf, buf, KYBER_SYMBYTES+KYBER_SYMBYTES);
+  printf("\n");
+  printf("publicseed: ");        
+  for (i = 0; i < 32; i++) printf("%02x", publicseed[i]);
+  printf("\n");
+  printf("noiseseed: ");        
+  for (i = 0; i < 32; i++) printf("%02x", noiseseed[i]);
   gen_a(a, publicseed);
 
   for(i=0;i<KYBER_K;i++)
     poly_getnoise(skpv.vec+i,noiseseed,nonce++);
-
   polyvec_ntt(&skpv);
-  
+
   for(i=0;i<KYBER_K;i++)
     poly_getnoise(e.vec+i,noiseseed,nonce++);
 
   // matrix-vector multiplication
   for(i=0;i<KYBER_K;i++)
     polyvec_pointwise_acc(&pkpv.vec[i],&skpv,a+i);
-
   polyvec_invntt(&pkpv);
   polyvec_add(&pkpv,&pkpv,&e);
 

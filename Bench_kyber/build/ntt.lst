@@ -1,0 +1,164 @@
+ARM GAS  C:\Users\11410\AppData\Local\Temp\ccbFvCoA.s 			page 1
+
+
+   1              		.cpu cortex-m4
+   2              		.eabi_attribute 27, 1
+   3              		.eabi_attribute 28, 1
+   4              		.eabi_attribute 20, 1
+   5              		.eabi_attribute 21, 1
+   6              		.eabi_attribute 23, 3
+   7              		.eabi_attribute 24, 1
+   8              		.eabi_attribute 25, 1
+   9              		.eabi_attribute 26, 1
+  10              		.eabi_attribute 30, 1
+  11              		.eabi_attribute 34, 1
+  12              		.eabi_attribute 18, 4
+  13              		.file	"ntt.c"
+  14              		.text
+  15              	.Ltext0:
+  16              		.cfi_sections	.debug_frame
+  17              		.section	.text.ntt,"ax",%progbits
+  18              		.align	1
+  19              		.global	ntt
+  20              		.arch armv7e-m
+  21              		.syntax unified
+  22              		.thumb
+  23              		.thumb_func
+  24              		.fpu fpv4-sp-d16
+  26              	ntt:
+  27              	.LVL0:
+  28              	.LFB0:
+  29              		.file 1 "Core/Src/ntt.c"
+   1:Core/Src/ntt.c **** #include "inttypes.h"
+   2:Core/Src/ntt.c **** #include "ntt.h"
+   3:Core/Src/ntt.c **** #include "params.h"
+   4:Core/Src/ntt.c **** #include "reduce.h"
+   5:Core/Src/ntt.c **** 
+   6:Core/Src/ntt.c **** extern const uint16_t omegas_inv_bitrev_montgomery[];
+   7:Core/Src/ntt.c **** extern const uint16_t psis_inv_montgomery[];
+   8:Core/Src/ntt.c **** extern const uint16_t zetas[];
+   9:Core/Src/ntt.c **** 
+  10:Core/Src/ntt.c **** extern void ntt_asm(uint16_t* poly, const uint16_t* zetas);
+  11:Core/Src/ntt.c **** extern void invntt_asm(uint16_t* poly, const uint16_t* omegas_inv_bitrev_montgomery);
+  12:Core/Src/ntt.c **** extern void pointwise_multiply(uint16_t* poly, const uint16_t* psis_inv_montgomery);
+  13:Core/Src/ntt.c **** 
+  14:Core/Src/ntt.c **** /*************************************************
+  15:Core/Src/ntt.c **** * Name:        ntt
+  16:Core/Src/ntt.c **** * 
+  17:Core/Src/ntt.c **** * Description: Computes negacyclic number-theoretic transform (NTT) of
+  18:Core/Src/ntt.c **** *              a polynomial (vector of 256 coefficients) in place; 
+  19:Core/Src/ntt.c **** *              inputs assumed to be in normal order, output in bitreversed order
+  20:Core/Src/ntt.c **** *
+  21:Core/Src/ntt.c **** * Arguments:   - uint16_t *p: pointer to in/output polynomial
+  22:Core/Src/ntt.c **** **************************************************/
+  23:Core/Src/ntt.c **** inline void ntt(uint16_t *p) 
+  24:Core/Src/ntt.c **** {
+  30              		.loc 1 24 1 view -0
+  31              		.cfi_startproc
+  32              		@ args = 0, pretend = 0, frame = 0
+  33              		@ frame_needed = 0, uses_anonymous_args = 0
+  34              		.loc 1 24 1 is_stmt 0 view .LVU1
+ARM GAS  C:\Users\11410\AppData\Local\Temp\ccbFvCoA.s 			page 2
+
+
+  35 0000 08B5     		push	{r3, lr}
+  36              	.LCFI0:
+  37              		.cfi_def_cfa_offset 8
+  38              		.cfi_offset 3, -8
+  39              		.cfi_offset 14, -4
+  25:Core/Src/ntt.c ****   ntt_asm(p, zetas);
+  40              		.loc 1 25 3 is_stmt 1 view .LVU2
+  41 0002 0249     		ldr	r1, .L3
+  42 0004 FFF7FEFF 		bl	ntt_asm
+  43              	.LVL1:
+  26:Core/Src/ntt.c **** }
+  44              		.loc 1 26 1 is_stmt 0 view .LVU3
+  45 0008 08BD     		pop	{r3, pc}
+  46              	.L4:
+  47 000a 00BF     		.align	2
+  48              	.L3:
+  49 000c 00000000 		.word	zetas
+  50              		.cfi_endproc
+  51              	.LFE0:
+  53              		.section	.text.invntt,"ax",%progbits
+  54              		.align	1
+  55              		.global	invntt
+  56              		.syntax unified
+  57              		.thumb
+  58              		.thumb_func
+  59              		.fpu fpv4-sp-d16
+  61              	invntt:
+  62              	.LVL2:
+  63              	.LFB1:
+  27:Core/Src/ntt.c **** 
+  28:Core/Src/ntt.c **** /*************************************************
+  29:Core/Src/ntt.c **** * Name:        invntt
+  30:Core/Src/ntt.c **** * 
+  31:Core/Src/ntt.c **** * Description: Computes inverse of negacyclic number-theoretic transform (NTT) of
+  32:Core/Src/ntt.c **** *              a polynomial (vector of 256 coefficients) in place; 
+  33:Core/Src/ntt.c **** *              inputs assumed to be in bitreversed order, output in normal order
+  34:Core/Src/ntt.c **** *
+  35:Core/Src/ntt.c **** * Arguments:   - uint16_t *a: pointer to in/output polynomial
+  36:Core/Src/ntt.c **** **************************************************/
+  37:Core/Src/ntt.c **** inline void invntt(uint16_t * a)
+  38:Core/Src/ntt.c **** {
+  64              		.loc 1 38 1 is_stmt 1 view -0
+  65              		.cfi_startproc
+  66              		@ args = 0, pretend = 0, frame = 0
+  67              		@ frame_needed = 0, uses_anonymous_args = 0
+  68              		.loc 1 38 1 is_stmt 0 view .LVU5
+  69 0000 10B5     		push	{r4, lr}
+  70              	.LCFI1:
+  71              		.cfi_def_cfa_offset 8
+  72              		.cfi_offset 4, -8
+  73              		.cfi_offset 14, -4
+  74 0002 0446     		mov	r4, r0
+  39:Core/Src/ntt.c ****   invntt_asm(a, omegas_inv_bitrev_montgomery);
+  75              		.loc 1 39 3 is_stmt 1 view .LVU6
+  76 0004 0349     		ldr	r1, .L7
+  77 0006 FFF7FEFF 		bl	invntt_asm
+  78              	.LVL3:
+ARM GAS  C:\Users\11410\AppData\Local\Temp\ccbFvCoA.s 			page 3
+
+
+  40:Core/Src/ntt.c ****   pointwise_multiply(a, psis_inv_montgomery);
+  79              		.loc 1 40 3 view .LVU7
+  80 000a 0349     		ldr	r1, .L7+4
+  81 000c 2046     		mov	r0, r4
+  82 000e FFF7FEFF 		bl	pointwise_multiply
+  83              	.LVL4:
+  41:Core/Src/ntt.c **** }
+  84              		.loc 1 41 1 is_stmt 0 view .LVU8
+  85 0012 10BD     		pop	{r4, pc}
+  86              	.LVL5:
+  87              	.L8:
+  88              		.loc 1 41 1 view .LVU9
+  89              		.align	2
+  90              	.L7:
+  91 0014 00000000 		.word	omegas_inv_bitrev_montgomery
+  92 0018 00000000 		.word	psis_inv_montgomery
+  93              		.cfi_endproc
+  94              	.LFE1:
+  96              		.text
+  97              	.Letext0:
+  98              		.file 2 "c:\\program files (x86)\\gnu tools arm embedded\\9 2019-q4-major\\arm-none-eabi\\include\
+  99              		.file 3 "c:\\program files (x86)\\gnu tools arm embedded\\9 2019-q4-major\\arm-none-eabi\\include\
+ARM GAS  C:\Users\11410\AppData\Local\Temp\ccbFvCoA.s 			page 4
+
+
+DEFINED SYMBOLS
+                            *ABS*:00000000 ntt.c
+C:\Users\11410\AppData\Local\Temp\ccbFvCoA.s:18     .text.ntt:00000000 $t
+C:\Users\11410\AppData\Local\Temp\ccbFvCoA.s:26     .text.ntt:00000000 ntt
+C:\Users\11410\AppData\Local\Temp\ccbFvCoA.s:49     .text.ntt:0000000c $d
+C:\Users\11410\AppData\Local\Temp\ccbFvCoA.s:54     .text.invntt:00000000 $t
+C:\Users\11410\AppData\Local\Temp\ccbFvCoA.s:61     .text.invntt:00000000 invntt
+C:\Users\11410\AppData\Local\Temp\ccbFvCoA.s:91     .text.invntt:00000014 $d
+
+UNDEFINED SYMBOLS
+ntt_asm
+zetas
+invntt_asm
+pointwise_multiply
+omegas_inv_bitrev_montgomery
+psis_inv_montgomery

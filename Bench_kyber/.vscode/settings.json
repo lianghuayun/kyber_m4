@@ -1,0 +1,16 @@
+{
+    "files.associations": {
+        "usart.h": "c",
+        "kex.h": "c",
+        "cpucycles.h": "c",
+        "api.h": "c",
+        "reduce.h": "c",
+        "ntt.h": "c",
+        "params.h": "c",
+        "inttypes.h": "c",
+        "process.h": "c",
+        "getopt.h": "c",
+        "io.h": "c",
+        "gpio.h": "c"
+    }
+}

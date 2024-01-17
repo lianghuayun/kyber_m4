@@ -1,0 +1,654 @@
+ARM GAS  C:\Users\11410\AppData\Local\Temp\ccdu9yod.s 			page 1
+
+
+   1              		.cpu cortex-m4
+   2              		.eabi_attribute 27, 1
+   3              		.eabi_attribute 28, 1
+   4              		.eabi_attribute 20, 1
+   5              		.eabi_attribute 21, 1
+   6              		.eabi_attribute 23, 3
+   7              		.eabi_attribute 24, 1
+   8              		.eabi_attribute 25, 1
+   9              		.eabi_attribute 26, 1
+  10              		.eabi_attribute 30, 1
+  11              		.eabi_attribute 34, 1
+  12              		.eabi_attribute 18, 4
+  13              		.file	"randombytes.c"
+  14              		.text
+  15              	.Ltext0:
+  16              		.cfi_sections	.debug_frame
+  17              		.section	.text.surf,"ax",%progbits
+  18              		.align	1
+  19              		.arch armv7e-m
+  20              		.syntax unified
+  21              		.thumb
+  22              		.thumb_func
+  23              		.fpu fpv4-sp-d16
+  25              	surf:
+  26              	.LFB0:
+  27              		.file 1 "Core/Src/randombytes.c"
+   1:Core/Src/randombytes.c **** /*
+   2:Core/Src/randombytes.c ****  * From try-anything.c version 20120328
+   3:Core/Src/randombytes.c ****  * by D. J. Bernstein
+   4:Core/Src/randombytes.c ****  */
+   5:Core/Src/randombytes.c **** 
+   6:Core/Src/randombytes.c **** #include "randombytes.h"
+   7:Core/Src/randombytes.c **** #include <inttypes.h>
+   8:Core/Src/randombytes.c **** 
+   9:Core/Src/randombytes.c **** static uint32_t seed[32] = { 3,1,4,1,5,9,2,6,5,3,5,8,9,7,9,3,2,3,8,4,6,2,6,4,3,3,8,3,2,7,9,5 } ;
+  10:Core/Src/randombytes.c **** static uint32_t in[12] = {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
+  11:Core/Src/randombytes.c **** static uint32_t out[8];
+  12:Core/Src/randombytes.c **** static int outleft = 0;
+  13:Core/Src/randombytes.c **** 
+  14:Core/Src/randombytes.c **** #define ROTATE(x,b) (((x) << (b)) | ((x) >> (32 - (b))))
+  15:Core/Src/randombytes.c **** #define MUSH(i,b) x = t[i] += (((x ^ seed[i]) + sum) ^ ROTATE(x,b));
+  16:Core/Src/randombytes.c **** 
+  17:Core/Src/randombytes.c **** static void surf(void)
+  18:Core/Src/randombytes.c **** {
+  28              		.loc 1 18 1 view -0
+  29              		.cfi_startproc
+  30              		@ args = 0, pretend = 0, frame = 48
+  31              		@ frame_needed = 0, uses_anonymous_args = 0
+  32              		@ link register save eliminated.
+  33 0000 70B4     		push	{r4, r5, r6}
+  34              	.LCFI0:
+  35              		.cfi_def_cfa_offset 12
+  36              		.cfi_offset 4, -12
+  37              		.cfi_offset 5, -8
+  38              		.cfi_offset 6, -4
+  39 0002 8DB0     		sub	sp, sp, #52
+  40              	.LCFI1:
+ARM GAS  C:\Users\11410\AppData\Local\Temp\ccdu9yod.s 			page 2
+
+
+  41              		.cfi_def_cfa_offset 64
+  19:Core/Src/randombytes.c ****   uint32_t t[12]; uint32_t x; uint32_t sum = 0;
+  42              		.loc 1 19 3 view .LVU1
+  43              		.loc 1 19 19 view .LVU2
+  44              		.loc 1 19 31 view .LVU3
+  45              	.LVL0:
+  20:Core/Src/randombytes.c ****   int r; int i; int loop;
+  46              		.loc 1 20 3 view .LVU4
+  47              		.loc 1 20 10 view .LVU5
+  48              		.loc 1 20 17 view .LVU6
+  21:Core/Src/randombytes.c **** 
+  22:Core/Src/randombytes.c ****   for (i = 0;i < 12;++i) t[i] = in[i] ^ seed[12 + i];
+  49              		.loc 1 22 3 view .LVU7
+  50              		.loc 1 22 10 is_stmt 0 view .LVU8
+  51 0004 0023     		movs	r3, #0
+  52              	.LVL1:
+  53              	.L2:
+  54              		.loc 1 22 14 is_stmt 1 discriminator 1 view .LVU9
+  55              		.loc 1 22 3 is_stmt 0 discriminator 1 view .LVU10
+  56 0006 0B2B     		cmp	r3, #11
+  57 0008 0FDC     		bgt	.L13
+  58              		.loc 1 22 26 is_stmt 1 discriminator 3 view .LVU11
+  59              		.loc 1 22 35 is_stmt 0 discriminator 3 view .LVU12
+  60 000a 514A     		ldr	r2, .L16
+  61 000c 52F82320 		ldr	r2, [r2, r3, lsl #2]
+  62              		.loc 1 22 49 discriminator 3 view .LVU13
+  63 0010 03F10C00 		add	r0, r3, #12
+  64              		.loc 1 22 45 discriminator 3 view .LVU14
+  65 0014 4F49     		ldr	r1, .L16+4
+  66 0016 51F82010 		ldr	r1, [r1, r0, lsl #2]
+  67              		.loc 1 22 39 discriminator 3 view .LVU15
+  68 001a 4A40     		eors	r2, r2, r1
+  69              		.loc 1 22 31 discriminator 3 view .LVU16
+  70 001c 0CA9     		add	r1, sp, #48
+  71 001e 01EB8301 		add	r1, r1, r3, lsl #2
+  72 0022 41F8302C 		str	r2, [r1, #-48]
+  73              		.loc 1 22 21 is_stmt 1 discriminator 3 view .LVU17
+  74 0026 0133     		adds	r3, r3, #1
+  75              	.LVL2:
+  76              		.loc 1 22 21 is_stmt 0 discriminator 3 view .LVU18
+  77 0028 EDE7     		b	.L2
+  78              	.L13:
+  23:Core/Src/randombytes.c ****   for (i = 0;i < 8;++i) out[i] = seed[24 + i];
+  79              		.loc 1 23 10 view .LVU19
+  80 002a 0023     		movs	r3, #0
+  81              	.LVL3:
+  82              		.loc 1 23 10 view .LVU20
+  83 002c 08E0     		b	.L4
+  84              	.LVL4:
+  85              	.L5:
+  86              		.loc 1 23 25 is_stmt 1 discriminator 3 view .LVU21
+  87              		.loc 1 23 42 is_stmt 0 discriminator 3 view .LVU22
+  88 002e 03F11801 		add	r1, r3, #24
+  89              		.loc 1 23 38 discriminator 3 view .LVU23
+  90 0032 484A     		ldr	r2, .L16+4
+  91 0034 52F82110 		ldr	r1, [r2, r1, lsl #2]
+  92              		.loc 1 23 32 discriminator 3 view .LVU24
+ARM GAS  C:\Users\11410\AppData\Local\Temp\ccdu9yod.s 			page 3
+
+
+  93 0038 474A     		ldr	r2, .L16+8
+  94 003a 42F82310 		str	r1, [r2, r3, lsl #2]
+  95              		.loc 1 23 20 is_stmt 1 discriminator 3 view .LVU25
+  96 003e 0133     		adds	r3, r3, #1
+  97              	.LVL5:
+  98              	.L4:
+  99              		.loc 1 23 14 discriminator 1 view .LVU26
+ 100              		.loc 1 23 3 is_stmt 0 discriminator 1 view .LVU27
+ 101 0040 072B     		cmp	r3, #7
+ 102 0042 F4DD     		ble	.L5
+  24:Core/Src/randombytes.c ****   x = t[11];
+ 103              		.loc 1 24 3 is_stmt 1 view .LVU28
+ 104              		.loc 1 24 5 is_stmt 0 view .LVU29
+ 105 0044 0B9A     		ldr	r2, [sp, #44]
+ 106              	.LVL6:
+  25:Core/Src/randombytes.c ****   for (loop = 0;loop < 2;++loop) {
+ 107              		.loc 1 25 3 is_stmt 1 view .LVU30
+ 108              		.loc 1 25 13 is_stmt 0 view .LVU31
+ 109 0046 0024     		movs	r4, #0
+  19:Core/Src/randombytes.c ****   int r; int i; int loop;
+ 110              		.loc 1 19 40 view .LVU32
+ 111 0048 2346     		mov	r3, r4
+ 112              	.LVL7:
+ 113              		.loc 1 25 3 view .LVU33
+ 114 004a 11E0     		b	.L6
+ 115              	.LVL8:
+ 116              	.L15:
+  26:Core/Src/randombytes.c ****     for (r = 0;r < 16;++r) {
+  27:Core/Src/randombytes.c ****       sum += 0x9e3779b9;
+  28:Core/Src/randombytes.c ****       MUSH(0,5) MUSH(1,7) MUSH(2,9) MUSH(3,13)
+  29:Core/Src/randombytes.c ****       MUSH(4,5) MUSH(5,7) MUSH(6,9) MUSH(7,13)
+  30:Core/Src/randombytes.c ****       MUSH(8,5) MUSH(9,7) MUSH(10,9) MUSH(11,13)
+  31:Core/Src/randombytes.c ****     }
+  32:Core/Src/randombytes.c ****     for (i = 0;i < 8;++i) out[i] ^= t[i + 4];
+ 117              		.loc 1 32 12 view .LVU34
+ 118 004c 0021     		movs	r1, #0
+ 119 004e 0CE0     		b	.L8
+ 120              	.LVL9:
+ 121              	.L9:
+ 122              		.loc 1 32 27 is_stmt 1 discriminator 3 view .LVU35
+ 123              		.loc 1 32 41 is_stmt 0 discriminator 3 view .LVU36
+ 124 0050 081D     		adds	r0, r1, #4
+ 125              		.loc 1 32 38 discriminator 3 view .LVU37
+ 126 0052 0CAD     		add	r5, sp, #48
+ 127 0054 05EB8000 		add	r0, r5, r0, lsl #2
+ 128 0058 50F8306C 		ldr	r6, [r0, #-48]
+ 129              		.loc 1 32 34 discriminator 3 view .LVU38
+ 130 005c 3E4D     		ldr	r5, .L16+8
+ 131 005e 55F82100 		ldr	r0, [r5, r1, lsl #2]
+ 132 0062 7040     		eors	r0, r0, r6
+ 133 0064 45F82100 		str	r0, [r5, r1, lsl #2]
+ 134              		.loc 1 32 22 is_stmt 1 discriminator 3 view .LVU39
+ 135 0068 0131     		adds	r1, r1, #1
+ 136              	.LVL10:
+ 137              	.L8:
+ 138              		.loc 1 32 16 discriminator 1 view .LVU40
+ 139              		.loc 1 32 5 is_stmt 0 discriminator 1 view .LVU41
+ARM GAS  C:\Users\11410\AppData\Local\Temp\ccdu9yod.s 			page 4
+
+
+ 140 006a 0729     		cmp	r1, #7
+ 141 006c F0DD     		ble	.L9
+  25:Core/Src/randombytes.c ****     for (r = 0;r < 16;++r) {
+ 142              		.loc 1 25 26 is_stmt 1 discriminator 2 view .LVU42
+ 143 006e 0134     		adds	r4, r4, #1
+ 144              	.LVL11:
+ 145              	.L6:
+  25:Core/Src/randombytes.c ****     for (r = 0;r < 16;++r) {
+ 146              		.loc 1 25 17 discriminator 1 view .LVU43
+  25:Core/Src/randombytes.c ****     for (r = 0;r < 16;++r) {
+ 147              		.loc 1 25 3 is_stmt 0 discriminator 1 view .LVU44
+ 148 0070 012C     		cmp	r4, #1
+ 149 0072 6ADC     		bgt	.L14
+  26:Core/Src/randombytes.c ****     for (r = 0;r < 16;++r) {
+ 150              		.loc 1 26 12 view .LVU45
+ 151 0074 0020     		movs	r0, #0
+ 152              	.L10:
+ 153              	.LVL12:
+  26:Core/Src/randombytes.c ****     for (r = 0;r < 16;++r) {
+ 154              		.loc 1 26 16 is_stmt 1 discriminator 1 view .LVU46
+  26:Core/Src/randombytes.c ****     for (r = 0;r < 16;++r) {
+ 155              		.loc 1 26 5 is_stmt 0 discriminator 1 view .LVU47
+ 156 0076 0F28     		cmp	r0, #15
+ 157 0078 E8DC     		bgt	.L15
+  27:Core/Src/randombytes.c ****       MUSH(0,5) MUSH(1,7) MUSH(2,9) MUSH(3,13)
+ 158              		.loc 1 27 7 is_stmt 1 discriminator 3 view .LVU48
+  27:Core/Src/randombytes.c ****       MUSH(0,5) MUSH(1,7) MUSH(2,9) MUSH(3,13)
+ 159              		.loc 1 27 11 is_stmt 0 discriminator 3 view .LVU49
+ 160 007a A3F1C343 		sub	r3, r3, #1635778560
+ 161              	.LVL13:
+  27:Core/Src/randombytes.c ****       MUSH(0,5) MUSH(1,7) MUSH(2,9) MUSH(3,13)
+ 162              		.loc 1 27 11 discriminator 3 view .LVU50
+ 163 007e A3F59103 		sub	r3, r3, #4751360
+ 164              	.LVL14:
+  27:Core/Src/randombytes.c ****       MUSH(0,5) MUSH(1,7) MUSH(2,9) MUSH(3,13)
+ 165              		.loc 1 27 11 discriminator 3 view .LVU51
+ 166 0082 A3F24763 		subw	r3, r3, #1607
+ 167              	.LVL15:
+  28:Core/Src/randombytes.c ****       MUSH(4,5) MUSH(5,7) MUSH(6,9) MUSH(7,13)
+ 168              		.loc 1 28 7 is_stmt 1 discriminator 3 view .LVU52
+ 169 0086 82F00301 		eor	r1, r2, #3
+ 170 008a 1944     		add	r1, r1, r3
+ 171 008c 81EAF262 		eor	r2, r1, r2, ror #27
+ 172              	.LVL16:
+  28:Core/Src/randombytes.c ****       MUSH(4,5) MUSH(5,7) MUSH(6,9) MUSH(7,13)
+ 173              		.loc 1 28 7 is_stmt 0 discriminator 3 view .LVU53
+ 174 0090 0099     		ldr	r1, [sp]
+ 175 0092 0A44     		add	r2, r2, r1
+ 176 0094 0092     		str	r2, [sp]
+ 177              	.LVL17:
+  28:Core/Src/randombytes.c ****       MUSH(4,5) MUSH(5,7) MUSH(6,9) MUSH(7,13)
+ 178              		.loc 1 28 17 is_stmt 1 discriminator 3 view .LVU54
+ 179 0096 82F00101 		eor	r1, r2, #1
+ 180 009a 1944     		add	r1, r1, r3
+ 181 009c 81EA7261 		eor	r1, r1, r2, ror #25
+ 182 00a0 019A     		ldr	r2, [sp, #4]
+ 183              	.LVL18:
+ARM GAS  C:\Users\11410\AppData\Local\Temp\ccdu9yod.s 			page 5
+
+
+  28:Core/Src/randombytes.c ****       MUSH(4,5) MUSH(5,7) MUSH(6,9) MUSH(7,13)
+ 184              		.loc 1 28 17 is_stmt 0 discriminator 3 view .LVU55
+ 185 00a2 1144     		add	r1, r1, r2
+ 186 00a4 0191     		str	r1, [sp, #4]
+ 187              	.LVL19:
+  28:Core/Src/randombytes.c ****       MUSH(4,5) MUSH(5,7) MUSH(6,9) MUSH(7,13)
+ 188              		.loc 1 28 27 is_stmt 1 discriminator 3 view .LVU56
+ 189 00a6 81F00402 		eor	r2, r1, #4
+ 190 00aa 1A44     		add	r2, r2, r3
+ 191 00ac 82EAF152 		eor	r2, r2, r1, ror #23
+ 192 00b0 0299     		ldr	r1, [sp, #8]
+ 193              	.LVL20:
+  28:Core/Src/randombytes.c ****       MUSH(4,5) MUSH(5,7) MUSH(6,9) MUSH(7,13)
+ 194              		.loc 1 28 27 is_stmt 0 discriminator 3 view .LVU57
+ 195 00b2 1144     		add	r1, r1, r2
+ 196 00b4 0291     		str	r1, [sp, #8]
+ 197              	.LVL21:
+  28:Core/Src/randombytes.c ****       MUSH(4,5) MUSH(5,7) MUSH(6,9) MUSH(7,13)
+ 198              		.loc 1 28 37 is_stmt 1 discriminator 3 view .LVU58
+ 199 00b6 81F00102 		eor	r2, r1, #1
+ 200 00ba 1A44     		add	r2, r2, r3
+ 201 00bc 82EAF142 		eor	r2, r2, r1, ror #19
+ 202 00c0 0399     		ldr	r1, [sp, #12]
+ 203              	.LVL22:
+  28:Core/Src/randombytes.c ****       MUSH(4,5) MUSH(5,7) MUSH(6,9) MUSH(7,13)
+ 204              		.loc 1 28 37 is_stmt 0 discriminator 3 view .LVU59
+ 205 00c2 0A44     		add	r2, r2, r1
+ 206 00c4 0392     		str	r2, [sp, #12]
+ 207              	.LVL23:
+  29:Core/Src/randombytes.c ****       MUSH(8,5) MUSH(9,7) MUSH(10,9) MUSH(11,13)
+ 208              		.loc 1 29 7 is_stmt 1 discriminator 3 view .LVU60
+ 209 00c6 82F00501 		eor	r1, r2, #5
+ 210 00ca 1944     		add	r1, r1, r3
+ 211 00cc 81EAF261 		eor	r1, r1, r2, ror #27
+ 212 00d0 049A     		ldr	r2, [sp, #16]
+ 213              	.LVL24:
+  29:Core/Src/randombytes.c ****       MUSH(8,5) MUSH(9,7) MUSH(10,9) MUSH(11,13)
+ 214              		.loc 1 29 7 is_stmt 0 discriminator 3 view .LVU61
+ 215 00d2 0A44     		add	r2, r2, r1
+ 216 00d4 0492     		str	r2, [sp, #16]
+ 217              	.LVL25:
+  29:Core/Src/randombytes.c ****       MUSH(8,5) MUSH(9,7) MUSH(10,9) MUSH(11,13)
+ 218              		.loc 1 29 17 is_stmt 1 discriminator 3 view .LVU62
+ 219 00d6 82F00901 		eor	r1, r2, #9
+ 220 00da 1944     		add	r1, r1, r3
+ 221 00dc 81EA7261 		eor	r1, r1, r2, ror #25
+ 222 00e0 059A     		ldr	r2, [sp, #20]
+ 223              	.LVL26:
+  29:Core/Src/randombytes.c ****       MUSH(8,5) MUSH(9,7) MUSH(10,9) MUSH(11,13)
+ 224              		.loc 1 29 17 is_stmt 0 discriminator 3 view .LVU63
+ 225 00e2 1144     		add	r1, r1, r2
+ 226 00e4 0591     		str	r1, [sp, #20]
+ 227              	.LVL27:
+  29:Core/Src/randombytes.c ****       MUSH(8,5) MUSH(9,7) MUSH(10,9) MUSH(11,13)
+ 228              		.loc 1 29 27 is_stmt 1 discriminator 3 view .LVU64
+ 229 00e6 81F00202 		eor	r2, r1, #2
+ 230 00ea 1A44     		add	r2, r2, r3
+ARM GAS  C:\Users\11410\AppData\Local\Temp\ccdu9yod.s 			page 6
+
+
+ 231 00ec 82EAF152 		eor	r2, r2, r1, ror #23
+ 232 00f0 0699     		ldr	r1, [sp, #24]
+ 233              	.LVL28:
+  29:Core/Src/randombytes.c ****       MUSH(8,5) MUSH(9,7) MUSH(10,9) MUSH(11,13)
+ 234              		.loc 1 29 27 is_stmt 0 discriminator 3 view .LVU65
+ 235 00f2 1144     		add	r1, r1, r2
+ 236 00f4 0691     		str	r1, [sp, #24]
+ 237              	.LVL29:
+  29:Core/Src/randombytes.c ****       MUSH(8,5) MUSH(9,7) MUSH(10,9) MUSH(11,13)
+ 238              		.loc 1 29 37 is_stmt 1 discriminator 3 view .LVU66
+ 239 00f6 81F00602 		eor	r2, r1, #6
+ 240 00fa 1A44     		add	r2, r2, r3
+ 241 00fc 82EAF142 		eor	r2, r2, r1, ror #19
+ 242 0100 0799     		ldr	r1, [sp, #28]
+ 243              	.LVL30:
+  29:Core/Src/randombytes.c ****       MUSH(8,5) MUSH(9,7) MUSH(10,9) MUSH(11,13)
+ 244              		.loc 1 29 37 is_stmt 0 discriminator 3 view .LVU67
+ 245 0102 0A44     		add	r2, r2, r1
+ 246 0104 0792     		str	r2, [sp, #28]
+ 247              	.LVL31:
+  30:Core/Src/randombytes.c ****     }
+ 248              		.loc 1 30 7 is_stmt 1 discriminator 3 view .LVU68
+ 249 0106 82F00501 		eor	r1, r2, #5
+ 250 010a 1944     		add	r1, r1, r3
+ 251 010c 81EAF261 		eor	r1, r1, r2, ror #27
+ 252 0110 089A     		ldr	r2, [sp, #32]
+ 253              	.LVL32:
+  30:Core/Src/randombytes.c ****     }
+ 254              		.loc 1 30 7 is_stmt 0 discriminator 3 view .LVU69
+ 255 0112 0A44     		add	r2, r2, r1
+ 256 0114 0892     		str	r2, [sp, #32]
+ 257              	.LVL33:
+  30:Core/Src/randombytes.c ****     }
+ 258              		.loc 1 30 17 is_stmt 1 discriminator 3 view .LVU70
+ 259 0116 82F00301 		eor	r1, r2, #3
+ 260 011a 1944     		add	r1, r1, r3
+ 261 011c 81EA7261 		eor	r1, r1, r2, ror #25
+ 262 0120 099A     		ldr	r2, [sp, #36]
+ 263              	.LVL34:
+  30:Core/Src/randombytes.c ****     }
+ 264              		.loc 1 30 17 is_stmt 0 discriminator 3 view .LVU71
+ 265 0122 1144     		add	r1, r1, r2
+ 266 0124 0991     		str	r1, [sp, #36]
+ 267              	.LVL35:
+  30:Core/Src/randombytes.c ****     }
+ 268              		.loc 1 30 27 is_stmt 1 discriminator 3 view .LVU72
+ 269 0126 81F00502 		eor	r2, r1, #5
+ 270 012a 1A44     		add	r2, r2, r3
+ 271 012c 82EAF152 		eor	r2, r2, r1, ror #23
+ 272 0130 0A99     		ldr	r1, [sp, #40]
+ 273              	.LVL36:
+  30:Core/Src/randombytes.c ****     }
+ 274              		.loc 1 30 27 is_stmt 0 discriminator 3 view .LVU73
+ 275 0132 1144     		add	r1, r1, r2
+ 276 0134 0A91     		str	r1, [sp, #40]
+ 277              	.LVL37:
+  30:Core/Src/randombytes.c ****     }
+ARM GAS  C:\Users\11410\AppData\Local\Temp\ccdu9yod.s 			page 7
+
+
+ 278              		.loc 1 30 38 is_stmt 1 discriminator 3 view .LVU74
+ 279 0136 81F00802 		eor	r2, r1, #8
+ 280 013a 1A44     		add	r2, r2, r3
+ 281 013c 82EAF142 		eor	r2, r2, r1, ror #19
+ 282 0140 0B99     		ldr	r1, [sp, #44]
+ 283              	.LVL38:
+  30:Core/Src/randombytes.c ****     }
+ 284              		.loc 1 30 38 is_stmt 0 discriminator 3 view .LVU75
+ 285 0142 0A44     		add	r2, r2, r1
+ 286 0144 0B92     		str	r2, [sp, #44]
+ 287              	.LVL39:
+  26:Core/Src/randombytes.c ****       sum += 0x9e3779b9;
+ 288              		.loc 1 26 23 is_stmt 1 discriminator 3 view .LVU76
+ 289 0146 0130     		adds	r0, r0, #1
+ 290              	.LVL40:
+  26:Core/Src/randombytes.c ****       sum += 0x9e3779b9;
+ 291              		.loc 1 26 23 is_stmt 0 discriminator 3 view .LVU77
+ 292 0148 95E7     		b	.L10
+ 293              	.LVL41:
+ 294              	.L14:
+  33:Core/Src/randombytes.c ****   }
+  34:Core/Src/randombytes.c **** }
+ 295              		.loc 1 34 1 view .LVU78
+ 296 014a 0DB0     		add	sp, sp, #52
+ 297              	.LCFI2:
+ 298              		.cfi_def_cfa_offset 12
+ 299              		@ sp needed
+ 300 014c 70BC     		pop	{r4, r5, r6}
+ 301              	.LCFI3:
+ 302              		.cfi_restore 6
+ 303              		.cfi_restore 5
+ 304              		.cfi_restore 4
+ 305              		.cfi_def_cfa_offset 0
+ 306              	.LVL42:
+ 307              		.loc 1 34 1 view .LVU79
+ 308 014e 7047     		bx	lr
+ 309              	.L17:
+ 310              		.align	2
+ 311              	.L16:
+ 312 0150 00000000 		.word	.LANCHOR0
+ 313 0154 00000000 		.word	.LANCHOR1
+ 314 0158 00000000 		.word	.LANCHOR2
+ 315              		.cfi_endproc
+ 316              	.LFE0:
+ 318              		.section	.text.randombytes,"ax",%progbits
+ 319              		.align	1
+ 320              		.global	randombytes
+ 321              		.syntax unified
+ 322              		.thumb
+ 323              		.thumb_func
+ 324              		.fpu fpv4-sp-d16
+ 326              	randombytes:
+ 327              	.LVL43:
+ 328              	.LFB1:
+  35:Core/Src/randombytes.c **** 
+  36:Core/Src/randombytes.c **** void randombytes(unsigned char *x,unsigned long long xlen)
+  37:Core/Src/randombytes.c **** {
+ARM GAS  C:\Users\11410\AppData\Local\Temp\ccdu9yod.s 			page 8
+
+
+ 329              		.loc 1 37 1 is_stmt 1 view -0
+ 330              		.cfi_startproc
+ 331              		@ args = 0, pretend = 0, frame = 0
+ 332              		@ frame_needed = 0, uses_anonymous_args = 0
+ 333              		.loc 1 37 1 is_stmt 0 view .LVU81
+ 334 0000 70B5     		push	{r4, r5, r6, lr}
+ 335              	.LCFI4:
+ 336              		.cfi_def_cfa_offset 16
+ 337              		.cfi_offset 4, -16
+ 338              		.cfi_offset 5, -12
+ 339              		.cfi_offset 6, -8
+ 340              		.cfi_offset 14, -4
+ 341 0002 0646     		mov	r6, r0
+ 342 0004 1446     		mov	r4, r2
+ 343 0006 1D46     		mov	r5, r3
+  38:Core/Src/randombytes.c ****   while (xlen > 0) {
+ 344              		.loc 1 38 3 is_stmt 1 view .LVU82
+ 345              		.loc 1 38 9 is_stmt 0 view .LVU83
+ 346 0008 11E0     		b	.L19
+ 347              	.LVL44:
+ 348              	.L21:
+  39:Core/Src/randombytes.c ****     if (!outleft) {
+  40:Core/Src/randombytes.c ****       if (!++in[0]) if (!++in[1]) if (!++in[2]) ++in[3];
+  41:Core/Src/randombytes.c ****       surf();
+ 349              		.loc 1 41 7 is_stmt 1 view .LVU84
+ 350 000a FFF7FEFF 		bl	surf
+ 351              	.LVL45:
+  42:Core/Src/randombytes.c ****       outleft = 8;
+ 352              		.loc 1 42 7 view .LVU85
+ 353              		.loc 1 42 15 is_stmt 0 view .LVU86
+ 354 000e 164B     		ldr	r3, .L25
+ 355 0010 0822     		movs	r2, #8
+ 356 0012 1A60     		str	r2, [r3]
+ 357              	.L20:
+  43:Core/Src/randombytes.c ****     }
+  44:Core/Src/randombytes.c ****     *x = out[--outleft];
+ 358              		.loc 1 44 5 is_stmt 1 view .LVU87
+ 359              		.loc 1 44 14 is_stmt 0 view .LVU88
+ 360 0014 144A     		ldr	r2, .L25
+ 361 0016 1368     		ldr	r3, [r2]
+ 362 0018 013B     		subs	r3, r3, #1
+ 363              		.loc 1 44 8 view .LVU89
+ 364 001a 1360     		str	r3, [r2]
+ 365              		.loc 1 44 13 view .LVU90
+ 366 001c 134A     		ldr	r2, .L25+4
+ 367 001e 52F82330 		ldr	r3, [r2, r3, lsl #2]
+ 368              		.loc 1 44 8 view .LVU91
+ 369 0022 06F8013B 		strb	r3, [r6], #1
+ 370              	.LVL46:
+  45:Core/Src/randombytes.c ****     ++x;
+ 371              		.loc 1 45 5 is_stmt 1 view .LVU92
+  46:Core/Src/randombytes.c ****     --xlen;
+ 372              		.loc 1 46 5 view .LVU93
+ 373 0026 14F1FF34 		adds	r4, r4, #-1
+ 374              	.LVL47:
+ 375              		.loc 1 46 5 is_stmt 0 view .LVU94
+ 376 002a 45F1FF35 		adc	r5, r5, #-1
+ARM GAS  C:\Users\11410\AppData\Local\Temp\ccdu9yod.s 			page 9
+
+
+ 377              	.LVL48:
+ 378              	.L19:
+  38:Core/Src/randombytes.c ****     if (!outleft) {
+ 379              		.loc 1 38 9 is_stmt 1 view .LVU95
+ 380 002e 54EA0503 		orrs	r3, r4, r5
+ 381 0032 17D0     		beq	.L24
+  39:Core/Src/randombytes.c ****       if (!++in[0]) if (!++in[1]) if (!++in[2]) ++in[3];
+ 382              		.loc 1 39 5 view .LVU96
+  39:Core/Src/randombytes.c ****       if (!++in[0]) if (!++in[1]) if (!++in[2]) ++in[3];
+ 383              		.loc 1 39 9 is_stmt 0 view .LVU97
+ 384 0034 0C4B     		ldr	r3, .L25
+ 385 0036 1B68     		ldr	r3, [r3]
+  39:Core/Src/randombytes.c ****       if (!++in[0]) if (!++in[1]) if (!++in[2]) ++in[3];
+ 386              		.loc 1 39 8 view .LVU98
+ 387 0038 002B     		cmp	r3, #0
+ 388 003a EBD1     		bne	.L20
+  40:Core/Src/randombytes.c ****       surf();
+ 389              		.loc 1 40 7 is_stmt 1 view .LVU99
+  40:Core/Src/randombytes.c ****       surf();
+ 390              		.loc 1 40 16 is_stmt 0 view .LVU100
+ 391 003c 0C4A     		ldr	r2, .L25+8
+ 392 003e 1368     		ldr	r3, [r2]
+  40:Core/Src/randombytes.c ****       surf();
+ 393              		.loc 1 40 12 view .LVU101
+ 394 0040 0133     		adds	r3, r3, #1
+  40:Core/Src/randombytes.c ****       surf();
+ 395              		.loc 1 40 10 view .LVU102
+ 396 0042 1360     		str	r3, [r2]
+ 397 0044 002B     		cmp	r3, #0
+ 398 0046 E0D1     		bne	.L21
+  40:Core/Src/randombytes.c ****       surf();
+ 399              		.loc 1 40 21 is_stmt 1 discriminator 1 view .LVU103
+  40:Core/Src/randombytes.c ****       surf();
+ 400              		.loc 1 40 30 is_stmt 0 discriminator 1 view .LVU104
+ 401 0048 5368     		ldr	r3, [r2, #4]
+  40:Core/Src/randombytes.c ****       surf();
+ 402              		.loc 1 40 26 discriminator 1 view .LVU105
+ 403 004a 0133     		adds	r3, r3, #1
+  40:Core/Src/randombytes.c ****       surf();
+ 404              		.loc 1 40 24 discriminator 1 view .LVU106
+ 405 004c 5360     		str	r3, [r2, #4]
+ 406 004e 002B     		cmp	r3, #0
+ 407 0050 DBD1     		bne	.L21
+  40:Core/Src/randombytes.c ****       surf();
+ 408              		.loc 1 40 35 is_stmt 1 discriminator 2 view .LVU107
+  40:Core/Src/randombytes.c ****       surf();
+ 409              		.loc 1 40 44 is_stmt 0 discriminator 2 view .LVU108
+ 410 0052 9368     		ldr	r3, [r2, #8]
+  40:Core/Src/randombytes.c ****       surf();
+ 411              		.loc 1 40 40 discriminator 2 view .LVU109
+ 412 0054 0133     		adds	r3, r3, #1
+  40:Core/Src/randombytes.c ****       surf();
+ 413              		.loc 1 40 38 discriminator 2 view .LVU110
+ 414 0056 9360     		str	r3, [r2, #8]
+ 415 0058 002B     		cmp	r3, #0
+ 416 005a D6D1     		bne	.L21
+  40:Core/Src/randombytes.c ****       surf();
+ARM GAS  C:\Users\11410\AppData\Local\Temp\ccdu9yod.s 			page 10
+
+
+ 417              		.loc 1 40 49 is_stmt 1 discriminator 3 view .LVU111
+  40:Core/Src/randombytes.c ****       surf();
+ 418              		.loc 1 40 53 is_stmt 0 discriminator 3 view .LVU112
+ 419 005c D368     		ldr	r3, [r2, #12]
+  40:Core/Src/randombytes.c ****       surf();
+ 420              		.loc 1 40 49 discriminator 3 view .LVU113
+ 421 005e 0133     		adds	r3, r3, #1
+ 422 0060 D360     		str	r3, [r2, #12]
+ 423 0062 D2E7     		b	.L21
+ 424              	.L24:
+  47:Core/Src/randombytes.c ****   }
+  48:Core/Src/randombytes.c **** }
+ 425              		.loc 1 48 1 view .LVU114
+ 426 0064 70BD     		pop	{r4, r5, r6, pc}
+ 427              	.LVL49:
+ 428              	.L26:
+ 429              		.loc 1 48 1 view .LVU115
+ 430 0066 00BF     		.align	2
+ 431              	.L25:
+ 432 0068 00000000 		.word	.LANCHOR3
+ 433 006c 00000000 		.word	.LANCHOR2
+ 434 0070 00000000 		.word	.LANCHOR0
+ 435              		.cfi_endproc
+ 436              	.LFE1:
+ 438              		.section	.bss.in,"aw",%nobits
+ 439              		.align	2
+ 440              		.set	.LANCHOR0,. + 0
+ 443              	in:
+ 444 0000 00000000 		.space	48
+ 444      00000000 
+ 444      00000000 
+ 444      00000000 
+ 444      00000000 
+ 445              		.section	.bss.out,"aw",%nobits
+ 446              		.align	2
+ 447              		.set	.LANCHOR2,. + 0
+ 450              	out:
+ 451 0000 00000000 		.space	32
+ 451      00000000 
+ 451      00000000 
+ 451      00000000 
+ 451      00000000 
+ 452              		.section	.bss.outleft,"aw",%nobits
+ 453              		.align	2
+ 454              		.set	.LANCHOR3,. + 0
+ 457              	outleft:
+ 458 0000 00000000 		.space	4
+ 459              		.section	.rodata.seed,"a"
+ 460              		.align	2
+ 461              		.set	.LANCHOR1,. + 0
+ 464              	seed:
+ 465 0000 03000000 		.word	3
+ 466 0004 01000000 		.word	1
+ 467 0008 04000000 		.word	4
+ 468 000c 01000000 		.word	1
+ 469 0010 05000000 		.word	5
+ 470 0014 09000000 		.word	9
+ARM GAS  C:\Users\11410\AppData\Local\Temp\ccdu9yod.s 			page 11
+
+
+ 471 0018 02000000 		.word	2
+ 472 001c 06000000 		.word	6
+ 473 0020 05000000 		.word	5
+ 474 0024 03000000 		.word	3
+ 475 0028 05000000 		.word	5
+ 476 002c 08000000 		.word	8
+ 477 0030 09000000 		.word	9
+ 478 0034 07000000 		.word	7
+ 479 0038 09000000 		.word	9
+ 480 003c 03000000 		.word	3
+ 481 0040 02000000 		.word	2
+ 482 0044 03000000 		.word	3
+ 483 0048 08000000 		.word	8
+ 484 004c 04000000 		.word	4
+ 485 0050 06000000 		.word	6
+ 486 0054 02000000 		.word	2
+ 487 0058 06000000 		.word	6
+ 488 005c 04000000 		.word	4
+ 489 0060 03000000 		.word	3
+ 490 0064 03000000 		.word	3
+ 491 0068 08000000 		.word	8
+ 492 006c 03000000 		.word	3
+ 493 0070 02000000 		.word	2
+ 494 0074 07000000 		.word	7
+ 495 0078 09000000 		.word	9
+ 496 007c 05000000 		.word	5
+ 497              		.text
+ 498              	.Letext0:
+ 499              		.file 2 "c:\\program files (x86)\\gnu tools arm embedded\\9 2019-q4-major\\arm-none-eabi\\include\
+ 500              		.file 3 "c:\\program files (x86)\\gnu tools arm embedded\\9 2019-q4-major\\arm-none-eabi\\include\
+ARM GAS  C:\Users\11410\AppData\Local\Temp\ccdu9yod.s 			page 12
+
+
+DEFINED SYMBOLS
+                            *ABS*:00000000 randombytes.c
+C:\Users\11410\AppData\Local\Temp\ccdu9yod.s:18     .text.surf:00000000 $t
+C:\Users\11410\AppData\Local\Temp\ccdu9yod.s:25     .text.surf:00000000 surf
+C:\Users\11410\AppData\Local\Temp\ccdu9yod.s:312    .text.surf:00000150 $d
+C:\Users\11410\AppData\Local\Temp\ccdu9yod.s:319    .text.randombytes:00000000 $t
+C:\Users\11410\AppData\Local\Temp\ccdu9yod.s:326    .text.randombytes:00000000 randombytes
+C:\Users\11410\AppData\Local\Temp\ccdu9yod.s:432    .text.randombytes:00000068 $d
+C:\Users\11410\AppData\Local\Temp\ccdu9yod.s:439    .bss.in:00000000 $d
+C:\Users\11410\AppData\Local\Temp\ccdu9yod.s:443    .bss.in:00000000 in
+C:\Users\11410\AppData\Local\Temp\ccdu9yod.s:446    .bss.out:00000000 $d
+C:\Users\11410\AppData\Local\Temp\ccdu9yod.s:450    .bss.out:00000000 out
+C:\Users\11410\AppData\Local\Temp\ccdu9yod.s:453    .bss.outleft:00000000 $d
+C:\Users\11410\AppData\Local\Temp\ccdu9yod.s:457    .bss.outleft:00000000 outleft
+C:\Users\11410\AppData\Local\Temp\ccdu9yod.s:460    .rodata.seed:00000000 $d
+C:\Users\11410\AppData\Local\Temp\ccdu9yod.s:464    .rodata.seed:00000000 seed
+
+NO UNDEFINED SYMBOLS

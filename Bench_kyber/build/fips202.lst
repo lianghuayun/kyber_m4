@@ -1,0 +1,901 @@
+ARM GAS  C:\Users\11410\AppData\Local\Temp\ccaeMp5O.s 			page 1
+
+
+   1              		.cpu cortex-m4
+   2              		.eabi_attribute 27, 1
+   3              		.eabi_attribute 28, 1
+   4              		.eabi_attribute 20, 1
+   5              		.eabi_attribute 21, 1
+   6              		.eabi_attribute 23, 3
+   7              		.eabi_attribute 24, 1
+   8              		.eabi_attribute 25, 1
+   9              		.eabi_attribute 26, 1
+  10              		.eabi_attribute 30, 1
+  11              		.eabi_attribute 34, 1
+  12              		.eabi_attribute 18, 4
+  13              		.file	"fips202.c"
+  14              		.text
+  15              	.Ltext0:
+  16              		.cfi_sections	.debug_frame
+  17              		.section	.text.keccak_absorb,"ax",%progbits
+  18              		.align	1
+  19              		.arch armv7e-m
+  20              		.syntax unified
+  21              		.thumb
+  22              		.thumb_func
+  23              		.fpu fpv4-sp-d16
+  25              	keccak_absorb:
+  26              	.LVL0:
+  27              	.LFB0:
+  28              		.file 1 "Core/Src/fips202.c"
+   1:Core/Src/fips202.c **** #include "fips202.h"
+   2:Core/Src/fips202.c **** #include <stdint.h>
+   3:Core/Src/fips202.c **** #include <string.h>
+   4:Core/Src/fips202.c **** 
+   5:Core/Src/fips202.c **** /*************************************************
+   6:Core/Src/fips202.c **** * Name:        keccak_absorb
+   7:Core/Src/fips202.c **** * 
+   8:Core/Src/fips202.c **** * Description: Absorb step of Keccak;
+   9:Core/Src/fips202.c **** *              non-incremental, starts by zeroeing the state.
+  10:Core/Src/fips202.c **** *
+  11:Core/Src/fips202.c **** * Arguments:   - uint8_t *s:              pointer to (uninitialized) output Keccak state
+  12:Core/Src/fips202.c **** *              - unsigned int r:          rate in bytes (e.g., 168 for SHAKE128)
+  13:Core/Src/fips202.c **** *              - const unsigned char *m:  pointer to input to be absorbed into s
+  14:Core/Src/fips202.c **** *              - unsigned long long mlen: length of input in bytes
+  15:Core/Src/fips202.c **** *              - unsigned char p:         domain-separation byte for different Keccak-derived funct
+  16:Core/Src/fips202.c **** **************************************************/
+  17:Core/Src/fips202.c **** static void keccak_absorb(uint8_t* s, unsigned int r, const unsigned char *m,
+  18:Core/Src/fips202.c ****                           unsigned long long int mlen, unsigned char p) {
+  29              		.loc 1 18 73 view -0
+  30              		.cfi_startproc
+  31              		@ args = 12, pretend = 0, frame = 200
+  32              		@ frame_needed = 0, uses_anonymous_args = 0
+  33              		.loc 1 18 73 is_stmt 0 view .LVU1
+  34 0000 2DE9F047 		push	{r4, r5, r6, r7, r8, r9, r10, lr}
+  35              	.LCFI0:
+  36              		.cfi_def_cfa_offset 32
+  37              		.cfi_offset 4, -32
+  38              		.cfi_offset 5, -28
+  39              		.cfi_offset 6, -24
+  40              		.cfi_offset 7, -20
+ARM GAS  C:\Users\11410\AppData\Local\Temp\ccaeMp5O.s 			page 2
+
+
+  41              		.cfi_offset 8, -16
+  42              		.cfi_offset 9, -12
+  43              		.cfi_offset 10, -8
+  44              		.cfi_offset 14, -4
+  45 0004 B2B0     		sub	sp, sp, #200
+  46              	.LCFI1:
+  47              		.cfi_def_cfa_offset 232
+  48 0006 8246     		mov	r10, r0
+  49 0008 8946     		mov	r9, r1
+  50 000a 9046     		mov	r8, r2
+  51 000c DDE93A45 		ldrd	r4, [sp, #232]
+  19:Core/Src/fips202.c ****   unsigned long long i;
+  52              		.loc 1 19 3 is_stmt 1 view .LVU2
+  20:Core/Src/fips202.c ****   unsigned char t[200];
+  53              		.loc 1 20 3 view .LVU3
+  21:Core/Src/fips202.c **** 
+  22:Core/Src/fips202.c ****   // Zero state
+  23:Core/Src/fips202.c ****   KeccakP1600_Initialize((unsigned char *)s);
+  54              		.loc 1 23 3 view .LVU4
+  55 0010 FFF7FEFF 		bl	KeccakP1600_Initialize
+  56              	.LVL1:
+  24:Core/Src/fips202.c **** 
+  25:Core/Src/fips202.c ****   while (mlen >= (size_t)r) {
+  57              		.loc 1 25 3 view .LVU5
+  58              	.L2:
+  59              		.loc 1 25 9 view .LVU6
+  60              		.loc 1 25 15 is_stmt 0 view .LVU7
+  61 0014 4E46     		mov	r6, r9
+  62 0016 0027     		movs	r7, #0
+  63              		.loc 1 25 9 view .LVU8
+  64 0018 BD42     		cmp	r5, r7
+  65 001a 08BF     		it	eq
+  66 001c 4C45     		cmpeq	r4, r9
+  67 001e 0DD3     		bcc	.L9
+  68              	.LVL2:
+  26:Core/Src/fips202.c ****     KeccakP1600_AddBytes(s, m, 0, r);
+  69              		.loc 1 26 5 is_stmt 1 view .LVU9
+  70 0020 4B46     		mov	r3, r9
+  71 0022 0022     		movs	r2, #0
+  72 0024 4146     		mov	r1, r8
+  73 0026 5046     		mov	r0, r10
+  74 0028 FFF7FEFF 		bl	KeccakP1600_AddBytes
+  75              	.LVL3:
+  27:Core/Src/fips202.c ****     KeccakP1600_Permute_24rounds(s);
+  76              		.loc 1 27 5 view .LVU10
+  77 002c 5046     		mov	r0, r10
+  78 002e FFF7FEFF 		bl	KeccakP1600_Permute_24rounds
+  79              	.LVL4:
+  28:Core/Src/fips202.c ****     m += r;
+  80              		.loc 1 28 5 view .LVU11
+  81              		.loc 1 28 7 is_stmt 0 view .LVU12
+  82 0032 C844     		add	r8, r8, r9
+  83              	.LVL5:
+  29:Core/Src/fips202.c ****     mlen -= r;
+  84              		.loc 1 29 5 is_stmt 1 view .LVU13
+  85              		.loc 1 29 10 is_stmt 0 view .LVU14
+  86 0034 A41B     		subs	r4, r4, r6
+ARM GAS  C:\Users\11410\AppData\Local\Temp\ccaeMp5O.s 			page 3
+
+
+  87              	.LVL6:
+  88              		.loc 1 29 10 view .LVU15
+  89 0036 65EB0705 		sbc	r5, r5, r7
+  90              	.LVL7:
+  91              		.loc 1 29 10 view .LVU16
+  92 003a EBE7     		b	.L2
+  93              	.L9:
+  30:Core/Src/fips202.c ****   }
+  31:Core/Src/fips202.c **** 
+  32:Core/Src/fips202.c ****   for (i = 0; i < r; ++i) t[i] = 0;
+  94              		.loc 1 32 10 view .LVU17
+  95 003c 0022     		movs	r2, #0
+  96 003e 0023     		movs	r3, #0
+  97              	.L4:
+  98              	.LVL8:
+  99              		.loc 1 32 15 is_stmt 1 discriminator 1 view .LVU18
+ 100              		.loc 1 32 3 is_stmt 0 discriminator 1 view .LVU19
+ 101 0040 BB42     		cmp	r3, r7
+ 102 0042 08BF     		it	eq
+ 103 0044 B242     		cmpeq	r2, r6
+ 104 0046 06D2     		bcs	.L10
+ 105              		.loc 1 32 27 is_stmt 1 discriminator 3 view .LVU20
+ 106              		.loc 1 32 32 is_stmt 0 discriminator 3 view .LVU21
+ 107 0048 0DEB0201 		add	r1, sp, r2
+ 108 004c 0020     		movs	r0, #0
+ 109 004e 0870     		strb	r0, [r1]
+ 110              		.loc 1 32 22 is_stmt 1 discriminator 3 view .LVU22
+ 111 0050 0132     		adds	r2, r2, #1
+ 112              	.LVL9:
+ 113              		.loc 1 32 22 is_stmt 0 discriminator 3 view .LVU23
+ 114 0052 4341     		adcs	r3, r3, r0
+ 115              	.LVL10:
+ 116              		.loc 1 32 22 discriminator 3 view .LVU24
+ 117 0054 F4E7     		b	.L4
+ 118              	.L10:
+  33:Core/Src/fips202.c ****   for (i = 0; i < mlen; ++i) t[i] = m[i];
+ 119              		.loc 1 33 10 view .LVU25
+ 120 0056 0022     		movs	r2, #0
+ 121              	.LVL11:
+ 122              		.loc 1 33 10 view .LVU26
+ 123 0058 0023     		movs	r3, #0
+ 124 005a 08E0     		b	.L6
+ 125              	.LVL12:
+ 126              	.L7:
+ 127              		.loc 1 33 30 is_stmt 1 discriminator 3 view .LVU27
+ 128              		.loc 1 33 38 is_stmt 0 discriminator 3 view .LVU28
+ 129 005c 08EB0201 		add	r1, r8, r2
+ 130 0060 0878     		ldrb	r0, [r1]	@ zero_extendqisi2
+ 131              		.loc 1 33 35 discriminator 3 view .LVU29
+ 132 0062 0DEB0201 		add	r1, sp, r2
+ 133 0066 0870     		strb	r0, [r1]
+ 134              		.loc 1 33 25 is_stmt 1 discriminator 3 view .LVU30
+ 135 0068 0132     		adds	r2, r2, #1
+ 136              	.LVL13:
+ 137              		.loc 1 33 25 is_stmt 0 discriminator 3 view .LVU31
+ 138 006a 43F10003 		adc	r3, r3, #0
+ 139              	.LVL14:
+ARM GAS  C:\Users\11410\AppData\Local\Temp\ccaeMp5O.s 			page 4
+
+
+ 140              	.L6:
+ 141              		.loc 1 33 15 is_stmt 1 discriminator 1 view .LVU32
+ 142              		.loc 1 33 3 is_stmt 0 discriminator 1 view .LVU33
+ 143 006e AB42     		cmp	r3, r5
+ 144 0070 08BF     		it	eq
+ 145 0072 A242     		cmpeq	r2, r4
+ 146 0074 F2D3     		bcc	.L7
+  34:Core/Src/fips202.c ****   t[i] = p;
+ 147              		.loc 1 34 3 is_stmt 1 view .LVU34
+ 148              		.loc 1 34 8 is_stmt 0 view .LVU35
+ 149 0076 6A44     		add	r2, r2, sp
+ 150              	.LVL15:
+ 151              		.loc 1 34 8 view .LVU36
+ 152 0078 9DF8F030 		ldrb	r3, [sp, #240]	@ zero_extendqisi2
+ 153 007c 1370     		strb	r3, [r2]
+  35:Core/Src/fips202.c ****   t[r - 1] |= 128;
+ 154              		.loc 1 35 3 is_stmt 1 view .LVU37
+ 155              		.loc 1 35 12 is_stmt 0 view .LVU38
+ 156 007e 09F1FF33 		add	r3, r9, #-1
+ 157 0082 32AA     		add	r2, sp, #200
+ 158 0084 1344     		add	r3, r3, r2
+ 159 0086 13F8C82C 		ldrb	r2, [r3, #-200]	@ zero_extendqisi2
+ 160 008a 62F07F02 		orn	r2, r2, #127
+ 161 008e 03F8C82C 		strb	r2, [r3, #-200]
+  36:Core/Src/fips202.c ****   KeccakP1600_AddBytes(s, t, 0, r);
+ 162              		.loc 1 36 3 is_stmt 1 view .LVU39
+ 163 0092 4B46     		mov	r3, r9
+ 164 0094 0022     		movs	r2, #0
+ 165 0096 6946     		mov	r1, sp
+ 166 0098 5046     		mov	r0, r10
+ 167 009a FFF7FEFF 		bl	KeccakP1600_AddBytes
+ 168              	.LVL16:
+  37:Core/Src/fips202.c **** }
+ 169              		.loc 1 37 1 is_stmt 0 view .LVU40
+ 170 009e 32B0     		add	sp, sp, #200
+ 171              	.LCFI2:
+ 172              		.cfi_def_cfa_offset 32
+ 173              		@ sp needed
+ 174 00a0 BDE8F087 		pop	{r4, r5, r6, r7, r8, r9, r10, pc}
+ 175              		.loc 1 37 1 view .LVU41
+ 176              		.cfi_endproc
+ 177              	.LFE0:
+ 179              		.section	.text.keccak_squeezeblocks,"ax",%progbits
+ 180              		.align	1
+ 181              		.syntax unified
+ 182              		.thumb
+ 183              		.thumb_func
+ 184              		.fpu fpv4-sp-d16
+ 186              	keccak_squeezeblocks:
+ 187              	.LVL17:
+ 188              	.LFB1:
+  38:Core/Src/fips202.c **** 
+  39:Core/Src/fips202.c **** /*************************************************
+  40:Core/Src/fips202.c **** * Name:        keccak_squeezeblocks
+  41:Core/Src/fips202.c **** * 
+  42:Core/Src/fips202.c **** * Description: Squeeze step of Keccak. Squeezes full blocks of r bytes each.
+  43:Core/Src/fips202.c **** *              Modifies the state. Can be called multiple times to keep squeezing,
+ARM GAS  C:\Users\11410\AppData\Local\Temp\ccaeMp5O.s 			page 5
+
+
+  44:Core/Src/fips202.c **** *              i.e., is incremental.
+  45:Core/Src/fips202.c **** *
+  46:Core/Src/fips202.c **** * Arguments:   - unsigned char *h:               pointer to output blocks
+  47:Core/Src/fips202.c **** *              - unsigned long long int nblocks: number of blocks to be squeezed (written to h)
+  48:Core/Src/fips202.c **** *              - uint8_t *s:                     pointer to in/output Keccak state
+  49:Core/Src/fips202.c **** *              - unsigned int r:                 rate in bytes (e.g., 168 for SHAKE128)
+  50:Core/Src/fips202.c **** **************************************************/
+  51:Core/Src/fips202.c **** static void keccak_squeezeblocks(unsigned char *h,
+  52:Core/Src/fips202.c ****                                  unsigned long long int nblocks, uint8_t* s,
+  53:Core/Src/fips202.c ****                                  unsigned int r) {
+ 189              		.loc 1 53 50 is_stmt 1 view -0
+ 190              		.cfi_startproc
+ 191              		@ args = 8, pretend = 0, frame = 0
+ 192              		@ frame_needed = 0, uses_anonymous_args = 0
+ 193              		.loc 1 53 50 is_stmt 0 view .LVU43
+ 194 0000 2DE9F041 		push	{r4, r5, r6, r7, r8, lr}
+ 195              	.LCFI3:
+ 196              		.cfi_def_cfa_offset 24
+ 197              		.cfi_offset 4, -24
+ 198              		.cfi_offset 5, -20
+ 199              		.cfi_offset 6, -16
+ 200              		.cfi_offset 7, -12
+ 201              		.cfi_offset 8, -8
+ 202              		.cfi_offset 14, -4
+ 203 0004 0646     		mov	r6, r0
+ 204 0006 1446     		mov	r4, r2
+ 205 0008 1D46     		mov	r5, r3
+ 206 000a DDF81880 		ldr	r8, [sp, #24]
+ 207 000e 079F     		ldr	r7, [sp, #28]
+  54:Core/Src/fips202.c ****   while (nblocks > 0) {
+ 208              		.loc 1 54 3 is_stmt 1 view .LVU44
+ 209              	.LVL18:
+ 210              	.L12:
+ 211              		.loc 1 54 9 view .LVU45
+ 212 0010 54EA0503 		orrs	r3, r4, r5
+ 213 0014 0ED0     		beq	.L15
+  55:Core/Src/fips202.c ****     KeccakP1600_Permute_24rounds(s);
+ 214              		.loc 1 55 5 view .LVU46
+ 215 0016 4046     		mov	r0, r8
+ 216 0018 FFF7FEFF 		bl	KeccakP1600_Permute_24rounds
+ 217              	.LVL19:
+  56:Core/Src/fips202.c ****     KeccakP1600_ExtractBytes(s, h, 0, r);
+ 218              		.loc 1 56 5 view .LVU47
+ 219 001c 3B46     		mov	r3, r7
+ 220 001e 0022     		movs	r2, #0
+ 221 0020 3146     		mov	r1, r6
+ 222 0022 4046     		mov	r0, r8
+ 223 0024 FFF7FEFF 		bl	KeccakP1600_ExtractBytes
+ 224              	.LVL20:
+  57:Core/Src/fips202.c ****     h += r;
+ 225              		.loc 1 57 5 view .LVU48
+ 226              		.loc 1 57 7 is_stmt 0 view .LVU49
+ 227 0028 3E44     		add	r6, r6, r7
+ 228              	.LVL21:
+  58:Core/Src/fips202.c ****     nblocks--;
+ 229              		.loc 1 58 5 is_stmt 1 view .LVU50
+ 230              		.loc 1 58 12 is_stmt 0 view .LVU51
+ARM GAS  C:\Users\11410\AppData\Local\Temp\ccaeMp5O.s 			page 6
+
+
+ 231 002a 14F1FF34 		adds	r4, r4, #-1
+ 232              	.LVL22:
+ 233              		.loc 1 58 12 view .LVU52
+ 234 002e 45F1FF35 		adc	r5, r5, #-1
+ 235              	.LVL23:
+ 236              		.loc 1 58 12 view .LVU53
+ 237 0032 EDE7     		b	.L12
+ 238              	.L15:
+  59:Core/Src/fips202.c ****   }
+  60:Core/Src/fips202.c **** }
+ 239              		.loc 1 60 1 view .LVU54
+ 240 0034 BDE8F081 		pop	{r4, r5, r6, r7, r8, pc}
+ 241              		.loc 1 60 1 view .LVU55
+ 242              		.cfi_endproc
+ 243              	.LFE1:
+ 245              		.section	.text.shake128_absorb,"ax",%progbits
+ 246              		.align	1
+ 247              		.global	shake128_absorb
+ 248              		.syntax unified
+ 249              		.thumb
+ 250              		.thumb_func
+ 251              		.fpu fpv4-sp-d16
+ 253              	shake128_absorb:
+ 254              	.LVL24:
+ 255              	.LFB2:
+  61:Core/Src/fips202.c **** 
+  62:Core/Src/fips202.c **** /*************************************************
+  63:Core/Src/fips202.c **** * Name:        shake128_absorb
+  64:Core/Src/fips202.c **** * 
+  65:Core/Src/fips202.c **** * Description: Absorb step of the SHAKE128 XOF.
+  66:Core/Src/fips202.c **** *              non-incremental, starts by zeroeing the state.
+  67:Core/Src/fips202.c **** *
+  68:Core/Src/fips202.c **** * Arguments:   - uint8_t *s:                      pointer to (uninitialized) output Keccak state
+  69:Core/Src/fips202.c **** *              - const unsigned char *input:      pointer to input to be absorbed into s
+  70:Core/Src/fips202.c **** *              - unsigned long long inputByteLen: length of input in bytes
+  71:Core/Src/fips202.c **** **************************************************/
+  72:Core/Src/fips202.c **** void shake128_absorb(uint8_t* s, const unsigned char *input,
+  73:Core/Src/fips202.c ****                      unsigned int inputByteLen) {
+ 256              		.loc 1 73 49 is_stmt 1 view -0
+ 257              		.cfi_startproc
+ 258              		@ args = 0, pretend = 0, frame = 0
+ 259              		@ frame_needed = 0, uses_anonymous_args = 0
+ 260              		.loc 1 73 49 is_stmt 0 view .LVU57
+ 261 0000 00B5     		push	{lr}
+ 262              	.LCFI4:
+ 263              		.cfi_def_cfa_offset 4
+ 264              		.cfi_offset 14, -4
+ 265 0002 85B0     		sub	sp, sp, #20
+ 266              	.LCFI5:
+ 267              		.cfi_def_cfa_offset 24
+  74:Core/Src/fips202.c ****   keccak_absorb(s, SHAKE128_RATE, input, inputByteLen, 0x1F);
+ 268              		.loc 1 74 3 is_stmt 1 view .LVU58
+ 269 0004 1F23     		movs	r3, #31
+ 270 0006 0293     		str	r3, [sp, #8]
+ 271 0008 0092     		str	r2, [sp]
+ 272 000a 0023     		movs	r3, #0
+ 273 000c 0193     		str	r3, [sp, #4]
+ARM GAS  C:\Users\11410\AppData\Local\Temp\ccaeMp5O.s 			page 7
+
+
+ 274 000e 0A46     		mov	r2, r1
+ 275              	.LVL25:
+ 276              		.loc 1 74 3 is_stmt 0 view .LVU59
+ 277 0010 A821     		movs	r1, #168
+ 278              	.LVL26:
+ 279              		.loc 1 74 3 view .LVU60
+ 280 0012 FFF7FEFF 		bl	keccak_absorb
+ 281              	.LVL27:
+  75:Core/Src/fips202.c **** }
+ 282              		.loc 1 75 1 view .LVU61
+ 283 0016 05B0     		add	sp, sp, #20
+ 284              	.LCFI6:
+ 285              		.cfi_def_cfa_offset 4
+ 286              		@ sp needed
+ 287 0018 5DF804FB 		ldr	pc, [sp], #4
+ 288              		.cfi_endproc
+ 289              	.LFE2:
+ 291              		.section	.text.shake128_squeezeblocks,"ax",%progbits
+ 292              		.align	1
+ 293              		.global	shake128_squeezeblocks
+ 294              		.syntax unified
+ 295              		.thumb
+ 296              		.thumb_func
+ 297              		.fpu fpv4-sp-d16
+ 299              	shake128_squeezeblocks:
+ 300              	.LVL28:
+ 301              	.LFB3:
+  76:Core/Src/fips202.c **** 
+  77:Core/Src/fips202.c **** /*************************************************
+  78:Core/Src/fips202.c **** * Name:        shake128_squeezeblocks
+  79:Core/Src/fips202.c **** * 
+  80:Core/Src/fips202.c **** * Description: Squeeze step of SHAKE128 XOF. Squeezes full blocks of SHAKE128_RATE bytes each.
+  81:Core/Src/fips202.c **** *              Modifies the state. Can be called multiple times to keep squeezing,
+  82:Core/Src/fips202.c **** *              i.e., is incremental.
+  83:Core/Src/fips202.c **** *
+  84:Core/Src/fips202.c **** * Arguments:   - unsigned char *output:      pointer to output blocks
+  85:Core/Src/fips202.c **** *              - unsigned long long nblocks: number of blocks to be squeezed (written to output)
+  86:Core/Src/fips202.c **** *              - uint8_t *s:                 pointer to in/output Keccak state
+  87:Core/Src/fips202.c **** **************************************************/
+  88:Core/Src/fips202.c **** void shake128_squeezeblocks(unsigned char *output, unsigned long long nblocks,
+  89:Core/Src/fips202.c ****                             uint8_t* s) {
+ 302              		.loc 1 89 41 is_stmt 1 view -0
+ 303              		.cfi_startproc
+ 304              		@ args = 4, pretend = 0, frame = 0
+ 305              		@ frame_needed = 0, uses_anonymous_args = 0
+ 306              		.loc 1 89 41 is_stmt 0 view .LVU63
+ 307 0000 00B5     		push	{lr}
+ 308              	.LCFI7:
+ 309              		.cfi_def_cfa_offset 4
+ 310              		.cfi_offset 14, -4
+ 311 0002 83B0     		sub	sp, sp, #12
+ 312              	.LCFI8:
+ 313              		.cfi_def_cfa_offset 16
+  90:Core/Src/fips202.c ****   keccak_squeezeblocks(output, nblocks, s, SHAKE128_RATE);
+ 314              		.loc 1 90 3 is_stmt 1 view .LVU64
+ 315 0004 A821     		movs	r1, #168
+ 316 0006 0191     		str	r1, [sp, #4]
+ARM GAS  C:\Users\11410\AppData\Local\Temp\ccaeMp5O.s 			page 8
+
+
+ 317 0008 0499     		ldr	r1, [sp, #16]
+ 318 000a 0091     		str	r1, [sp]
+ 319 000c FFF7FEFF 		bl	keccak_squeezeblocks
+ 320              	.LVL29:
+  91:Core/Src/fips202.c **** }
+ 321              		.loc 1 91 1 is_stmt 0 view .LVU65
+ 322 0010 03B0     		add	sp, sp, #12
+ 323              	.LCFI9:
+ 324              		.cfi_def_cfa_offset 4
+ 325              		@ sp needed
+ 326 0012 5DF804FB 		ldr	pc, [sp], #4
+ 327              		.loc 1 91 1 view .LVU66
+ 328              		.cfi_endproc
+ 329              	.LFE3:
+ 331              		.global	__aeabi_uldivmod
+ 332              		.section	.text.shake256,"ax",%progbits
+ 333              		.align	1
+ 334              		.global	shake256
+ 335              		.syntax unified
+ 336              		.thumb
+ 337              		.thumb_func
+ 338              		.fpu fpv4-sp-d16
+ 340              	shake256:
+ 341              	.LVL30:
+ 342              	.LFB4:
+  92:Core/Src/fips202.c **** 
+  93:Core/Src/fips202.c **** /*************************************************
+  94:Core/Src/fips202.c **** * Name:        shake256
+  95:Core/Src/fips202.c **** * 
+  96:Core/Src/fips202.c **** * Description: SHAKE256 XOF with non-incremental API
+  97:Core/Src/fips202.c **** *
+  98:Core/Src/fips202.c **** * Arguments:   - unsigned char *output:      pointer to output
+  99:Core/Src/fips202.c **** *              - unsigned long long outlen:  requested output length in bytes
+ 100:Core/Src/fips202.c **** *              - const unsigned char *input: pointer to input
+ 101:Core/Src/fips202.c **** *              - unsigned long long inlen:   length of input in bytes
+ 102:Core/Src/fips202.c **** **************************************************/
+ 103:Core/Src/fips202.c **** void shake256(unsigned char *output, unsigned long long outlen,
+ 104:Core/Src/fips202.c ****               const unsigned char *input, unsigned long long inlen) {
+ 343              		.loc 1 104 69 is_stmt 1 view -0
+ 344              		.cfi_startproc
+ 345              		@ args = 16, pretend = 0, frame = 336
+ 346              		@ frame_needed = 0, uses_anonymous_args = 0
+ 347              		.loc 1 104 69 is_stmt 0 view .LVU68
+ 348 0000 2DE9F043 		push	{r4, r5, r6, r7, r8, r9, lr}
+ 349              	.LCFI10:
+ 350              		.cfi_def_cfa_offset 28
+ 351              		.cfi_offset 4, -28
+ 352              		.cfi_offset 5, -24
+ 353              		.cfi_offset 6, -20
+ 354              		.cfi_offset 7, -16
+ 355              		.cfi_offset 8, -12
+ 356              		.cfi_offset 9, -8
+ 357              		.cfi_offset 14, -4
+ 358 0004 D9B0     		sub	sp, sp, #356
+ 359              	.LCFI11:
+ 360              		.cfi_def_cfa_offset 384
+ 361 0006 0546     		mov	r5, r0
+ARM GAS  C:\Users\11410\AppData\Local\Temp\ccaeMp5O.s 			page 9
+
+
+ 362 0008 1746     		mov	r7, r2
+ 363 000a 1E46     		mov	r6, r3
+ 105:Core/Src/fips202.c ****   uint8_t s[200];
+ 364              		.loc 1 105 3 is_stmt 1 view .LVU69
+ 106:Core/Src/fips202.c ****   unsigned char t[SHAKE256_RATE];
+ 365              		.loc 1 106 3 view .LVU70
+ 107:Core/Src/fips202.c ****   unsigned long long nblocks = outlen / SHAKE256_RATE;
+ 366              		.loc 1 107 3 view .LVU71
+ 367              		.loc 1 107 22 is_stmt 0 view .LVU72
+ 368 000c 8822     		movs	r2, #136
+ 369              	.LVL31:
+ 370              		.loc 1 107 22 view .LVU73
+ 371 000e 0023     		movs	r3, #0
+ 372 0010 3846     		mov	r0, r7
+ 373              	.LVL32:
+ 374              		.loc 1 107 22 view .LVU74
+ 375 0012 3146     		mov	r1, r6
+ 376 0014 FFF7FEFF 		bl	__aeabi_uldivmod
+ 377              	.LVL33:
+ 378 0018 0446     		mov	r4, r0
+ 379 001a 8846     		mov	r8, r1
+ 380              	.LVL34:
+ 108:Core/Src/fips202.c ****   size_t i;
+ 381              		.loc 1 108 3 is_stmt 1 view .LVU75
+ 109:Core/Src/fips202.c **** 
+ 110:Core/Src/fips202.c ****   /* Absorb input */
+ 111:Core/Src/fips202.c ****   keccak_absorb(s, SHAKE256_RATE, input, inlen, 0x1F);
+ 382              		.loc 1 111 3 view .LVU76
+ 383 001c 0DF19809 		add	r9, sp, #152
+ 384 0020 1F23     		movs	r3, #31
+ 385 0022 0293     		str	r3, [sp, #8]
+ 386 0024 DDE96223 		ldrd	r2, [sp, #392]
+ 387 0028 CDE90023 		strd	r2, [sp]
+ 388 002c 609A     		ldr	r2, [sp, #384]
+ 389 002e 8821     		movs	r1, #136
+ 390              	.LVL35:
+ 391              		.loc 1 111 3 is_stmt 0 view .LVU77
+ 392 0030 4846     		mov	r0, r9
+ 393              	.LVL36:
+ 394              		.loc 1 111 3 view .LVU78
+ 395 0032 FFF7FEFF 		bl	keccak_absorb
+ 396              	.LVL37:
+ 112:Core/Src/fips202.c **** 
+ 113:Core/Src/fips202.c ****   /* Squeeze output */
+ 114:Core/Src/fips202.c ****   keccak_squeezeblocks(output, nblocks, s, SHAKE256_RATE);
+ 397              		.loc 1 114 3 is_stmt 1 view .LVU79
+ 398 0036 8823     		movs	r3, #136
+ 399 0038 0193     		str	r3, [sp, #4]
+ 400 003a CDF80090 		str	r9, [sp]
+ 401 003e 2246     		mov	r2, r4
+ 402 0040 4346     		mov	r3, r8
+ 403 0042 2846     		mov	r0, r5
+ 404 0044 FFF7FEFF 		bl	keccak_squeezeblocks
+ 405              	.LVL38:
+ 115:Core/Src/fips202.c **** 
+ 116:Core/Src/fips202.c ****   output += nblocks * SHAKE256_RATE;
+ 406              		.loc 1 116 3 view .LVU80
+ARM GAS  C:\Users\11410\AppData\Local\Temp\ccaeMp5O.s 			page 10
+
+
+ 407              		.loc 1 116 10 is_stmt 0 view .LVU81
+ 408 0048 04EB0414 		add	r4, r4, r4, lsl #4
+ 409              	.LVL39:
+ 117:Core/Src/fips202.c ****   outlen -= nblocks * SHAKE256_RATE;
+ 410              		.loc 1 117 3 is_stmt 1 view .LVU82
+ 411 004c 8822     		movs	r2, #136
+ 412 004e 0023     		movs	r3, #0
+ 413 0050 3846     		mov	r0, r7
+ 414 0052 3146     		mov	r1, r6
+ 415 0054 FFF7FEFF 		bl	__aeabi_uldivmod
+ 416              	.LVL40:
+ 417 0058 1646     		mov	r6, r2
+ 418 005a 1F46     		mov	r7, r3
+ 419              	.LVL41:
+ 118:Core/Src/fips202.c **** 
+ 119:Core/Src/fips202.c ****   if (outlen) {
+ 420              		.loc 1 119 3 view .LVU83
+ 421              		.loc 1 119 6 is_stmt 0 view .LVU84
+ 422 005c 56EA0703 		orrs	r3, r6, r7
+ 423 0060 02D1     		bne	.L25
+ 424              	.LVL42:
+ 425              	.L20:
+ 120:Core/Src/fips202.c ****     keccak_squeezeblocks(t, 1, s, SHAKE256_RATE);
+ 121:Core/Src/fips202.c ****     for (i = 0; i < outlen; i++) output[i] = t[i];
+ 122:Core/Src/fips202.c ****   }
+ 123:Core/Src/fips202.c **** }
+ 426              		.loc 1 123 1 view .LVU85
+ 427 0062 59B0     		add	sp, sp, #356
+ 428              	.LCFI12:
+ 429              		.cfi_remember_state
+ 430              		.cfi_def_cfa_offset 28
+ 431              		@ sp needed
+ 432 0064 BDE8F083 		pop	{r4, r5, r6, r7, r8, r9, pc}
+ 433              	.LVL43:
+ 434              	.L25:
+ 435              	.LCFI13:
+ 436              		.cfi_restore_state
+ 437              		.loc 1 123 1 view .LVU86
+ 438 0068 E400     		lsls	r4, r4, #3
+ 439              	.LVL44:
+ 120:Core/Src/fips202.c ****     keccak_squeezeblocks(t, 1, s, SHAKE256_RATE);
+ 440              		.loc 1 120 5 is_stmt 1 view .LVU87
+ 441 006a 8823     		movs	r3, #136
+ 442 006c 0193     		str	r3, [sp, #4]
+ 443 006e 26AB     		add	r3, sp, #152
+ 444 0070 0093     		str	r3, [sp]
+ 445 0072 0122     		movs	r2, #1
+ 446 0074 0023     		movs	r3, #0
+ 447 0076 04A8     		add	r0, sp, #16
+ 448 0078 FFF7FEFF 		bl	keccak_squeezeblocks
+ 449              	.LVL45:
+ 121:Core/Src/fips202.c ****   }
+ 450              		.loc 1 121 5 view .LVU88
+ 121:Core/Src/fips202.c ****   }
+ 451              		.loc 1 121 12 is_stmt 0 view .LVU89
+ 452 007c 0023     		movs	r3, #0
+ 453              	.LVL46:
+ARM GAS  C:\Users\11410\AppData\Local\Temp\ccaeMp5O.s 			page 11
+
+
+ 454              	.L22:
+ 121:Core/Src/fips202.c ****   }
+ 455              		.loc 1 121 17 is_stmt 1 discriminator 1 view .LVU90
+ 121:Core/Src/fips202.c ****   }
+ 456              		.loc 1 121 19 is_stmt 0 discriminator 1 view .LVU91
+ 457 007e 0021     		movs	r1, #0
+ 121:Core/Src/fips202.c ****   }
+ 458              		.loc 1 121 5 discriminator 1 view .LVU92
+ 459 0080 B942     		cmp	r1, r7
+ 460 0082 08BF     		it	eq
+ 461 0084 B342     		cmpeq	r3, r6
+ 462 0086 ECD2     		bcs	.L20
+ 121:Core/Src/fips202.c ****   }
+ 463              		.loc 1 121 34 is_stmt 1 discriminator 3 view .LVU93
+ 121:Core/Src/fips202.c ****   }
+ 464              		.loc 1 121 40 is_stmt 0 discriminator 3 view .LVU94
+ 465 0088 E218     		adds	r2, r4, r3
+ 121:Core/Src/fips202.c ****   }
+ 466              		.loc 1 121 47 discriminator 3 view .LVU95
+ 467 008a 04A9     		add	r1, sp, #16
+ 468 008c C95C     		ldrb	r1, [r1, r3]	@ zero_extendqisi2
+ 121:Core/Src/fips202.c ****   }
+ 469              		.loc 1 121 44 discriminator 3 view .LVU96
+ 470 008e A954     		strb	r1, [r5, r2]
+ 121:Core/Src/fips202.c ****   }
+ 471              		.loc 1 121 29 is_stmt 1 discriminator 3 view .LVU97
+ 121:Core/Src/fips202.c ****   }
+ 472              		.loc 1 121 30 is_stmt 0 discriminator 3 view .LVU98
+ 473 0090 0133     		adds	r3, r3, #1
+ 474              	.LVL47:
+ 121:Core/Src/fips202.c ****   }
+ 475              		.loc 1 121 30 discriminator 3 view .LVU99
+ 476 0092 F4E7     		b	.L22
+ 477              		.cfi_endproc
+ 478              	.LFE4:
+ 480              		.section	.text.sha3_256,"ax",%progbits
+ 481              		.align	1
+ 482              		.global	sha3_256
+ 483              		.syntax unified
+ 484              		.thumb
+ 485              		.thumb_func
+ 486              		.fpu fpv4-sp-d16
+ 488              	sha3_256:
+ 489              	.LVL48:
+ 490              	.LFB5:
+ 124:Core/Src/fips202.c **** 
+ 125:Core/Src/fips202.c **** /*************************************************
+ 126:Core/Src/fips202.c **** * Name:        sha3_256
+ 127:Core/Src/fips202.c **** * 
+ 128:Core/Src/fips202.c **** * Description: SHA3-256 with non-incremental API
+ 129:Core/Src/fips202.c **** *
+ 130:Core/Src/fips202.c **** * Arguments:   - unsigned char *output:      pointer to output
+ 131:Core/Src/fips202.c **** *              - const unsigned char *input: pointer to input 
+ 132:Core/Src/fips202.c **** *              - unsigned long long inlen:   length of input in bytes
+ 133:Core/Src/fips202.c **** **************************************************/
+ 134:Core/Src/fips202.c **** void sha3_256(unsigned char *output, const unsigned char *input,
+ 135:Core/Src/fips202.c ****               unsigned long long inlen) {
+ARM GAS  C:\Users\11410\AppData\Local\Temp\ccaeMp5O.s 			page 12
+
+
+ 491              		.loc 1 135 41 is_stmt 1 view -0
+ 492              		.cfi_startproc
+ 493              		@ args = 0, pretend = 0, frame = 336
+ 494              		@ frame_needed = 0, uses_anonymous_args = 0
+ 495              		.loc 1 135 41 is_stmt 0 view .LVU101
+ 496 0000 30B5     		push	{r4, r5, lr}
+ 497              	.LCFI14:
+ 498              		.cfi_def_cfa_offset 12
+ 499              		.cfi_offset 4, -12
+ 500              		.cfi_offset 5, -8
+ 501              		.cfi_offset 14, -4
+ 502 0002 D9B0     		sub	sp, sp, #356
+ 503              	.LCFI15:
+ 504              		.cfi_def_cfa_offset 368
+ 505 0004 0446     		mov	r4, r0
+ 136:Core/Src/fips202.c ****   uint8_t s[200];
+ 506              		.loc 1 136 3 is_stmt 1 view .LVU102
+ 137:Core/Src/fips202.c ****   unsigned char t[SHA3_256_RATE];
+ 507              		.loc 1 137 3 view .LVU103
+ 138:Core/Src/fips202.c ****   size_t i;
+ 508              		.loc 1 138 3 view .LVU104
+ 139:Core/Src/fips202.c **** 
+ 140:Core/Src/fips202.c ****   /* Absorb input */
+ 141:Core/Src/fips202.c ****   keccak_absorb(s, SHA3_256_RATE, input, inlen, 0x06);
+ 509              		.loc 1 141 3 view .LVU105
+ 510 0006 26AD     		add	r5, sp, #152
+ 511 0008 0620     		movs	r0, #6
+ 512              	.LVL49:
+ 513              		.loc 1 141 3 is_stmt 0 view .LVU106
+ 514 000a 0290     		str	r0, [sp, #8]
+ 515 000c CDE90023 		strd	r2, [sp]
+ 516 0010 0A46     		mov	r2, r1
+ 517              	.LVL50:
+ 518              		.loc 1 141 3 view .LVU107
+ 519 0012 8821     		movs	r1, #136
+ 520              	.LVL51:
+ 521              		.loc 1 141 3 view .LVU108
+ 522 0014 2846     		mov	r0, r5
+ 523 0016 FFF7FEFF 		bl	keccak_absorb
+ 524              	.LVL52:
+ 142:Core/Src/fips202.c **** 
+ 143:Core/Src/fips202.c ****   /* Squeeze output */
+ 144:Core/Src/fips202.c ****   keccak_squeezeblocks(t, 1, s, SHA3_256_RATE);
+ 525              		.loc 1 144 3 is_stmt 1 view .LVU109
+ 526 001a 8823     		movs	r3, #136
+ 527 001c 0193     		str	r3, [sp, #4]
+ 528 001e 0095     		str	r5, [sp]
+ 529 0020 0122     		movs	r2, #1
+ 530 0022 0023     		movs	r3, #0
+ 531 0024 04A8     		add	r0, sp, #16
+ 532 0026 FFF7FEFF 		bl	keccak_squeezeblocks
+ 533              	.LVL53:
+ 145:Core/Src/fips202.c **** 
+ 146:Core/Src/fips202.c ****   for (i = 0; i < 32; i++) output[i] = t[i];
+ 534              		.loc 1 146 3 view .LVU110
+ 535              		.loc 1 146 10 is_stmt 0 view .LVU111
+ 536 002a 0023     		movs	r3, #0
+ARM GAS  C:\Users\11410\AppData\Local\Temp\ccaeMp5O.s 			page 13
+
+
+ 537              	.LVL54:
+ 538              	.L27:
+ 539              		.loc 1 146 15 is_stmt 1 discriminator 1 view .LVU112
+ 540              		.loc 1 146 3 is_stmt 0 discriminator 1 view .LVU113
+ 541 002c 1F2B     		cmp	r3, #31
+ 542 002e 04D8     		bhi	.L30
+ 543              		.loc 1 146 28 is_stmt 1 discriminator 3 view .LVU114
+ 544              		.loc 1 146 41 is_stmt 0 discriminator 3 view .LVU115
+ 545 0030 04AA     		add	r2, sp, #16
+ 546 0032 D25C     		ldrb	r2, [r2, r3]	@ zero_extendqisi2
+ 547              		.loc 1 146 38 discriminator 3 view .LVU116
+ 548 0034 E254     		strb	r2, [r4, r3]
+ 549              		.loc 1 146 23 is_stmt 1 discriminator 3 view .LVU117
+ 550              		.loc 1 146 24 is_stmt 0 discriminator 3 view .LVU118
+ 551 0036 0133     		adds	r3, r3, #1
+ 552              	.LVL55:
+ 553              		.loc 1 146 24 discriminator 3 view .LVU119
+ 554 0038 F8E7     		b	.L27
+ 555              	.L30:
+ 147:Core/Src/fips202.c **** }
+ 556              		.loc 1 147 1 view .LVU120
+ 557 003a 59B0     		add	sp, sp, #356
+ 558              	.LCFI16:
+ 559              		.cfi_def_cfa_offset 12
+ 560              		@ sp needed
+ 561 003c 30BD     		pop	{r4, r5, pc}
+ 562              		.loc 1 147 1 view .LVU121
+ 563              		.cfi_endproc
+ 564              	.LFE5:
+ 566              		.section	.text.sha3_512,"ax",%progbits
+ 567              		.align	1
+ 568              		.global	sha3_512
+ 569              		.syntax unified
+ 570              		.thumb
+ 571              		.thumb_func
+ 572              		.fpu fpv4-sp-d16
+ 574              	sha3_512:
+ 575              	.LVL56:
+ 576              	.LFB6:
+ 148:Core/Src/fips202.c **** 
+ 149:Core/Src/fips202.c **** /*************************************************
+ 150:Core/Src/fips202.c **** * Name:        sha3_512
+ 151:Core/Src/fips202.c **** * 
+ 152:Core/Src/fips202.c **** * Description: SHA3-512 with non-incremental API
+ 153:Core/Src/fips202.c **** *
+ 154:Core/Src/fips202.c **** * Arguments:   - unsigned char *output:      pointer to output
+ 155:Core/Src/fips202.c **** *              - const unsigned char *input: pointer to input 
+ 156:Core/Src/fips202.c **** *              - unsigned long long inlen:   length of input in bytes
+ 157:Core/Src/fips202.c **** **************************************************/
+ 158:Core/Src/fips202.c **** void sha3_512(unsigned char *output, const unsigned char *input,
+ 159:Core/Src/fips202.c ****               unsigned long long inlen) {
+ 577              		.loc 1 159 41 is_stmt 1 view -0
+ 578              		.cfi_startproc
+ 579              		@ args = 0, pretend = 0, frame = 272
+ 580              		@ frame_needed = 0, uses_anonymous_args = 0
+ 581              		.loc 1 159 41 is_stmt 0 view .LVU123
+ 582 0000 30B5     		push	{r4, r5, lr}
+ARM GAS  C:\Users\11410\AppData\Local\Temp\ccaeMp5O.s 			page 14
+
+
+ 583              	.LCFI17:
+ 584              		.cfi_def_cfa_offset 12
+ 585              		.cfi_offset 4, -12
+ 586              		.cfi_offset 5, -8
+ 587              		.cfi_offset 14, -4
+ 588 0002 C9B0     		sub	sp, sp, #292
+ 589              	.LCFI18:
+ 590              		.cfi_def_cfa_offset 304
+ 591 0004 0446     		mov	r4, r0
+ 160:Core/Src/fips202.c ****   uint8_t s[200];
+ 592              		.loc 1 160 3 is_stmt 1 view .LVU124
+ 161:Core/Src/fips202.c ****   unsigned char t[SHA3_512_RATE];
+ 593              		.loc 1 161 3 view .LVU125
+ 162:Core/Src/fips202.c ****   size_t i;
+ 594              		.loc 1 162 3 view .LVU126
+ 163:Core/Src/fips202.c **** 
+ 164:Core/Src/fips202.c ****   /* Absorb input */
+ 165:Core/Src/fips202.c ****   keccak_absorb(s, SHA3_512_RATE, input, inlen, 0x06);
+ 595              		.loc 1 165 3 view .LVU127
+ 596 0006 16AD     		add	r5, sp, #88
+ 597 0008 0620     		movs	r0, #6
+ 598              	.LVL57:
+ 599              		.loc 1 165 3 is_stmt 0 view .LVU128
+ 600 000a 0290     		str	r0, [sp, #8]
+ 601 000c CDE90023 		strd	r2, [sp]
+ 602 0010 0A46     		mov	r2, r1
+ 603              	.LVL58:
+ 604              		.loc 1 165 3 view .LVU129
+ 605 0012 4821     		movs	r1, #72
+ 606              	.LVL59:
+ 607              		.loc 1 165 3 view .LVU130
+ 608 0014 2846     		mov	r0, r5
+ 609 0016 FFF7FEFF 		bl	keccak_absorb
+ 610              	.LVL60:
+ 166:Core/Src/fips202.c **** 
+ 167:Core/Src/fips202.c ****   /* Squeeze output */
+ 168:Core/Src/fips202.c ****   keccak_squeezeblocks(t, 1, s, SHA3_512_RATE);
+ 611              		.loc 1 168 3 is_stmt 1 view .LVU131
+ 612 001a 4823     		movs	r3, #72
+ 613 001c 0193     		str	r3, [sp, #4]
+ 614 001e 0095     		str	r5, [sp]
+ 615 0020 0122     		movs	r2, #1
+ 616 0022 0023     		movs	r3, #0
+ 617 0024 04A8     		add	r0, sp, #16
+ 618 0026 FFF7FEFF 		bl	keccak_squeezeblocks
+ 619              	.LVL61:
+ 169:Core/Src/fips202.c **** 
+ 170:Core/Src/fips202.c ****   for (i = 0; i < 64; i++) output[i] = t[i];
+ 620              		.loc 1 170 3 view .LVU132
+ 621              		.loc 1 170 10 is_stmt 0 view .LVU133
+ 622 002a 0023     		movs	r3, #0
+ 623              		.loc 1 170 3 view .LVU134
+ 624 002c 03E0     		b	.L32
+ 625              	.LVL62:
+ 626              	.L33:
+ 627              		.loc 1 170 28 is_stmt 1 discriminator 3 view .LVU135
+ 628              		.loc 1 170 41 is_stmt 0 discriminator 3 view .LVU136
+ARM GAS  C:\Users\11410\AppData\Local\Temp\ccaeMp5O.s 			page 15
+
+
+ 629 002e 04AA     		add	r2, sp, #16
+ 630 0030 D25C     		ldrb	r2, [r2, r3]	@ zero_extendqisi2
+ 631              		.loc 1 170 38 discriminator 3 view .LVU137
+ 632 0032 E254     		strb	r2, [r4, r3]
+ 633              		.loc 1 170 23 is_stmt 1 discriminator 3 view .LVU138
+ 634              		.loc 1 170 24 is_stmt 0 discriminator 3 view .LVU139
+ 635 0034 0133     		adds	r3, r3, #1
+ 636              	.LVL63:
+ 637              	.L32:
+ 638              		.loc 1 170 15 is_stmt 1 discriminator 1 view .LVU140
+ 639              		.loc 1 170 3 is_stmt 0 discriminator 1 view .LVU141
+ 640 0036 3F2B     		cmp	r3, #63
+ 641 0038 F9D9     		bls	.L33
+ 171:Core/Src/fips202.c **** }
+ 642              		.loc 1 171 1 view .LVU142
+ 643 003a 49B0     		add	sp, sp, #292
+ 644              	.LCFI19:
+ 645              		.cfi_def_cfa_offset 12
+ 646              		@ sp needed
+ 647 003c 30BD     		pop	{r4, r5, pc}
+ 648              		.loc 1 171 1 view .LVU143
+ 649              		.cfi_endproc
+ 650              	.LFE6:
+ 652              		.text
+ 653              	.Letext0:
+ 654              		.file 2 "c:\\program files (x86)\\gnu tools arm embedded\\9 2019-q4-major\\arm-none-eabi\\include\
+ 655              		.file 3 "c:\\program files (x86)\\gnu tools arm embedded\\9 2019-q4-major\\arm-none-eabi\\include\
+ 656              		.file 4 "c:\\program files (x86)\\gnu tools arm embedded\\9 2019-q4-major\\lib\\gcc\\arm-none-eabi
+ 657              		.file 5 "c:\\program files (x86)\\gnu tools arm embedded\\9 2019-q4-major\\arm-none-eabi\\include\
+ 658              		.file 6 "c:\\program files (x86)\\gnu tools arm embedded\\9 2019-q4-major\\arm-none-eabi\\include\
+ 659              		.file 7 "c:\\program files (x86)\\gnu tools arm embedded\\9 2019-q4-major\\arm-none-eabi\\include\
+ 660              		.file 8 "Core/Inc/fips202.h"
+ARM GAS  C:\Users\11410\AppData\Local\Temp\ccaeMp5O.s 			page 16
+
+
+DEFINED SYMBOLS
+                            *ABS*:00000000 fips202.c
+C:\Users\11410\AppData\Local\Temp\ccaeMp5O.s:18     .text.keccak_absorb:00000000 $t
+C:\Users\11410\AppData\Local\Temp\ccaeMp5O.s:25     .text.keccak_absorb:00000000 keccak_absorb
+C:\Users\11410\AppData\Local\Temp\ccaeMp5O.s:180    .text.keccak_squeezeblocks:00000000 $t
+C:\Users\11410\AppData\Local\Temp\ccaeMp5O.s:186    .text.keccak_squeezeblocks:00000000 keccak_squeezeblocks
+C:\Users\11410\AppData\Local\Temp\ccaeMp5O.s:246    .text.shake128_absorb:00000000 $t
+C:\Users\11410\AppData\Local\Temp\ccaeMp5O.s:253    .text.shake128_absorb:00000000 shake128_absorb
+C:\Users\11410\AppData\Local\Temp\ccaeMp5O.s:292    .text.shake128_squeezeblocks:00000000 $t
+C:\Users\11410\AppData\Local\Temp\ccaeMp5O.s:299    .text.shake128_squeezeblocks:00000000 shake128_squeezeblocks
+C:\Users\11410\AppData\Local\Temp\ccaeMp5O.s:333    .text.shake256:00000000 $t
+C:\Users\11410\AppData\Local\Temp\ccaeMp5O.s:340    .text.shake256:00000000 shake256
+C:\Users\11410\AppData\Local\Temp\ccaeMp5O.s:481    .text.sha3_256:00000000 $t
+C:\Users\11410\AppData\Local\Temp\ccaeMp5O.s:488    .text.sha3_256:00000000 sha3_256
+C:\Users\11410\AppData\Local\Temp\ccaeMp5O.s:567    .text.sha3_512:00000000 $t
+C:\Users\11410\AppData\Local\Temp\ccaeMp5O.s:574    .text.sha3_512:00000000 sha3_512
+
+UNDEFINED SYMBOLS
+KeccakP1600_Initialize
+KeccakP1600_AddBytes
+KeccakP1600_Permute_24rounds
+KeccakP1600_ExtractBytes
+__aeabi_uldivmod

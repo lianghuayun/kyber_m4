@@ -1,0 +1,532 @@
+ARM GAS  C:\Users\11410\AppData\Local\Temp\cclVlsCg.s 			page 1
+
+
+   1              		.cpu cortex-m4
+   2              		.eabi_attribute 27, 1
+   3              		.eabi_attribute 28, 1
+   4              		.eabi_attribute 20, 1
+   5              		.eabi_attribute 21, 1
+   6              		.eabi_attribute 23, 3
+   7              		.eabi_attribute 24, 1
+   8              		.eabi_attribute 25, 1
+   9              		.eabi_attribute 26, 1
+  10              		.eabi_attribute 30, 1
+  11              		.eabi_attribute 34, 1
+  12              		.eabi_attribute 18, 4
+  13              		.file	"test_kyber.c"
+  14              		.text
+  15              	.Ltext0:
+  16              		.cfi_sections	.debug_frame
+  17              		.section	.text.test_keys,"ax",%progbits
+  18              		.align	1
+  19              		.global	test_keys
+  20              		.arch armv7e-m
+  21              		.syntax unified
+  22              		.thumb
+  23              		.thumb_func
+  24              		.fpu fpv4-sp-d16
+  26              	test_keys:
+  27              	.LFB3:
+  28              		.file 1 "Core/Src/test_kyber.c"
+   1:Core/Src/test_kyber.c **** #include "api.h"
+   2:Core/Src/test_kyber.c **** #include "poly.h"
+   3:Core/Src/test_kyber.c **** #include "randombytes.h"
+   4:Core/Src/test_kyber.c **** #include <stdio.h>
+   5:Core/Src/test_kyber.c **** #include <string.h>
+   6:Core/Src/test_kyber.c **** 
+   7:Core/Src/test_kyber.c **** #define NTESTS 100
+   8:Core/Src/test_kyber.c **** 
+   9:Core/Src/test_kyber.c **** int test_keys()
+  10:Core/Src/test_kyber.c **** {
+  29              		.loc 1 10 1 view -0
+  30              		.cfi_startproc
+  31              		@ args = 0, pretend = 0, frame = 2464
+  32              		@ frame_needed = 0, uses_anonymous_args = 0
+  33 0000 70B5     		push	{r4, r5, r6, lr}
+  34              	.LCFI0:
+  35              		.cfi_def_cfa_offset 16
+  36              		.cfi_offset 4, -16
+  37              		.cfi_offset 5, -12
+  38              		.cfi_offset 6, -8
+  39              		.cfi_offset 14, -4
+  40 0002 ADF51A6D 		sub	sp, sp, #2464
+  41              	.LCFI1:
+  42              		.cfi_def_cfa_offset 2480
+  11:Core/Src/test_kyber.c ****   unsigned char sk_a[KYBER_SECRETKEYBYTES];
+  43              		.loc 1 11 3 view .LVU1
+  12:Core/Src/test_kyber.c ****   unsigned char key_a[32], key_b[32];
+  44              		.loc 1 12 3 view .LVU2
+  13:Core/Src/test_kyber.c ****   unsigned char *senda = (unsigned char *)malloc(KYBER_PUBLICKEYBYTES);
+  45              		.loc 1 13 3 view .LVU3
+ARM GAS  C:\Users\11410\AppData\Local\Temp\cclVlsCg.s 			page 2
+
+
+  46              		.loc 1 13 43 is_stmt 0 view .LVU4
+  47 0006 4FF48860 		mov	r0, #1088
+  48 000a FFF7FEFF 		bl	malloc
+  49              	.LVL0:
+  50 000e 0646     		mov	r6, r0
+  51              	.LVL1:
+  14:Core/Src/test_kyber.c ****   unsigned char *sendb = (unsigned char *)malloc(KYBER_CIPHERTEXTBYTES);
+  52              		.loc 1 14 3 is_stmt 1 view .LVU5
+  53              		.loc 1 14 43 is_stmt 0 view .LVU6
+  54 0010 4FF49060 		mov	r0, #1152
+  55              	.LVL2:
+  56              		.loc 1 14 43 view .LVU7
+  57 0014 FFF7FEFF 		bl	malloc
+  58              	.LVL3:
+  59 0018 0546     		mov	r5, r0
+  60              	.LVL4:
+  15:Core/Src/test_kyber.c ****   int i;
+  61              		.loc 1 15 3 is_stmt 1 view .LVU8
+  16:Core/Src/test_kyber.c **** 
+  17:Core/Src/test_kyber.c ****   for(i=0; i<NTESTS; i++)
+  62              		.loc 1 17 3 view .LVU9
+  63              		.loc 1 17 8 is_stmt 0 view .LVU10
+  64 001a 0024     		movs	r4, #0
+  65              	.LVL5:
+  66              	.L2:
+  67              		.loc 1 17 12 is_stmt 1 discriminator 1 view .LVU11
+  68              		.loc 1 17 3 is_stmt 0 discriminator 1 view .LVU12
+  69 001c 632C     		cmp	r4, #99
+  70 001e 12DC     		bgt	.L5
+  18:Core/Src/test_kyber.c ****   {
+  19:Core/Src/test_kyber.c ****     //Alice generates a public key
+  20:Core/Src/test_kyber.c ****      crypto_kem_keypair(senda, sk_a);
+  71              		.loc 1 20 6 is_stmt 1 discriminator 3 view .LVU13
+  72 0020 10A9     		add	r1, sp, #64
+  73 0022 3046     		mov	r0, r6
+  74 0024 FFF7FEFF 		bl	crypto_kem_keypair
+  75              	.LVL6:
+  21:Core/Src/test_kyber.c ****      crypto_kem_enc(sendb, key_b, senda);
+  76              		.loc 1 21 6 discriminator 3 view .LVU14
+  77 0028 3246     		mov	r2, r6
+  78 002a 6946     		mov	r1, sp
+  79 002c 2846     		mov	r0, r5
+  80 002e FFF7FEFF 		bl	crypto_kem_enc
+  81              	.LVL7:
+  22:Core/Src/test_kyber.c ****      crypto_kem_dec(key_a, sendb, sk_a);
+  82              		.loc 1 22 6 discriminator 3 view .LVU15
+  83 0032 10AA     		add	r2, sp, #64
+  84 0034 2946     		mov	r1, r5
+  85 0036 08A8     		add	r0, sp, #32
+  86 0038 FFF7FEFF 		bl	crypto_kem_dec
+  87              	.LVL8:
+  23:Core/Src/test_kyber.c ****     //Bob derives a secret key and creates a response
+  24:Core/Src/test_kyber.c ****     //crypto_kem_enc(sendb, key_b, pk);
+  25:Core/Src/test_kyber.c ****   printf("\n");
+  88              		.loc 1 25 3 discriminator 3 view .LVU16
+  89 003c 0A20     		movs	r0, #10
+  90 003e FFF7FEFF 		bl	putchar
+ARM GAS  C:\Users\11410\AppData\Local\Temp\cclVlsCg.s 			page 3
+
+
+  91              	.LVL9:
+  17:Core/Src/test_kyber.c ****   {
+  92              		.loc 1 17 22 discriminator 3 view .LVU17
+  17:Core/Src/test_kyber.c ****   {
+  93              		.loc 1 17 23 is_stmt 0 discriminator 3 view .LVU18
+  94 0042 0134     		adds	r4, r4, #1
+  95              	.LVL10:
+  17:Core/Src/test_kyber.c ****   {
+  96              		.loc 1 17 23 discriminator 3 view .LVU19
+  97 0044 EAE7     		b	.L2
+  98              	.L5:
+  26:Core/Src/test_kyber.c ****     //Alice uses Bobs response to get her secret key
+  27:Core/Src/test_kyber.c ****     //crypto_kem_dec(key_a, sendb, sk_a);
+  28:Core/Src/test_kyber.c **** 
+  29:Core/Src/test_kyber.c ****     //if(memcmp(key_a, key_b, KYBER_SYMBYTES))
+  30:Core/Src/test_kyber.c ****     //  printf("ERROR keys\n");
+  31:Core/Src/test_kyber.c ****  
+  32:Core/Src/test_kyber.c ****   }
+  33:Core/Src/test_kyber.c **** 
+  34:Core/Src/test_kyber.c ****   return 0;
+  99              		.loc 1 34 3 is_stmt 1 view .LVU20
+  35:Core/Src/test_kyber.c **** }
+ 100              		.loc 1 35 1 is_stmt 0 view .LVU21
+ 101 0046 0020     		movs	r0, #0
+ 102 0048 0DF51A6D 		add	sp, sp, #2464
+ 103              	.LCFI2:
+ 104              		.cfi_def_cfa_offset 16
+ 105              		@ sp needed
+ 106 004c 70BD     		pop	{r4, r5, r6, pc}
+ 107              		.loc 1 35 1 view .LVU22
+ 108              		.cfi_endproc
+ 109              	.LFE3:
+ 111              		.section	.rodata.test_invalid_sk_a.str1.4,"aMS",%progbits,1
+ 112              		.align	2
+ 113              	.LC0:
+ 114 0000 4552524F 		.ascii	"ERROR invalid sk_a\000"
+ 114      5220696E 
+ 114      76616C69 
+ 114      6420736B 
+ 114      5F6100
+ 115              		.section	.text.test_invalid_sk_a,"ax",%progbits
+ 116              		.align	1
+ 117              		.global	test_invalid_sk_a
+ 118              		.syntax unified
+ 119              		.thumb
+ 120              		.thumb_func
+ 121              		.fpu fpv4-sp-d16
+ 123              	test_invalid_sk_a:
+ 124              	.LFB4:
+  36:Core/Src/test_kyber.c **** 
+  37:Core/Src/test_kyber.c **** 
+  38:Core/Src/test_kyber.c **** int test_invalid_sk_a()
+  39:Core/Src/test_kyber.c **** {
+ 125              		.loc 1 39 1 is_stmt 1 view -0
+ 126              		.cfi_startproc
+ 127              		@ args = 0, pretend = 0, frame = 4704
+ 128              		@ frame_needed = 0, uses_anonymous_args = 0
+ARM GAS  C:\Users\11410\AppData\Local\Temp\cclVlsCg.s 			page 4
+
+
+ 129 0000 10B5     		push	{r4, lr}
+ 130              	.LCFI3:
+ 131              		.cfi_def_cfa_offset 8
+ 132              		.cfi_offset 4, -8
+ 133              		.cfi_offset 14, -4
+ 134 0002 ADF5935D 		sub	sp, sp, #4704
+ 135              	.LCFI4:
+ 136              		.cfi_def_cfa_offset 4712
+  40:Core/Src/test_kyber.c ****   unsigned char sk_a[KYBER_SECRETKEYBYTES];
+ 137              		.loc 1 40 3 view .LVU24
+  41:Core/Src/test_kyber.c ****   unsigned char key_a[KYBER_SYMBYTES], key_b[KYBER_SYMBYTES];
+ 138              		.loc 1 41 3 view .LVU25
+  42:Core/Src/test_kyber.c ****   unsigned char pk[KYBER_PUBLICKEYBYTES];
+ 139              		.loc 1 42 3 view .LVU26
+  43:Core/Src/test_kyber.c ****   unsigned char sendb[KYBER_CIPHERTEXTBYTES];
+ 140              		.loc 1 43 3 view .LVU27
+  44:Core/Src/test_kyber.c ****   int i;
+ 141              		.loc 1 44 3 view .LVU28
+  45:Core/Src/test_kyber.c **** 
+  46:Core/Src/test_kyber.c ****   for(i=0; i<NTESTS; i++)
+ 142              		.loc 1 46 3 view .LVU29
+ 143              	.LVL11:
+ 144              		.loc 1 46 8 is_stmt 0 view .LVU30
+ 145 0006 0024     		movs	r4, #0
+ 146              		.loc 1 46 3 view .LVU31
+ 147 0008 03E0     		b	.L7
+ 148              	.LVL12:
+ 149              	.L12:
+  47:Core/Src/test_kyber.c ****   {
+  48:Core/Src/test_kyber.c ****     //Alice generates a public key
+  49:Core/Src/test_kyber.c ****     crypto_kem_keypair(pk, sk_a);
+  50:Core/Src/test_kyber.c **** 
+  51:Core/Src/test_kyber.c ****     //Bob derives a secret key and creates a response
+  52:Core/Src/test_kyber.c ****     crypto_kem_enc(sendb, key_b, pk);
+  53:Core/Src/test_kyber.c **** 
+  54:Core/Src/test_kyber.c ****     //Replace secret key with random values
+  55:Core/Src/test_kyber.c ****     randombytes(sk_a, KYBER_SECRETKEYBYTES);
+  56:Core/Src/test_kyber.c **** 
+  57:Core/Src/test_kyber.c ****   
+  58:Core/Src/test_kyber.c ****     //Alice uses Bobs response to get her secre key
+  59:Core/Src/test_kyber.c ****     crypto_kem_dec(key_a, sendb, sk_a);
+  60:Core/Src/test_kyber.c **** 
+  61:Core/Src/test_kyber.c **** 
+  62:Core/Src/test_kyber.c ****     if(!memcmp(key_a, key_b, KYBER_SYMBYTES))
+  63:Core/Src/test_kyber.c ****       printf("ERROR invalid sk_a\n");
+ 150              		.loc 1 63 7 is_stmt 1 view .LVU32
+ 151 000a 1748     		ldr	r0, .L13
+ 152 000c FFF7FEFF 		bl	puts
+ 153              	.LVL13:
+ 154              	.L8:
+  46:Core/Src/test_kyber.c ****   {
+ 155              		.loc 1 46 22 discriminator 2 view .LVU33
+  46:Core/Src/test_kyber.c ****   {
+ 156              		.loc 1 46 23 is_stmt 0 discriminator 2 view .LVU34
+ 157 0010 0134     		adds	r4, r4, #1
+ 158              	.LVL14:
+ 159              	.L7:
+ARM GAS  C:\Users\11410\AppData\Local\Temp\cclVlsCg.s 			page 5
+
+
+  46:Core/Src/test_kyber.c ****   {
+ 160              		.loc 1 46 12 is_stmt 1 discriminator 1 view .LVU35
+  46:Core/Src/test_kyber.c ****   {
+ 161              		.loc 1 46 3 is_stmt 0 discriminator 1 view .LVU36
+ 162 0012 632C     		cmp	r4, #99
+ 163 0014 24DC     		bgt	.L11
+  49:Core/Src/test_kyber.c **** 
+ 164              		.loc 1 49 5 is_stmt 1 view .LVU37
+ 165 0016 0DF51061 		add	r1, sp, #2304
+ 166 001a 0DF59060 		add	r0, sp, #1152
+ 167 001e FFF7FEFF 		bl	crypto_kem_keypair
+ 168              	.LVL15:
+  52:Core/Src/test_kyber.c **** 
+ 169              		.loc 1 52 5 view .LVU38
+ 170 0022 0DF59062 		add	r2, sp, #1152
+ 171 0026 0DF50C61 		add	r1, sp, #2240
+ 172 002a 6846     		mov	r0, sp
+ 173 002c FFF7FEFF 		bl	crypto_kem_enc
+ 174              	.LVL16:
+  55:Core/Src/test_kyber.c **** 
+ 175              		.loc 1 55 5 view .LVU39
+ 176 0030 4FF41662 		mov	r2, #2400
+ 177 0034 0023     		movs	r3, #0
+ 178 0036 0DF51060 		add	r0, sp, #2304
+ 179 003a FFF7FEFF 		bl	randombytes
+ 180              	.LVL17:
+  59:Core/Src/test_kyber.c **** 
+ 181              		.loc 1 59 5 view .LVU40
+ 182 003e 0DF51062 		add	r2, sp, #2304
+ 183 0042 6946     		mov	r1, sp
+ 184 0044 0DF50E60 		add	r0, sp, #2272
+ 185 0048 FFF7FEFF 		bl	crypto_kem_dec
+ 186              	.LVL18:
+  62:Core/Src/test_kyber.c ****       printf("ERROR invalid sk_a\n");
+ 187              		.loc 1 62 5 view .LVU41
+  62:Core/Src/test_kyber.c ****       printf("ERROR invalid sk_a\n");
+ 188              		.loc 1 62 9 is_stmt 0 view .LVU42
+ 189 004c 2022     		movs	r2, #32
+ 190 004e 0DF50C61 		add	r1, sp, #2240
+ 191 0052 0DF50E60 		add	r0, sp, #2272
+ 192 0056 FFF7FEFF 		bl	memcmp
+ 193              	.LVL19:
+  62:Core/Src/test_kyber.c ****       printf("ERROR invalid sk_a\n");
+ 194              		.loc 1 62 7 view .LVU43
+ 195 005a 0028     		cmp	r0, #0
+ 196 005c D8D1     		bne	.L8
+ 197 005e D4E7     		b	.L12
+ 198              	.L11:
+  64:Core/Src/test_kyber.c ****       
+  65:Core/Src/test_kyber.c ****   }
+  66:Core/Src/test_kyber.c **** 
+  67:Core/Src/test_kyber.c ****   return 0;
+ 199              		.loc 1 67 3 is_stmt 1 view .LVU44
+  68:Core/Src/test_kyber.c **** }
+ 200              		.loc 1 68 1 is_stmt 0 view .LVU45
+ 201 0060 0020     		movs	r0, #0
+ 202 0062 0DF5935D 		add	sp, sp, #4704
+ARM GAS  C:\Users\11410\AppData\Local\Temp\cclVlsCg.s 			page 6
+
+
+ 203              	.LCFI5:
+ 204              		.cfi_def_cfa_offset 8
+ 205              		@ sp needed
+ 206 0066 10BD     		pop	{r4, pc}
+ 207              	.LVL20:
+ 208              	.L14:
+ 209              		.loc 1 68 1 view .LVU46
+ 210              		.align	2
+ 211              	.L13:
+ 212 0068 00000000 		.word	.LC0
+ 213              		.cfi_endproc
+ 214              	.LFE4:
+ 216              		.section	.rodata.test_invalid_ciphertext.str1.4,"aMS",%progbits,1
+ 217              		.align	2
+ 218              	.LC1:
+ 219 0000 4552524F 		.ascii	"ERROR invalid ciphertext\000"
+ 219      5220696E 
+ 219      76616C69 
+ 219      64206369 
+ 219      70686572 
+ 220              		.section	.text.test_invalid_ciphertext,"ax",%progbits
+ 221              		.align	1
+ 222              		.global	test_invalid_ciphertext
+ 223              		.syntax unified
+ 224              		.thumb
+ 225              		.thumb_func
+ 226              		.fpu fpv4-sp-d16
+ 228              	test_invalid_ciphertext:
+ 229              	.LFB5:
+  69:Core/Src/test_kyber.c **** 
+  70:Core/Src/test_kyber.c **** 
+  71:Core/Src/test_kyber.c **** int test_invalid_ciphertext()
+  72:Core/Src/test_kyber.c **** {
+ 230              		.loc 1 72 1 is_stmt 1 view -0
+ 231              		.cfi_startproc
+ 232              		@ args = 0, pretend = 0, frame = 4712
+ 233              		@ frame_needed = 0, uses_anonymous_args = 0
+ 234 0000 10B5     		push	{r4, lr}
+ 235              	.LCFI6:
+ 236              		.cfi_def_cfa_offset 8
+ 237              		.cfi_offset 4, -8
+ 238              		.cfi_offset 14, -4
+ 239 0002 ADF5935D 		sub	sp, sp, #4704
+ 240              	.LCFI7:
+ 241              		.cfi_def_cfa_offset 4712
+ 242 0006 82B0     		sub	sp, sp, #8
+ 243              	.LCFI8:
+ 244              		.cfi_def_cfa_offset 4720
+  73:Core/Src/test_kyber.c ****   unsigned char sk_a[KYBER_SECRETKEYBYTES];
+ 245              		.loc 1 73 3 view .LVU48
+  74:Core/Src/test_kyber.c ****   unsigned char key_a[KYBER_SYMBYTES], key_b[KYBER_SYMBYTES];
+ 246              		.loc 1 74 3 view .LVU49
+  75:Core/Src/test_kyber.c ****   unsigned char pk[KYBER_PUBLICKEYBYTES];
+ 247              		.loc 1 75 3 view .LVU50
+  76:Core/Src/test_kyber.c ****   unsigned char sendb[KYBER_CIPHERTEXTBYTES];
+ 248              		.loc 1 76 3 view .LVU51
+  77:Core/Src/test_kyber.c ****   int i;
+ARM GAS  C:\Users\11410\AppData\Local\Temp\cclVlsCg.s 			page 7
+
+
+ 249              		.loc 1 77 3 view .LVU52
+  78:Core/Src/test_kyber.c ****   size_t pos;
+ 250              		.loc 1 78 3 view .LVU53
+  79:Core/Src/test_kyber.c **** 
+  80:Core/Src/test_kyber.c ****   for(i=0; i<NTESTS; i++)
+ 251              		.loc 1 80 3 view .LVU54
+ 252              	.LVL21:
+ 253              		.loc 1 80 8 is_stmt 0 view .LVU55
+ 254 0008 0024     		movs	r4, #0
+ 255              		.loc 1 80 3 view .LVU56
+ 256 000a 03E0     		b	.L16
+ 257              	.LVL22:
+ 258              	.L21:
+  81:Core/Src/test_kyber.c ****   {
+  82:Core/Src/test_kyber.c ****     randombytes((unsigned char *)&pos, sizeof(size_t));
+  83:Core/Src/test_kyber.c **** 
+  84:Core/Src/test_kyber.c ****     //Alice generates a public key
+  85:Core/Src/test_kyber.c ****     crypto_kem_keypair(pk, sk_a);
+  86:Core/Src/test_kyber.c **** 
+  87:Core/Src/test_kyber.c ****     //Bob derives a secret key and creates a response
+  88:Core/Src/test_kyber.c ****     crypto_kem_enc(sendb, key_b, pk);
+  89:Core/Src/test_kyber.c **** 
+  90:Core/Src/test_kyber.c ****     //Change some byte in the ciphertext (i.e., encapsulated key)
+  91:Core/Src/test_kyber.c ****     sendb[pos % KYBER_CIPHERTEXTBYTES] ^= 23;
+  92:Core/Src/test_kyber.c ****   
+  93:Core/Src/test_kyber.c ****     //Alice uses Bobs response to get her secre key
+  94:Core/Src/test_kyber.c ****     crypto_kem_dec(key_a, sendb, sk_a);
+  95:Core/Src/test_kyber.c **** 
+  96:Core/Src/test_kyber.c ****     if(!memcmp(key_a, key_b, KYBER_SYMBYTES))
+  97:Core/Src/test_kyber.c ****       printf("ERROR invalid ciphertext\n");
+ 259              		.loc 1 97 7 is_stmt 1 view .LVU57
+ 260 000c 1D48     		ldr	r0, .L22
+ 261 000e FFF7FEFF 		bl	puts
+ 262              	.LVL23:
+ 263              	.L17:
+  80:Core/Src/test_kyber.c ****   {
+ 264              		.loc 1 80 22 discriminator 2 view .LVU58
+  80:Core/Src/test_kyber.c ****   {
+ 265              		.loc 1 80 23 is_stmt 0 discriminator 2 view .LVU59
+ 266 0012 0134     		adds	r4, r4, #1
+ 267              	.LVL24:
+ 268              	.L16:
+  80:Core/Src/test_kyber.c ****   {
+ 269              		.loc 1 80 12 is_stmt 1 discriminator 1 view .LVU60
+  80:Core/Src/test_kyber.c ****   {
+ 270              		.loc 1 80 3 is_stmt 0 discriminator 1 view .LVU61
+ 271 0014 632C     		cmp	r4, #99
+ 272 0016 30DC     		bgt	.L20
+  82:Core/Src/test_kyber.c **** 
+ 273              		.loc 1 82 5 is_stmt 1 view .LVU62
+ 274 0018 0422     		movs	r2, #4
+ 275 001a 0023     		movs	r3, #0
+ 276 001c 01A8     		add	r0, sp, #4
+ 277 001e FFF7FEFF 		bl	randombytes
+ 278              	.LVL25:
+  85:Core/Src/test_kyber.c **** 
+ 279              		.loc 1 85 5 view .LVU63
+ARM GAS  C:\Users\11410\AppData\Local\Temp\cclVlsCg.s 			page 8
+
+
+ 280 0022 0DF60811 		addw	r1, sp, #2312
+ 281 0026 0DF59160 		add	r0, sp, #1160
+ 282 002a FFF7FEFF 		bl	crypto_kem_keypair
+ 283              	.LVL26:
+  88:Core/Src/test_kyber.c **** 
+ 284              		.loc 1 88 5 view .LVU64
+ 285 002e 0DF59162 		add	r2, sp, #1160
+ 286 0032 0DF6C801 		addw	r1, sp, #2248
+ 287 0036 02A8     		add	r0, sp, #8
+ 288 0038 FFF7FEFF 		bl	crypto_kem_enc
+ 289              	.LVL27:
+  91:Core/Src/test_kyber.c ****   
+ 290              		.loc 1 91 5 view .LVU65
+  91:Core/Src/test_kyber.c ****   
+ 291              		.loc 1 91 15 is_stmt 0 view .LVU66
+ 292 003c 019A     		ldr	r2, [sp, #4]
+ 293 003e 124B     		ldr	r3, .L22+4
+ 294 0040 A3FB0213 		umull	r1, r3, r3, r2
+ 295 0044 1B0A     		lsrs	r3, r3, #8
+ 296 0046 03EBC303 		add	r3, r3, r3, lsl #3
+ 297 004a A2EBC313 		sub	r3, r2, r3, lsl #7
+  91:Core/Src/test_kyber.c ****   
+ 298              		.loc 1 91 40 view .LVU67
+ 299 004e 02AA     		add	r2, sp, #8
+ 300 0050 D25C     		ldrb	r2, [r2, r3]	@ zero_extendqisi2
+ 301 0052 82F01702 		eor	r2, r2, #23
+ 302 0056 02A9     		add	r1, sp, #8
+ 303 0058 CA54     		strb	r2, [r1, r3]
+  94:Core/Src/test_kyber.c **** 
+ 304              		.loc 1 94 5 is_stmt 1 view .LVU68
+ 305 005a 0DF60812 		addw	r2, sp, #2312
+ 306 005e 0DF6E800 		addw	r0, sp, #2280
+ 307 0062 FFF7FEFF 		bl	crypto_kem_dec
+ 308              	.LVL28:
+  96:Core/Src/test_kyber.c ****       printf("ERROR invalid ciphertext\n");
+ 309              		.loc 1 96 5 view .LVU69
+  96:Core/Src/test_kyber.c ****       printf("ERROR invalid ciphertext\n");
+ 310              		.loc 1 96 9 is_stmt 0 view .LVU70
+ 311 0066 2022     		movs	r2, #32
+ 312 0068 0DF6C801 		addw	r1, sp, #2248
+ 313 006c 0DF6E800 		addw	r0, sp, #2280
+ 314 0070 FFF7FEFF 		bl	memcmp
+ 315              	.LVL29:
+  96:Core/Src/test_kyber.c ****       printf("ERROR invalid ciphertext\n");
+ 316              		.loc 1 96 7 view .LVU71
+ 317 0074 0028     		cmp	r0, #0
+ 318 0076 CCD1     		bne	.L17
+ 319 0078 C8E7     		b	.L21
+ 320              	.L20:
+  98:Core/Src/test_kyber.c ****   }
+  99:Core/Src/test_kyber.c **** 
+ 100:Core/Src/test_kyber.c ****   return 0;
+ 321              		.loc 1 100 3 is_stmt 1 view .LVU72
+ 101:Core/Src/test_kyber.c **** }
+ 322              		.loc 1 101 1 is_stmt 0 view .LVU73
+ 323 007a 0020     		movs	r0, #0
+ 324 007c 0DF5935D 		add	sp, sp, #4704
+ARM GAS  C:\Users\11410\AppData\Local\Temp\cclVlsCg.s 			page 9
+
+
+ 325 0080 02B0     		add	sp, sp, #8
+ 326              	.LCFI9:
+ 327              		.cfi_def_cfa_offset 8
+ 328              		@ sp needed
+ 329 0082 10BD     		pop	{r4, pc}
+ 330              	.LVL30:
+ 331              	.L23:
+ 332              		.loc 1 101 1 view .LVU74
+ 333              		.align	2
+ 334              	.L22:
+ 335 0084 00000000 		.word	.LC1
+ 336 0088 398EE338 		.word	954437177
+ 337              		.cfi_endproc
+ 338              	.LFE5:
+ 340              		.text
+ 341              	.Letext0:
+ 342              		.file 2 "c:\\program files (x86)\\gnu tools arm embedded\\9 2019-q4-major\\lib\\gcc\\arm-none-eabi
+ 343              		.file 3 "c:\\program files (x86)\\gnu tools arm embedded\\9 2019-q4-major\\arm-none-eabi\\include\
+ 344              		.file 4 "c:\\program files (x86)\\gnu tools arm embedded\\9 2019-q4-major\\arm-none-eabi\\include\
+ 345              		.file 5 "c:\\program files (x86)\\gnu tools arm embedded\\9 2019-q4-major\\arm-none-eabi\\include\
+ 346              		.file 6 "Core/Inc/randombytes.h"
+ 347              		.file 7 "Core/Inc/api.h"
+ 348              		.file 8 "c:\\program files (x86)\\gnu tools arm embedded\\9 2019-q4-major\\arm-none-eabi\\include\
+ 349              		.file 9 "<built-in>"
+ARM GAS  C:\Users\11410\AppData\Local\Temp\cclVlsCg.s 			page 10
+
+
+DEFINED SYMBOLS
+                            *ABS*:00000000 test_kyber.c
+C:\Users\11410\AppData\Local\Temp\cclVlsCg.s:18     .text.test_keys:00000000 $t
+C:\Users\11410\AppData\Local\Temp\cclVlsCg.s:26     .text.test_keys:00000000 test_keys
+C:\Users\11410\AppData\Local\Temp\cclVlsCg.s:112    .rodata.test_invalid_sk_a.str1.4:00000000 $d
+C:\Users\11410\AppData\Local\Temp\cclVlsCg.s:116    .text.test_invalid_sk_a:00000000 $t
+C:\Users\11410\AppData\Local\Temp\cclVlsCg.s:123    .text.test_invalid_sk_a:00000000 test_invalid_sk_a
+C:\Users\11410\AppData\Local\Temp\cclVlsCg.s:212    .text.test_invalid_sk_a:00000068 $d
+C:\Users\11410\AppData\Local\Temp\cclVlsCg.s:217    .rodata.test_invalid_ciphertext.str1.4:00000000 $d
+C:\Users\11410\AppData\Local\Temp\cclVlsCg.s:221    .text.test_invalid_ciphertext:00000000 $t
+C:\Users\11410\AppData\Local\Temp\cclVlsCg.s:228    .text.test_invalid_ciphertext:00000000 test_invalid_ciphertext
+C:\Users\11410\AppData\Local\Temp\cclVlsCg.s:335    .text.test_invalid_ciphertext:00000084 $d
+
+UNDEFINED SYMBOLS
+malloc
+crypto_kem_keypair
+crypto_kem_enc
+crypto_kem_dec
+putchar
+puts
+randombytes
+memcmp

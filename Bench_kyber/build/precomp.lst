@@ -1,0 +1,721 @@
+ARM GAS  C:\Users\11410\AppData\Local\Temp\ccZoxVrT.s 			page 1
+
+
+   1              		.cpu cortex-m4
+   2              		.eabi_attribute 27, 1
+   3              		.eabi_attribute 28, 1
+   4              		.eabi_attribute 20, 1
+   5              		.eabi_attribute 21, 1
+   6              		.eabi_attribute 23, 3
+   7              		.eabi_attribute 24, 1
+   8              		.eabi_attribute 25, 1
+   9              		.eabi_attribute 26, 1
+  10              		.eabi_attribute 30, 1
+  11              		.eabi_attribute 34, 1
+  12              		.eabi_attribute 18, 4
+  13              		.file	"precomp.c"
+  14              		.text
+  15              	.Ltext0:
+  16              		.cfi_sections	.debug_frame
+  17              		.global	psis_inv_montgomery
+  18              		.global	omegas_inv_bitrev_montgomery
+  19              		.global	zetas
+  20              		.section	.rodata.omegas_inv_bitrev_montgomery,"a"
+  21              		.align	2
+  24              	omegas_inv_bitrev_montgomery:
+  25 0000 DE03     		.short	990
+  26 0002 FE00     		.short	254
+  27 0004 5E03     		.short	862
+  28 0006 B713     		.short	5047
+  29 0008 BA19     		.short	6586
+  30 000a A215     		.short	5538
+  31 000c 3011     		.short	4400
+  32 000e BF1B     		.short	7103
+  33 0010 E907     		.short	2025
+  34 0012 941A     		.short	6804
+  35 0014 120F     		.short	3858
+  36 0016 3B06     		.short	1595
+  37 0018 FB08     		.short	2299
+  38 001a F910     		.short	4345
+  39 001c 2705     		.short	1319
+  40 001e 1D1C     		.short	7197
+  41 0020 FE1D     		.short	7678
+  42 0022 5D14     		.short	5213
+  43 0024 7207     		.short	1906
+  44 0026 370E     		.short	3639
+  45 0028 D506     		.short	1749
+  46 002a C109     		.short	2497
+  47 002c F309     		.short	2547
+  48 002e D417     		.short	6100
+  49 0030 5701     		.short	343
+  50 0032 1A02     		.short	538
+  51 0034 DE1C     		.short	7390
+  52 0036 FC18     		.short	6396
+  53 0038 FA1C     		.short	7418
+  54 003a F304     		.short	1267
+  55 003c 9F02     		.short	671
+  56 003e 0210     		.short	4098
+  57 0040 5C16     		.short	5724
+  58 0042 EB01     		.short	491
+  59 0044 3210     		.short	4146
+ARM GAS  C:\Users\11410\AppData\Local\Temp\ccZoxVrT.s 			page 2
+
+
+  60 0046 9C01     		.short	412
+  61 0048 2F10     		.short	4143
+  62 004a F915     		.short	5625
+  63 004c 5D09     		.short	2397
+  64 004e DC15     		.short	5596
+  65 0050 EA17     		.short	6122
+  66 0052 BE0A     		.short	2750
+  67 0054 9408     		.short	2196
+  68 0056 0506     		.short	1541
+  69 0058 EB09     		.short	2539
+  70 005a 1F08     		.short	2079
+  71 005c 9B09     		.short	2459
+  72 005e 1201     		.short	274
+  73 0060 641D     		.short	7524
+  74 0062 8B19     		.short	6539
+  75 0064 9713     		.short	5015
+  76 0066 D117     		.short	6097
+  77 0068 801B     		.short	7040
+  78 006a 6414     		.short	5220
+  79 006c 9C0A     		.short	2716
+  80 006e D806     		.short	1752
+  81 0070 1C00     		.short	28
+  82 0072 F809     		.short	2552
+  83 0074 8500     		.short	133
+  84 0076 5911     		.short	4441
+  85 0078 3F1A     		.short	6719
+  86 007a FA08     		.short	2298
+  87 007c 281B     		.short	6952
+  88 007e A31B     		.short	7075
+  89 0080 4012     		.short	4672
+  90 0082 B715     		.short	5559
+  91 0084 AE1A     		.short	6830
+  92 0086 A205     		.short	1442
+  93 0088 A30B     		.short	2979
+  94 008a E501     		.short	485
+  95 008c C511     		.short	4549
+  96 008e 8010     		.short	4224
+  97 0090 B117     		.short	6065
+  98 0092 9807     		.short	1944
+  99 0094 0500     		.short	5
+ 100 0096 1106     		.short	1553
+ 101 0098 B613     		.short	5046
+ 102 009a 6C0D     		.short	3436
+ 103 009c 9E12     		.short	4766
+ 104 009e BF03     		.short	959
+ 105 00a0 DB0C     		.short	3291
+ 106 00a2 640E     		.short	3684
+ 107 00a4 8F17     		.short	6031
+ 108 00a6 5908     		.short	2137
+ 109 00a8 3D06     		.short	1597
+ 110 00aa 5C0B     		.short	2908
+ 111 00ac 2107     		.short	1825
+ 112 00ae F417     		.short	6132
+ 113 00b0 6200     		.short	98
+ 114 00b2 E304     		.short	1251
+ 115 00b4 D210     		.short	4306
+ 116 00b6 B60F     		.short	4022
+ARM GAS  C:\Users\11410\AppData\Local\Temp\ccZoxVrT.s 			page 3
+
+
+ 117 00b8 DA10     		.short	4314
+ 118 00ba 6A01     		.short	362
+ 119 00bc 0905     		.short	1289
+ 120 00be B815     		.short	5560
+ 121 00c0 F60E     		.short	3830
+ 122 00c2 441A     		.short	6724
+ 123 00c4 0F1A     		.short	6671
+ 124 00c6 BF04     		.short	1215
+ 125 00c8 E908     		.short	2281
+ 126 00ca 2313     		.short	4899
+ 127 00cc D213     		.short	5074
+ 128 00ce 6417     		.short	5988
+ 129 00d0 B113     		.short	5041
+ 130 00d2 5B07     		.short	1883
+ 131 00d4 060B     		.short	2822
+ 132 00d6 701B     		.short	7024
+ 133 00d8 680B     		.short	2920
+ 134 00da 5202     		.short	594
+ 135 00dc 2D18     		.short	6189
+ 136 00de 061A     		.short	6662
+ 137 00e0 AF0C     		.short	3247
+ 138 00e2 0303     		.short	771
+ 139 00e4 BE16     		.short	5822
+ 140 00e6 CE06     		.short	1742
+ 141 00e8 6E10     		.short	4206
+ 142 00ea 660E     		.short	3686
+ 143 00ec 0803     		.short	776
+ 144 00ee 6317     		.short	5987
+ 145 00f0 0800     		.short	8
+ 146 00f2 B50F     		.short	4021
+ 147 00f4 2600     		.short	38
+ 148 00f6 1A16     		.short	5658
+ 149 00f8 C90B     		.short	3017
+ 150 00fa FF17     		.short	6143
+ 151 00fc 7903     		.short	889
+ 152 00fe 7810     		.short	4216
+ 153              		.section	.rodata.psis_inv_montgomery,"a"
+ 154              		.align	2
+ 157              	psis_inv_montgomery:
+ 158 0000 0004     		.short	1024
+ 159 0002 6C13     		.short	4972
+ 160 0004 9316     		.short	5779
+ 161 0006 FB1A     		.short	6907
+ 162 0008 4F13     		.short	4943
+ 163 000a 4810     		.short	4168
+ 164 000c 3B01     		.short	315
+ 165 000e CC15     		.short	5580
+ 166 0010 5A00     		.short	90
+ 167 0012 F101     		.short	497
+ 168 0014 6304     		.short	1123
+ 169 0016 8E00     		.short	142
+ 170 0018 6612     		.short	4710
+ 171 001a 9715     		.short	5527
+ 172 001c 8B09     		.short	2443
+ 173 001e 0713     		.short	4871
+ 174 0020 BA02     		.short	698
+ 175 0022 B909     		.short	2489
+ARM GAS  C:\Users\11410\AppData\Local\Temp\ccZoxVrT.s 			page 4
+
+
+ 176 0024 5A09     		.short	2394
+ 177 0026 A30F     		.short	4003
+ 178 0028 AC02     		.short	684
+ 179 002a C108     		.short	2241
+ 180 002c 5609     		.short	2390
+ 181 002e 381C     		.short	7224
+ 182 0030 D013     		.short	5072
+ 183 0032 1008     		.short	2064
+ 184 0034 8512     		.short	4741
+ 185 0036 9706     		.short	1687
+ 186 0038 B91A     		.short	6841
+ 187 003a E201     		.short	482
+ 188 003c 111D     		.short	7441
+ 189 003e D304     		.short	1235
+ 190 0040 4E08     		.short	2126
+ 191 0042 8612     		.short	4742
+ 192 0044 F20A     		.short	2802
+ 193 0046 7016     		.short	5744
+ 194 0048 8F18     		.short	6287
+ 195 004a 4513     		.short	4933
+ 196 004c BB02     		.short	699
+ 197 004e 140E     		.short	3604
+ 198 0050 1105     		.short	1297
+ 199 0052 4F08     		.short	2127
+ 200 0054 E116     		.short	5857
+ 201 0056 A906     		.short	1705
+ 202 0058 1C0F     		.short	3868
+ 203 005a C30E     		.short	3779
+ 204 005c 2D11     		.short	4397
+ 205 005e 8108     		.short	2177
+ 206 0060 9F00     		.short	159
+ 207 0062 6E02     		.short	622
+ 208 0064 C008     		.short	2240
+ 209 0066 FB04     		.short	1275
+ 210 0068 8002     		.short	640
+ 211 006a 241B     		.short	6948
+ 212 006c DC11     		.short	4572
+ 213 006e 9D14     		.short	5277
+ 214 0070 D100     		.short	209
+ 215 0072 2D0A     		.short	2605
+ 216 0074 8504     		.short	1157
+ 217 0076 A01C     		.short	7328
+ 218 0078 B916     		.short	5817
+ 219 007a 770C     		.short	3191
+ 220 007c 7E06     		.short	1662
+ 221 007e D907     		.short	2009
+ 222 0080 0013     		.short	4864
+ 223 0082 3E02     		.short	574
+ 224 0084 B709     		.short	2487
+ 225 0086 A400     		.short	164
+ 226 0088 3518     		.short	6197
+ 227 008a 5411     		.short	4436
+ 228 008c 591C     		.short	7257
+ 229 008e 860D     		.short	3462
+ 230 0090 AC10     		.short	4268
+ 231 0092 B910     		.short	4281
+ 232 0094 560D     		.short	3414
+ARM GAS  C:\Users\11410\AppData\Local\Temp\ccZoxVrT.s 			page 5
+
+
+ 233 0096 A311     		.short	4515
+ 234 0098 620C     		.short	3170
+ 235 009a 0A05     		.short	1290
+ 236 009c D307     		.short	2003
+ 237 009e DF16     		.short	5855
+ 238 00a0 F41B     		.short	7156
+ 239 00a2 AE17     		.short	6062
+ 240 00a4 6B1D     		.short	7531
+ 241 00a6 C406     		.short	1732
+ 242 00a8 B10C     		.short	3249
+ 243 00aa 1413     		.short	4884
+ 244 00ac 581D     		.short	7512
+ 245 00ae 060E     		.short	3590
+ 246 00b0 1904     		.short	1049
+ 247 00b2 4B08     		.short	2123
+ 248 00b4 7505     		.short	1397
+ 249 00b6 CD17     		.short	6093
+ 250 00b8 6B0E     		.short	3691
+ 251 00ba F217     		.short	6130
+ 252 00bc 8D19     		.short	6541
+ 253 00be 6A0F     		.short	3946
+ 254 00c0 7218     		.short	6258
+ 255 00c2 FA0C     		.short	3322
+ 256 00c4 FC06     		.short	1788
+ 257 00c6 9110     		.short	4241
+ 258 00c8 2413     		.short	4900
+ 259 00ca 0509     		.short	2309
+ 260 00cc 7805     		.short	1400
+ 261 00ce DD06     		.short	1757
+ 262 00d0 9001     		.short	400
+ 263 00d2 F601     		.short	502
+ 264 00d4 2A1A     		.short	6698
+ 265 00d6 2209     		.short	2338
+ 266 00d8 C30B     		.short	3011
+ 267 00da 9C02     		.short	668
+ 268 00dc 141D     		.short	7444
+ 269 00de E411     		.short	4580
+ 270 00e0 7419     		.short	6516
+ 271 00e2 8B1A     		.short	6795
+ 272 00e4 8F0B     		.short	2959
+ 273 00e6 2810     		.short	4136
+ 274 00e8 E00B     		.short	3040
+ 275 00ea E708     		.short	2279
+ 276 00ec D318     		.short	6355
+ 277 00ee 670F     		.short	3943
+ 278 00f0 610B     		.short	2913
+ 279 00f2 D519     		.short	6613
+ 280 00f4 F81C     		.short	7416
+ 281 00f6 F40F     		.short	4084
+ 282 00f8 6C19     		.short	6508
+ 283 00fa B415     		.short	5556
+ 284 00fc D60F     		.short	4054
+ 285 00fe C60E     		.short	3782
+ 286 0100 3D00     		.short	61
+ 287 0102 A719     		.short	6567
+ 288 0104 A408     		.short	2212
+ 289 0106 0B03     		.short	779
+ARM GAS  C:\Users\11410\AppData\Local\Temp\ccZoxVrT.s 			page 6
+
+
+ 290 0108 7802     		.short	632
+ 291 010a 4D16     		.short	5709
+ 292 010c 2316     		.short	5667
+ 293 010e 3B13     		.short	4923
+ 294 0110 2F13     		.short	4911
+ 295 0112 ED1A     		.short	6893
+ 296 0114 5712     		.short	4695
+ 297 0116 4410     		.short	4164
+ 298 0118 D00D     		.short	3536
+ 299 011a EF08     		.short	2287
+ 300 011c AA1D     		.short	7594
+ 301 011e 200B     		.short	2848
+ 302 0120 C30C     		.short	3267
+ 303 0122 7707     		.short	1911
+ 304 0124 380C     		.short	3128
+ 305 0126 2202     		.short	546
+ 306 0128 C707     		.short	1991
+ 307 012a 9C00     		.short	156
+ 308 012c 5E13     		.short	4958
+ 309 012e 9B15     		.short	5531
+ 310 0130 F71A     		.short	6903
+ 311 0132 E301     		.short	483
+ 312 0134 6B03     		.short	875
+ 313 0136 8A00     		.short	138
+ 314 0138 FA00     		.short	250
+ 315 013a BA08     		.short	2234
+ 316 013c DA08     		.short	2266
+ 317 013e 361C     		.short	7222
+ 318 0140 1A0B     		.short	2842
+ 319 0142 A210     		.short	4258
+ 320 0144 2C03     		.short	812
+ 321 0146 2F1A     		.short	6703
+ 322 0148 E800     		.short	232
+ 323 014a 5714     		.short	5207
+ 324 014c FA19     		.short	6650
+ 325 014e 190A     		.short	2585
+ 326 0150 6C07     		.short	1900
+ 327 0152 5118     		.short	6225
+ 328 0154 4413     		.short	4932
+ 329 0156 611C     		.short	7265
+ 330 0158 5D12     		.short	4701
+ 331 015a 650C     		.short	3173
+ 332 015c 1B12     		.short	4635
+ 333 015e F918     		.short	6393
+ 334 0160 E300     		.short	227
+ 335 0162 911C     		.short	7313
+ 336 0164 6611     		.short	4454
+ 337 0166 BC10     		.short	4284
+ 338 0168 671A     		.short	6759
+ 339 016a C804     		.short	1224
+ 340 016c 6714     		.short	5223
+ 341 016e A705     		.short	1447
+ 342 0170 8B01     		.short	395
+ 343 0172 300A     		.short	2608
+ 344 0174 9611     		.short	4502
+ 345 0176 C50F     		.short	4037
+ 346 0178 BD00     		.short	189
+ARM GAS  C:\Users\11410\AppData\Local\Temp\ccZoxVrT.s 			page 7
+
+
+ 347 017a 140D     		.short	3348
+ 348 017c 3600     		.short	54
+ 349 017e 2B19     		.short	6443
+ 350 0180 A208     		.short	2210
+ 351 0182 5618     		.short	6230
+ 352 0184 0A0B     		.short	2826
+ 353 0186 F406     		.short	1780
+ 354 0188 BA0B     		.short	3002
+ 355 018a 6B17     		.short	5995
+ 356 018c A307     		.short	1955
+ 357 018e D617     		.short	6102
+ 358 0190 9D17     		.short	6045
+ 359 0192 620F     		.short	3938
+ 360 0194 9B13     		.short	5019
+ 361 0196 4111     		.short	4417
+ 362 0198 9A05     		.short	1434
+ 363 019a EE04     		.short	1262
+ 364 019c E305     		.short	1507
+ 365 019e D716     		.short	5847
+ 366 01a0 1D17     		.short	5917
+ 367 01a2 F51B     		.short	7157
+ 368 01a4 091C     		.short	7177
+ 369 01a6 2219     		.short	6434
+ 370 01a8 711D     		.short	7537
+ 371 01aa E502     		.short	741
+ 372 01ac FC10     		.short	4348
+ 373 01ae 1D05     		.short	1309
+ 374 01b0 9100     		.short	145
+ 375 01b2 7601     		.short	374
+ 376 01b4 BC08     		.short	2236
+ 377 01b6 9011     		.short	4496
+ 378 01b8 A413     		.short	5028
+ 379 01ba 731A     		.short	6771
+ 380 01bc 0B1B     		.short	6923
+ 381 01be FD1C     		.short	7421
+ 382 01c0 BA07     		.short	1978
+ 383 01c2 FF03     		.short	1023
+ 384 01c4 110F     		.short	3857
+ 385 01c6 DC1A     		.short	6876
+ 386 01c8 4E04     		.short	1102
+ 387 01ca 1B1D     		.short	7451
+ 388 01cc 6012     		.short	4704
+ 389 01ce 7619     		.short	6518
+ 390 01d0 4005     		.short	1344
+ 391 01d2 FD02     		.short	765
+ 392 01d4 8001     		.short	384
+ 393 01d6 4916     		.short	5705
+ 394 01d8 B704     		.short	1207
+ 395 01da 5E06     		.short	1630
+ 396 01dc 7E12     		.short	4734
+ 397 01de 1B06     		.short	1563
+ 398 01e0 B71A     		.short	6839
+ 399 01e2 2D17     		.short	5933
+ 400 01e4 A207     		.short	1954
+ 401 01e6 7B13     		.short	4987
+ 402 01e8 E61B     		.short	7142
+ 403 01ea B616     		.short	5814
+ARM GAS  C:\Users\11410\AppData\Local\Temp\ccZoxVrT.s 			page 8
+
+
+ 404 01ec 671D     		.short	7527
+ 405 01ee 5913     		.short	4953
+ 406 01f0 D51D     		.short	7637
+ 407 01f2 6312     		.short	4707
+ 408 01f4 8608     		.short	2182
+ 409 01f6 6616     		.short	5734
+ 410 01f8 020B     		.short	2818
+ 411 01fa 1D02     		.short	541
+ 412 01fc 0110     		.short	4097
+ 413 01fe 0916     		.short	5641
+ 414              		.section	.rodata.zetas,"a"
+ 415              		.align	2
+ 418              	zetas:
+ 419 0000 031D     		.short	7427
+ 420 0002 4A0A     		.short	2634
+ 421 0004 A31A     		.short	6819
+ 422 0006 4202     		.short	578
+ 423 0008 D10C     		.short	3281
+ 424 000a 5F08     		.short	2143
+ 425 000c 4704     		.short	1095
+ 426 000e E401     		.short	484
+ 427 0010 DA18     		.short	6362
+ 428 0012 080D     		.short	3336
+ 429 0014 0615     		.short	5382
+ 430 0016 C617     		.short	6086
+ 431 0018 EF0E     		.short	3823
+ 432 001a 6D03     		.short	877
+ 433 001c 1816     		.short	5656
+ 434 001e FF0D     		.short	3583
+ 435 0020 621B     		.short	7010
+ 436 0022 0E19     		.short	6414
+ 437 0024 0701     		.short	263
+ 438 0026 0505     		.short	1285
+ 439 0028 2301     		.short	291
+ 440 002a E71B     		.short	7143
+ 441 002c AA1C     		.short	7338
+ 442 002e 2D06     		.short	1581
+ 443 0030 0E14     		.short	5134
+ 444 0032 4014     		.short	5184
+ 445 0034 2C17     		.short	5932
+ 446 0036 CA0F     		.short	4042
+ 447 0038 8F16     		.short	5775
+ 448 003a A409     		.short	2468
+ 449 003c 0300     		.short	3
+ 450 003e 5E02     		.short	606
+ 451 0040 D902     		.short	729
+ 452 0042 0715     		.short	5383
+ 453 0044 C203     		.short	962
+ 454 0046 A80C     		.short	3240
+ 455 0048 7C1D     		.short	7548
+ 456 004a 0914     		.short	5129
+ 457 004c E51D     		.short	7653
+ 458 004e 2917     		.short	5929
+ 459 0050 6513     		.short	4965
+ 460 0052 9D09     		.short	2461
+ 461 0054 8102     		.short	641
+ 462 0056 3006     		.short	1584
+ARM GAS  C:\Users\11410\AppData\Local\Temp\ccZoxVrT.s 			page 9
+
+
+ 463 0058 6A0A     		.short	2666
+ 464 005a 7604     		.short	1142
+ 465 005c 9D00     		.short	157
+ 466 005e EF1C     		.short	7407
+ 467 0060 6614     		.short	5222
+ 468 0062 E215     		.short	5602
+ 469 0064 1614     		.short	5142
+ 470 0066 FC17     		.short	6140
+ 471 0068 6D15     		.short	5485
+ 472 006a 4313     		.short	4931
+ 473 006c 1706     		.short	1559
+ 474 006e 2508     		.short	2085
+ 475 0070 A414     		.short	5284
+ 476 0072 0808     		.short	2056
+ 477 0074 D20D     		.short	3538
+ 478 0076 651C     		.short	7269
+ 479 0078 CF0D     		.short	3535
+ 480 007a 161C     		.short	7190
+ 481 007c A507     		.short	1957
+ 482 007e 890D     		.short	3465
+ 483 0080 881A     		.short	6792
+ 484 0082 0206     		.short	1538
+ 485 0084 3812     		.short	4664
+ 486 0086 E707     		.short	2023
+ 487 0088 DB1D     		.short	7643
+ 488 008a 4C0E     		.short	3660
+ 489 008c F91D     		.short	7673
+ 490 008e 9E06     		.short	1694
+ 491 0090 F91A     		.short	6905
+ 492 0092 9B0F     		.short	3995
+ 493 0094 930D     		.short	3475
+ 494 0096 3317     		.short	5939
+ 495 0098 4307     		.short	1859
+ 496 009a FE1A     		.short	6910
+ 497 009c 5211     		.short	4434
+ 498 009e FB03     		.short	1019
+ 499 00a0 D405     		.short	1492
+ 500 00a2 AF1B     		.short	7087
+ 501 00a4 9912     		.short	4761
+ 502 00a6 9102     		.short	657
+ 503 00a8 FB12     		.short	4859
+ 504 00aa A616     		.short	5798
+ 505 00ac 500A     		.short	2640
+ 506 00ae 9D06     		.short	1693
+ 507 00b0 2F0A     		.short	2607
+ 508 00b2 DE0A     		.short	2782
+ 509 00b4 1815     		.short	5400
+ 510 00b6 4219     		.short	6466
+ 511 00b8 F203     		.short	1010
+ 512 00ba BD03     		.short	957
+ 513 00bc 0B0F     		.short	3851
+ 514 00be 4908     		.short	2121
+ 515 00c0 F818     		.short	6392
+ 516 00c2 971C     		.short	7319
+ 517 00c4 270D     		.short	3367
+ 518 00c6 4B0E     		.short	3659
+ 519 00c8 2F0D     		.short	3375
+ARM GAS  C:\Users\11410\AppData\Local\Temp\ccZoxVrT.s 			page 10
+
+
+ 520 00ca 1E19     		.short	6430
+ 521 00cc 9F1D     		.short	7583
+ 522 00ce 0D06     		.short	1549
+ 523 00d0 E016     		.short	5856
+ 524 00d2 A512     		.short	4773
+ 525 00d4 C417     		.short	6084
+ 526 00d6 A815     		.short	5544
+ 527 00d8 7206     		.short	1650
+ 528 00da 9D0F     		.short	3997
+ 529 00dc 2611     		.short	4390
+ 530 00de 421A     		.short	6722
+ 531 00e0 630B     		.short	2915
+ 532 00e2 9510     		.short	4245
+ 533 00e4 4B0A     		.short	2635
+ 534 00e6 F017     		.short	6128
+ 535 00e8 FC1D     		.short	7676
+ 536 00ea 6916     		.short	5737
+ 537 00ec 5006     		.short	1616
+ 538 00ee 810D     		.short	3457
+ 539 00f0 3C0C     		.short	3132
+ 540 00f2 1C1C     		.short	7196
+ 541 00f4 5E12     		.short	4702
+ 542 00f6 5F18     		.short	6239
+ 543 00f8 5303     		.short	851
+ 544 00fa 4A08     		.short	2122
+ 545 00fc C10B     		.short	3009
+ 546 00fe BD1D     		.short	7613
+ 547 0100 7F1C     		.short	7295
+ 548 0102 D707     		.short	2007
+ 549 0104 4301     		.short	323
+ 550 0106 F813     		.short	5112
+ 551 0108 840E     		.short	3716
+ 552 010a F108     		.short	2289
+ 553 010c 2A19     		.short	6442
+ 554 010e 351B     		.short	6965
+ 555 0110 990A     		.short	2713
+ 556 0112 D61B     		.short	7126
+ 557 0114 490D     		.short	3401
+ 558 0116 C303     		.short	963
+ 559 0118 C419     		.short	6596
+ 560 011a 5F02     		.short	607
+ 561 011c A313     		.short	5027
+ 562 011e A61B     		.short	7078
+ 563 0120 8411     		.short	4484
+ 564 0122 3117     		.short	5937
+ 565 0124 B003     		.short	944
+ 566 0126 2C0B     		.short	2860
+ 567 0128 780A     		.short	2680
+ 568 012a B913     		.short	5049
+ 569 012c F106     		.short	1777
+ 570 012e DA16     		.short	5850
+ 571 0130 3B0D     		.short	3387
+ 572 0132 5719     		.short	6487
+ 573 0134 791A     		.short	6777
+ 574 0136 CC12     		.short	4812
+ 575 0138 7412     		.short	4724
+ 576 013a A51B     		.short	7077
+ARM GAS  C:\Users\11410\AppData\Local\Temp\ccZoxVrT.s 			page 11
+
+
+ 577 013c BA00     		.short	186
+ 578 013e C01A     		.short	6848
+ 579 0140 891A     		.short	6793
+ 580 0142 870D     		.short	3463
+ 581 0144 F516     		.short	5877
+ 582 0146 9604     		.short	1174
+ 583 0148 CC1B     		.short	7116
+ 584 014a 050C     		.short	3077
+ 585 014c 3917     		.short	5945
+ 586 014e BF19     		.short	6591
+ 587 0150 4E02     		.short	590
+ 588 0152 F319     		.short	6643
+ 589 0154 3905     		.short	1337
+ 590 0156 9417     		.short	6036
+ 591 0158 970F     		.short	3991
+ 592 015a 8B06     		.short	1675
+ 593 015c 0508     		.short	2053
+ 594 015e A717     		.short	6055
+ 595 0160 8A04     		.short	1162
+ 596 0162 8F06     		.short	1679
+ 597 0164 2B0F     		.short	3883
+ 598 0166 D710     		.short	4311
+ 599 0168 3A08     		.short	2106
+ 600 016a 1318     		.short	6163
+ 601 016c 8611     		.short	4486
+ 602 016e E618     		.short	6374
+ 603 0170 8E13     		.short	5006
+ 604 0172 E011     		.short	4576
+ 605 0174 C010     		.short	4288
+ 606 0176 3C14     		.short	5180
+ 607 0178 0610     		.short	4102
+ 608 017a 1A01     		.short	282
+ 609 017c E717     		.short	6119
+ 610 017e 131D     		.short	7443
+ 611 0180 BA18     		.short	6330
+ 612 0182 700C     		.short	3184
+ 613 0184 6B13     		.short	4971
+ 614 0186 E209     		.short	2530
+ 615 0188 CD14     		.short	5325
+ 616 018a 4B10     		.short	4171
+ 617 018c 111C     		.short	7185
+ 618 018e 3714     		.short	5175
+ 619 0190 1716     		.short	5655
+ 620 0192 6A07     		.short	1898
+ 621 0194 7E01     		.short	382
+ 622 0196 2B1C     		.short	7211
+ 623 0198 2B00     		.short	43
+ 624 019a 4D17     		.short	5965
+ 625 019c B917     		.short	6073
+ 626 019e C206     		.short	1730
+ 627 01a0 4C01     		.short	332
+ 628 01a2 2906     		.short	1577
+ 629 01a4 E80C     		.short	3304
+ 630 01a6 1909     		.short	2329
+ 631 01a8 A306     		.short	1699
+ 632 01aa 0618     		.short	6150
+ 633 01ac 4B09     		.short	2379
+ARM GAS  C:\Users\11410\AppData\Local\Temp\ccZoxVrT.s 			page 12
+
+
+ 634 01ae F913     		.short	5113
+ 635 01b0 4D01     		.short	333
+ 636 01b2 AE0D     		.short	3502
+ 637 01b4 A511     		.short	4517
+ 638 01b6 C805     		.short	1480
+ 639 01b8 9404     		.short	1172
+ 640 01ba BF15     		.short	5567
+ 641 01bc 8B02     		.short	651
+ 642 01be 9D03     		.short	925
+ 643 01c0 DD11     		.short	4573
+ 644 01c2 5702     		.short	599
+ 645 01c4 5705     		.short	1367
+ 646 01c6 0D10     		.short	4109
+ 647 01c8 4707     		.short	1863
+ 648 01ca 111B     		.short	6929
+ 649 01cc 4506     		.short	1605
+ 650 01ce 1A0F     		.short	3866
+ 651 01d0 1108     		.short	2065
+ 652 01d2 D00F     		.short	4048
+ 653 01d4 4703     		.short	839
+ 654 01d6 8416     		.short	5764
+ 655 01d8 8F09     		.short	2447
+ 656 01da E607     		.short	2022
+ 657 01dc 110D     		.short	3345
+ 658 01de C607     		.short	1990
+ 659 01e0 E30F     		.short	4067
+ 660 01e2 F407     		.short	2036
+ 661 01e4 1508     		.short	2069
+ 662 01e6 EF0D     		.short	3567
+ 663 01e8 CB1C     		.short	7371
+ 664 01ea 4009     		.short	2368
+ 665 01ec 5301     		.short	339
+ 666 01ee 231B     		.short	6947
+ 667 01f0 6F08     		.short	2159
+ 668 01f2 8E02     		.short	654
+ 669 01f4 9F1C     		.short	7327
+ 670 01f6 D00A     		.short	2768
+ 671 01f8 141A     		.short	6676
+ 672 01fa DB03     		.short	987
+ 673 01fc A608     		.short	2214
+ 674              		.text
+ 675              	.Letext0:
+ 676              		.file 1 "c:\\program files (x86)\\gnu tools arm embedded\\9 2019-q4-major\\arm-none-eabi\\include\
+ 677              		.file 2 "c:\\program files (x86)\\gnu tools arm embedded\\9 2019-q4-major\\arm-none-eabi\\include\
+ 678              		.file 3 "Core/Src/precomp.c"
+ARM GAS  C:\Users\11410\AppData\Local\Temp\ccZoxVrT.s 			page 13
+
+
+DEFINED SYMBOLS
+                            *ABS*:00000000 precomp.c
+C:\Users\11410\AppData\Local\Temp\ccZoxVrT.s:157    .rodata.psis_inv_montgomery:00000000 psis_inv_montgomery
+C:\Users\11410\AppData\Local\Temp\ccZoxVrT.s:24     .rodata.omegas_inv_bitrev_montgomery:00000000 omegas_inv_bitrev_montgomery
+C:\Users\11410\AppData\Local\Temp\ccZoxVrT.s:418    .rodata.zetas:00000000 zetas
+C:\Users\11410\AppData\Local\Temp\ccZoxVrT.s:21     .rodata.omegas_inv_bitrev_montgomery:00000000 $d
+C:\Users\11410\AppData\Local\Temp\ccZoxVrT.s:154    .rodata.psis_inv_montgomery:00000000 $d
+C:\Users\11410\AppData\Local\Temp\ccZoxVrT.s:415    .rodata.zetas:00000000 $d
+
+NO UNDEFINED SYMBOLS

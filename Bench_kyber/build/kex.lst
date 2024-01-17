@@ -1,0 +1,531 @@
+ARM GAS  C:\Users\11410\AppData\Local\Temp\ccjf4LnK.s 			page 1
+
+
+   1              		.cpu cortex-m4
+   2              		.eabi_attribute 27, 1
+   3              		.eabi_attribute 28, 1
+   4              		.eabi_attribute 20, 1
+   5              		.eabi_attribute 21, 1
+   6              		.eabi_attribute 23, 3
+   7              		.eabi_attribute 24, 1
+   8              		.eabi_attribute 25, 1
+   9              		.eabi_attribute 26, 1
+  10              		.eabi_attribute 30, 1
+  11              		.eabi_attribute 34, 1
+  12              		.eabi_attribute 18, 4
+  13              		.file	"kex.c"
+  14              		.text
+  15              	.Ltext0:
+  16              		.cfi_sections	.debug_frame
+  17              		.section	.text.kyber_uake_initA,"ax",%progbits
+  18              		.align	1
+  19              		.global	kyber_uake_initA
+  20              		.arch armv7e-m
+  21              		.syntax unified
+  22              		.thumb
+  23              		.thumb_func
+  24              		.fpu fpv4-sp-d16
+  26              	kyber_uake_initA:
+  27              	.LVL0:
+  28              	.LFB3:
+  29              		.file 1 "Core/Src/kex.c"
+   1:Core/Src/kex.c **** #include "kex.h"
+   2:Core/Src/kex.c **** #include "verify.h"
+   3:Core/Src/kex.c **** #include "fips202.h"
+   4:Core/Src/kex.c **** 
+   5:Core/Src/kex.c **** void kyber_uake_initA(u8 *send, u8* tk, u8 *sk, const u8 *pkb)
+   6:Core/Src/kex.c **** {
+  30              		.loc 1 6 1 view -0
+  31              		.cfi_startproc
+  32              		@ args = 0, pretend = 0, frame = 0
+  33              		@ frame_needed = 0, uses_anonymous_args = 0
+  34              		.loc 1 6 1 is_stmt 0 view .LVU1
+  35 0000 70B5     		push	{r4, r5, r6, lr}
+  36              	.LCFI0:
+  37              		.cfi_def_cfa_offset 16
+  38              		.cfi_offset 4, -16
+  39              		.cfi_offset 5, -12
+  40              		.cfi_offset 6, -8
+  41              		.cfi_offset 14, -4
+  42 0002 0446     		mov	r4, r0
+  43 0004 0D46     		mov	r5, r1
+  44 0006 1E46     		mov	r6, r3
+   7:Core/Src/kex.c ****   crypto_kem_keypair(send, sk);
+  45              		.loc 1 7 3 is_stmt 1 view .LVU2
+  46 0008 1146     		mov	r1, r2
+  47              	.LVL1:
+  48              		.loc 1 7 3 is_stmt 0 view .LVU3
+  49 000a FFF7FEFF 		bl	crypto_kem_keypair
+  50              	.LVL2:
+   8:Core/Src/kex.c ****   crypto_kem_enc(send+KYBER_PUBLICKEYBYTES, tk, pkb);
+ARM GAS  C:\Users\11410\AppData\Local\Temp\ccjf4LnK.s 			page 2
+
+
+  51              		.loc 1 8 3 is_stmt 1 view .LVU4
+  52 000e 3246     		mov	r2, r6
+  53 0010 2946     		mov	r1, r5
+  54 0012 04F58860 		add	r0, r4, #1088
+  55 0016 FFF7FEFF 		bl	crypto_kem_enc
+  56              	.LVL3:
+   9:Core/Src/kex.c **** }
+  57              		.loc 1 9 1 is_stmt 0 view .LVU5
+  58 001a 70BD     		pop	{r4, r5, r6, pc}
+  59              		.loc 1 9 1 view .LVU6
+  60              		.cfi_endproc
+  61              	.LFE3:
+  63              		.section	.text.kyber_uake_sharedB,"ax",%progbits
+  64              		.align	1
+  65              		.global	kyber_uake_sharedB
+  66              		.syntax unified
+  67              		.thumb
+  68              		.thumb_func
+  69              		.fpu fpv4-sp-d16
+  71              	kyber_uake_sharedB:
+  72              	.LVL4:
+  73              	.LFB4:
+  10:Core/Src/kex.c **** 
+  11:Core/Src/kex.c **** void kyber_uake_sharedB(u8 *send, u8 *k, const u8* recv, const u8 *skb)
+  12:Core/Src/kex.c **** {
+  74              		.loc 1 12 1 is_stmt 1 view -0
+  75              		.cfi_startproc
+  76              		@ args = 0, pretend = 0, frame = 64
+  77              		@ frame_needed = 0, uses_anonymous_args = 0
+  78              		.loc 1 12 1 is_stmt 0 view .LVU8
+  79 0000 F0B5     		push	{r4, r5, r6, r7, lr}
+  80              	.LCFI1:
+  81              		.cfi_def_cfa_offset 20
+  82              		.cfi_offset 4, -20
+  83              		.cfi_offset 5, -16
+  84              		.cfi_offset 6, -12
+  85              		.cfi_offset 7, -8
+  86              		.cfi_offset 14, -4
+  87 0002 95B0     		sub	sp, sp, #84
+  88              	.LCFI2:
+  89              		.cfi_def_cfa_offset 104
+  90 0004 0C46     		mov	r4, r1
+  91 0006 1546     		mov	r5, r2
+  92 0008 1E46     		mov	r6, r3
+  13:Core/Src/kex.c ****   unsigned char buf[2*KYBER_SYMBYTES];
+  93              		.loc 1 13 3 is_stmt 1 view .LVU9
+  14:Core/Src/kex.c ****   crypto_kem_enc(send, buf, recv);
+  94              		.loc 1 14 3 view .LVU10
+  95 000a 04AF     		add	r7, sp, #16
+  96 000c 3946     		mov	r1, r7
+  97              	.LVL5:
+  98              		.loc 1 14 3 is_stmt 0 view .LVU11
+  99 000e FFF7FEFF 		bl	crypto_kem_enc
+ 100              	.LVL6:
+  15:Core/Src/kex.c ****   crypto_kem_dec(buf+KYBER_SYMBYTES, recv+KYBER_PUBLICKEYBYTES, skb);
+ 101              		.loc 1 15 3 is_stmt 1 view .LVU12
+ 102 0012 3246     		mov	r2, r6
+ARM GAS  C:\Users\11410\AppData\Local\Temp\ccjf4LnK.s 			page 3
+
+
+ 103 0014 05F58861 		add	r1, r5, #1088
+ 104 0018 0CA8     		add	r0, sp, #48
+ 105 001a FFF7FEFF 		bl	crypto_kem_dec
+ 106              	.LVL7:
+  16:Core/Src/kex.c ****   shake256(k,KYBER_SYMBYTES,buf,2*KYBER_SYMBYTES);
+ 107              		.loc 1 16 3 view .LVU13
+ 108 001e 4022     		movs	r2, #64
+ 109 0020 0023     		movs	r3, #0
+ 110 0022 CDE90223 		strd	r2, [sp, #8]
+ 111 0026 0097     		str	r7, [sp]
+ 112 0028 2022     		movs	r2, #32
+ 113 002a 0023     		movs	r3, #0
+ 114 002c 2046     		mov	r0, r4
+ 115 002e FFF7FEFF 		bl	shake256
+ 116              	.LVL8:
+  17:Core/Src/kex.c **** }
+ 117              		.loc 1 17 1 is_stmt 0 view .LVU14
+ 118 0032 15B0     		add	sp, sp, #84
+ 119              	.LCFI3:
+ 120              		.cfi_def_cfa_offset 20
+ 121              		@ sp needed
+ 122 0034 F0BD     		pop	{r4, r5, r6, r7, pc}
+ 123              		.loc 1 17 1 view .LVU15
+ 124              		.cfi_endproc
+ 125              	.LFE4:
+ 127              		.section	.text.kyber_uake_sharedA,"ax",%progbits
+ 128              		.align	1
+ 129              		.global	kyber_uake_sharedA
+ 130              		.syntax unified
+ 131              		.thumb
+ 132              		.thumb_func
+ 133              		.fpu fpv4-sp-d16
+ 135              	kyber_uake_sharedA:
+ 136              	.LVL9:
+ 137              	.LFB5:
+  18:Core/Src/kex.c **** 
+  19:Core/Src/kex.c **** void kyber_uake_sharedA(u8 *k, const u8 *recv, const u8 *tk, const u8 *sk)
+  20:Core/Src/kex.c **** {
+ 138              		.loc 1 20 1 is_stmt 1 view -0
+ 139              		.cfi_startproc
+ 140              		@ args = 0, pretend = 0, frame = 64
+ 141              		@ frame_needed = 0, uses_anonymous_args = 0
+ 142              		.loc 1 20 1 is_stmt 0 view .LVU17
+ 143 0000 70B5     		push	{r4, r5, r6, lr}
+ 144              	.LCFI4:
+ 145              		.cfi_def_cfa_offset 16
+ 146              		.cfi_offset 4, -16
+ 147              		.cfi_offset 5, -12
+ 148              		.cfi_offset 6, -8
+ 149              		.cfi_offset 14, -4
+ 150 0002 94B0     		sub	sp, sp, #80
+ 151              	.LCFI5:
+ 152              		.cfi_def_cfa_offset 96
+ 153 0004 0646     		mov	r6, r0
+ 154 0006 1546     		mov	r5, r2
+  21:Core/Src/kex.c ****   unsigned char buf[2*KYBER_SYMBYTES];
+ 155              		.loc 1 21 3 is_stmt 1 view .LVU18
+ARM GAS  C:\Users\11410\AppData\Local\Temp\ccjf4LnK.s 			page 4
+
+
+  22:Core/Src/kex.c ****   int i;
+ 156              		.loc 1 22 3 view .LVU19
+  23:Core/Src/kex.c ****   crypto_kem_dec(buf, recv, sk);
+ 157              		.loc 1 23 3 view .LVU20
+ 158 0008 1A46     		mov	r2, r3
+ 159              	.LVL10:
+ 160              		.loc 1 23 3 is_stmt 0 view .LVU21
+ 161 000a 04A8     		add	r0, sp, #16
+ 162              	.LVL11:
+ 163              		.loc 1 23 3 view .LVU22
+ 164 000c FFF7FEFF 		bl	crypto_kem_dec
+ 165              	.LVL12:
+  24:Core/Src/kex.c ****   for(i=0;i<KYBER_SYMBYTES;i++) 
+ 166              		.loc 1 24 3 is_stmt 1 view .LVU23
+ 167              		.loc 1 24 8 is_stmt 0 view .LVU24
+ 168 0010 0023     		movs	r3, #0
+ 169              	.LVL13:
+ 170              	.L6:
+ 171              		.loc 1 24 11 is_stmt 1 discriminator 1 view .LVU25
+ 172              		.loc 1 24 3 is_stmt 0 discriminator 1 view .LVU26
+ 173 0012 1F2B     		cmp	r3, #31
+ 174 0014 08DC     		bgt	.L9
+  25:Core/Src/kex.c ****     buf[i+KYBER_SYMBYTES] = tk[i];
+ 175              		.loc 1 25 5 is_stmt 1 discriminator 3 view .LVU27
+ 176              		.loc 1 25 10 is_stmt 0 discriminator 3 view .LVU28
+ 177 0016 03F12001 		add	r1, r3, #32
+ 178              		.loc 1 25 31 discriminator 3 view .LVU29
+ 179 001a EC5C     		ldrb	r4, [r5, r3]	@ zero_extendqisi2
+ 180              		.loc 1 25 27 discriminator 3 view .LVU30
+ 181 001c 14AA     		add	r2, sp, #80
+ 182 001e 1144     		add	r1, r1, r2
+ 183 0020 01F8404C 		strb	r4, [r1, #-64]
+  24:Core/Src/kex.c ****   for(i=0;i<KYBER_SYMBYTES;i++) 
+ 184              		.loc 1 24 28 is_stmt 1 discriminator 3 view .LVU31
+  24:Core/Src/kex.c ****   for(i=0;i<KYBER_SYMBYTES;i++) 
+ 185              		.loc 1 24 29 is_stmt 0 discriminator 3 view .LVU32
+ 186 0024 0133     		adds	r3, r3, #1
+ 187              	.LVL14:
+  24:Core/Src/kex.c ****   for(i=0;i<KYBER_SYMBYTES;i++) 
+ 188              		.loc 1 24 29 discriminator 3 view .LVU33
+ 189 0026 F4E7     		b	.L6
+ 190              	.L9:
+  26:Core/Src/kex.c ****   shake256(k,KYBER_SYMBYTES,buf,2*KYBER_SYMBYTES);
+ 191              		.loc 1 26 3 is_stmt 1 view .LVU34
+ 192 0028 4022     		movs	r2, #64
+ 193 002a 0023     		movs	r3, #0
+ 194              	.LVL15:
+ 195              		.loc 1 26 3 is_stmt 0 view .LVU35
+ 196 002c CDE90223 		strd	r2, [sp, #8]
+ 197 0030 04AB     		add	r3, sp, #16
+ 198 0032 0093     		str	r3, [sp]
+ 199 0034 2022     		movs	r2, #32
+ 200 0036 0023     		movs	r3, #0
+ 201 0038 3046     		mov	r0, r6
+ 202 003a FFF7FEFF 		bl	shake256
+ 203              	.LVL16:
+  27:Core/Src/kex.c **** }
+ARM GAS  C:\Users\11410\AppData\Local\Temp\ccjf4LnK.s 			page 5
+
+
+ 204              		.loc 1 27 1 view .LVU36
+ 205 003e 14B0     		add	sp, sp, #80
+ 206              	.LCFI6:
+ 207              		.cfi_def_cfa_offset 16
+ 208              		@ sp needed
+ 209 0040 70BD     		pop	{r4, r5, r6, pc}
+ 210              		.loc 1 27 1 view .LVU37
+ 211              		.cfi_endproc
+ 212              	.LFE5:
+ 214              		.section	.text.kyber_ake_initA,"ax",%progbits
+ 215              		.align	1
+ 216              		.global	kyber_ake_initA
+ 217              		.syntax unified
+ 218              		.thumb
+ 219              		.thumb_func
+ 220              		.fpu fpv4-sp-d16
+ 222              	kyber_ake_initA:
+ 223              	.LVL17:
+ 224              	.LFB6:
+  28:Core/Src/kex.c **** 
+  29:Core/Src/kex.c **** 
+  30:Core/Src/kex.c **** 
+  31:Core/Src/kex.c **** void kyber_ake_initA(u8 *send, u8* tk, u8 *sk, const u8 *pkb)
+  32:Core/Src/kex.c **** {
+ 225              		.loc 1 32 1 is_stmt 1 view -0
+ 226              		.cfi_startproc
+ 227              		@ args = 0, pretend = 0, frame = 0
+ 228              		@ frame_needed = 0, uses_anonymous_args = 0
+ 229              		.loc 1 32 1 is_stmt 0 view .LVU39
+ 230 0000 70B5     		push	{r4, r5, r6, lr}
+ 231              	.LCFI7:
+ 232              		.cfi_def_cfa_offset 16
+ 233              		.cfi_offset 4, -16
+ 234              		.cfi_offset 5, -12
+ 235              		.cfi_offset 6, -8
+ 236              		.cfi_offset 14, -4
+ 237 0002 0446     		mov	r4, r0
+ 238 0004 0D46     		mov	r5, r1
+ 239 0006 1E46     		mov	r6, r3
+  33:Core/Src/kex.c ****   crypto_kem_keypair(send, sk);
+ 240              		.loc 1 33 3 is_stmt 1 view .LVU40
+ 241 0008 1146     		mov	r1, r2
+ 242              	.LVL18:
+ 243              		.loc 1 33 3 is_stmt 0 view .LVU41
+ 244 000a FFF7FEFF 		bl	crypto_kem_keypair
+ 245              	.LVL19:
+  34:Core/Src/kex.c ****   crypto_kem_enc(send+KYBER_PUBLICKEYBYTES, tk, pkb);
+ 246              		.loc 1 34 3 is_stmt 1 view .LVU42
+ 247 000e 3246     		mov	r2, r6
+ 248 0010 2946     		mov	r1, r5
+ 249 0012 04F58860 		add	r0, r4, #1088
+ 250 0016 FFF7FEFF 		bl	crypto_kem_enc
+ 251              	.LVL20:
+  35:Core/Src/kex.c **** }
+ 252              		.loc 1 35 1 is_stmt 0 view .LVU43
+ 253 001a 70BD     		pop	{r4, r5, r6, pc}
+ 254              		.loc 1 35 1 view .LVU44
+ARM GAS  C:\Users\11410\AppData\Local\Temp\ccjf4LnK.s 			page 6
+
+
+ 255              		.cfi_endproc
+ 256              	.LFE6:
+ 258              		.section	.text.kyber_ake_sharedB,"ax",%progbits
+ 259              		.align	1
+ 260              		.global	kyber_ake_sharedB
+ 261              		.syntax unified
+ 262              		.thumb
+ 263              		.thumb_func
+ 264              		.fpu fpv4-sp-d16
+ 266              	kyber_ake_sharedB:
+ 267              	.LVL21:
+ 268              	.LFB7:
+  36:Core/Src/kex.c **** 
+  37:Core/Src/kex.c **** void kyber_ake_sharedB(u8 *send, u8 *k, const u8* recv, const u8 *skb, const u8 *pka)
+  38:Core/Src/kex.c **** {
+ 269              		.loc 1 38 1 is_stmt 1 view -0
+ 270              		.cfi_startproc
+ 271              		@ args = 4, pretend = 0, frame = 96
+ 272              		@ frame_needed = 0, uses_anonymous_args = 0
+ 273              		.loc 1 38 1 is_stmt 0 view .LVU46
+ 274 0000 2DE9F041 		push	{r4, r5, r6, r7, r8, lr}
+ 275              	.LCFI8:
+ 276              		.cfi_def_cfa_offset 24
+ 277              		.cfi_offset 4, -24
+ 278              		.cfi_offset 5, -20
+ 279              		.cfi_offset 6, -16
+ 280              		.cfi_offset 7, -12
+ 281              		.cfi_offset 8, -8
+ 282              		.cfi_offset 14, -4
+ 283 0004 9CB0     		sub	sp, sp, #112
+ 284              	.LCFI9:
+ 285              		.cfi_def_cfa_offset 136
+ 286 0006 0746     		mov	r7, r0
+ 287 0008 0C46     		mov	r4, r1
+ 288 000a 1546     		mov	r5, r2
+ 289 000c 1E46     		mov	r6, r3
+  39:Core/Src/kex.c ****   unsigned char buf[3*KYBER_SYMBYTES];
+ 290              		.loc 1 39 3 is_stmt 1 view .LVU47
+  40:Core/Src/kex.c ****   crypto_kem_enc(send, buf, recv);
+ 291              		.loc 1 40 3 view .LVU48
+ 292 000e 0DF11008 		add	r8, sp, #16
+ 293 0012 4146     		mov	r1, r8
+ 294              	.LVL22:
+ 295              		.loc 1 40 3 is_stmt 0 view .LVU49
+ 296 0014 FFF7FEFF 		bl	crypto_kem_enc
+ 297              	.LVL23:
+  41:Core/Src/kex.c ****   crypto_kem_enc(send+KYBER_CIPHERTEXTBYTES, buf+KYBER_SYMBYTES, pka);
+ 298              		.loc 1 41 3 is_stmt 1 view .LVU50
+ 299 0018 229A     		ldr	r2, [sp, #136]
+ 300 001a 0CA9     		add	r1, sp, #48
+ 301 001c 07F59060 		add	r0, r7, #1152
+ 302 0020 FFF7FEFF 		bl	crypto_kem_enc
+ 303              	.LVL24:
+  42:Core/Src/kex.c ****   crypto_kem_dec(buf+2*KYBER_SYMBYTES, recv+KYBER_PUBLICKEYBYTES, skb);
+ 304              		.loc 1 42 3 view .LVU51
+ 305 0024 3246     		mov	r2, r6
+ 306 0026 05F58861 		add	r1, r5, #1088
+ARM GAS  C:\Users\11410\AppData\Local\Temp\ccjf4LnK.s 			page 7
+
+
+ 307 002a 14A8     		add	r0, sp, #80
+ 308 002c FFF7FEFF 		bl	crypto_kem_dec
+ 309              	.LVL25:
+  43:Core/Src/kex.c ****   shake256(k,KYBER_SYMBYTES,buf,3*KYBER_SYMBYTES);
+ 310              		.loc 1 43 3 view .LVU52
+ 311 0030 6022     		movs	r2, #96
+ 312 0032 0023     		movs	r3, #0
+ 313 0034 CDE90223 		strd	r2, [sp, #8]
+ 314 0038 CDF80080 		str	r8, [sp]
+ 315 003c 2022     		movs	r2, #32
+ 316 003e 0023     		movs	r3, #0
+ 317 0040 2046     		mov	r0, r4
+ 318 0042 FFF7FEFF 		bl	shake256
+ 319              	.LVL26:
+  44:Core/Src/kex.c **** }
+ 320              		.loc 1 44 1 is_stmt 0 view .LVU53
+ 321 0046 1CB0     		add	sp, sp, #112
+ 322              	.LCFI10:
+ 323              		.cfi_def_cfa_offset 24
+ 324              		@ sp needed
+ 325 0048 BDE8F081 		pop	{r4, r5, r6, r7, r8, pc}
+ 326              		.loc 1 44 1 view .LVU54
+ 327              		.cfi_endproc
+ 328              	.LFE7:
+ 330              		.section	.text.kyber_ake_sharedA,"ax",%progbits
+ 331              		.align	1
+ 332              		.global	kyber_ake_sharedA
+ 333              		.syntax unified
+ 334              		.thumb
+ 335              		.thumb_func
+ 336              		.fpu fpv4-sp-d16
+ 338              	kyber_ake_sharedA:
+ 339              	.LVL27:
+ 340              	.LFB8:
+  45:Core/Src/kex.c **** 
+  46:Core/Src/kex.c **** void kyber_ake_sharedA(u8 *k, const u8 *recv, const u8 *tk, const u8 *sk, const u8 *ska)
+  47:Core/Src/kex.c **** {
+ 341              		.loc 1 47 1 is_stmt 1 view -0
+ 342              		.cfi_startproc
+ 343              		@ args = 4, pretend = 0, frame = 96
+ 344              		@ frame_needed = 0, uses_anonymous_args = 0
+ 345              		.loc 1 47 1 is_stmt 0 view .LVU56
+ 346 0000 70B5     		push	{r4, r5, r6, lr}
+ 347              	.LCFI11:
+ 348              		.cfi_def_cfa_offset 16
+ 349              		.cfi_offset 4, -16
+ 350              		.cfi_offset 5, -12
+ 351              		.cfi_offset 6, -8
+ 352              		.cfi_offset 14, -4
+ 353 0002 9CB0     		sub	sp, sp, #112
+ 354              	.LCFI12:
+ 355              		.cfi_def_cfa_offset 128
+ 356 0004 0646     		mov	r6, r0
+ 357 0006 0C46     		mov	r4, r1
+ 358 0008 1546     		mov	r5, r2
+  48:Core/Src/kex.c ****   unsigned char buf[3*KYBER_SYMBYTES];
+ 359              		.loc 1 48 3 is_stmt 1 view .LVU57
+ARM GAS  C:\Users\11410\AppData\Local\Temp\ccjf4LnK.s 			page 8
+
+
+  49:Core/Src/kex.c ****   int i;
+ 360              		.loc 1 49 3 view .LVU58
+  50:Core/Src/kex.c ****   crypto_kem_dec(buf, recv, sk);
+ 361              		.loc 1 50 3 view .LVU59
+ 362 000a 1A46     		mov	r2, r3
+ 363              	.LVL28:
+ 364              		.loc 1 50 3 is_stmt 0 view .LVU60
+ 365 000c 04A8     		add	r0, sp, #16
+ 366              	.LVL29:
+ 367              		.loc 1 50 3 view .LVU61
+ 368 000e FFF7FEFF 		bl	crypto_kem_dec
+ 369              	.LVL30:
+  51:Core/Src/kex.c ****   crypto_kem_dec(buf+KYBER_SYMBYTES, recv+KYBER_CIPHERTEXTBYTES, ska);
+ 370              		.loc 1 51 3 is_stmt 1 view .LVU62
+ 371 0012 209A     		ldr	r2, [sp, #128]
+ 372 0014 04F59061 		add	r1, r4, #1152
+ 373 0018 0CA8     		add	r0, sp, #48
+ 374 001a FFF7FEFF 		bl	crypto_kem_dec
+ 375              	.LVL31:
+  52:Core/Src/kex.c ****   for(i=0;i<KYBER_SYMBYTES;i++) 
+ 376              		.loc 1 52 3 view .LVU63
+ 377              		.loc 1 52 8 is_stmt 0 view .LVU64
+ 378 001e 0023     		movs	r3, #0
+ 379              	.LVL32:
+ 380              	.L15:
+ 381              		.loc 1 52 11 is_stmt 1 discriminator 1 view .LVU65
+ 382              		.loc 1 52 3 is_stmt 0 discriminator 1 view .LVU66
+ 383 0020 1F2B     		cmp	r3, #31
+ 384 0022 08DC     		bgt	.L18
+  53:Core/Src/kex.c ****     buf[i+2*KYBER_SYMBYTES] = tk[i];
+ 385              		.loc 1 53 5 is_stmt 1 discriminator 3 view .LVU67
+ 386              		.loc 1 53 10 is_stmt 0 discriminator 3 view .LVU68
+ 387 0024 03F14001 		add	r1, r3, #64
+ 388              		.loc 1 53 33 discriminator 3 view .LVU69
+ 389 0028 EC5C     		ldrb	r4, [r5, r3]	@ zero_extendqisi2
+ 390              		.loc 1 53 29 discriminator 3 view .LVU70
+ 391 002a 1CAA     		add	r2, sp, #112
+ 392 002c 1144     		add	r1, r1, r2
+ 393 002e 01F8604C 		strb	r4, [r1, #-96]
+  52:Core/Src/kex.c ****   for(i=0;i<KYBER_SYMBYTES;i++) 
+ 394              		.loc 1 52 28 is_stmt 1 discriminator 3 view .LVU71
+  52:Core/Src/kex.c ****   for(i=0;i<KYBER_SYMBYTES;i++) 
+ 395              		.loc 1 52 29 is_stmt 0 discriminator 3 view .LVU72
+ 396 0032 0133     		adds	r3, r3, #1
+ 397              	.LVL33:
+  52:Core/Src/kex.c ****   for(i=0;i<KYBER_SYMBYTES;i++) 
+ 398              		.loc 1 52 29 discriminator 3 view .LVU73
+ 399 0034 F4E7     		b	.L15
+ 400              	.L18:
+  54:Core/Src/kex.c ****   shake256(k,KYBER_SYMBYTES,buf,3*KYBER_SYMBYTES);
+ 401              		.loc 1 54 3 is_stmt 1 view .LVU74
+ 402 0036 6022     		movs	r2, #96
+ 403 0038 0023     		movs	r3, #0
+ 404              	.LVL34:
+ 405              		.loc 1 54 3 is_stmt 0 view .LVU75
+ 406 003a CDE90223 		strd	r2, [sp, #8]
+ 407 003e 04AB     		add	r3, sp, #16
+ARM GAS  C:\Users\11410\AppData\Local\Temp\ccjf4LnK.s 			page 9
+
+
+ 408 0040 0093     		str	r3, [sp]
+ 409 0042 2022     		movs	r2, #32
+ 410 0044 0023     		movs	r3, #0
+ 411 0046 3046     		mov	r0, r6
+ 412 0048 FFF7FEFF 		bl	shake256
+ 413              	.LVL35:
+  55:Core/Src/kex.c **** }
+ 414              		.loc 1 55 1 view .LVU76
+ 415 004c 1CB0     		add	sp, sp, #112
+ 416              	.LCFI13:
+ 417              		.cfi_def_cfa_offset 16
+ 418              		@ sp needed
+ 419 004e 70BD     		pop	{r4, r5, r6, pc}
+ 420              		.loc 1 55 1 view .LVU77
+ 421              		.cfi_endproc
+ 422              	.LFE8:
+ 424              		.text
+ 425              	.Letext0:
+ 426              		.file 2 "c:\\program files (x86)\\gnu tools arm embedded\\9 2019-q4-major\\arm-none-eabi\\include\
+ 427              		.file 3 "c:\\program files (x86)\\gnu tools arm embedded\\9 2019-q4-major\\arm-none-eabi\\include\
+ 428              		.file 4 "c:\\program files (x86)\\gnu tools arm embedded\\9 2019-q4-major\\lib\\gcc\\arm-none-eabi
+ 429              		.file 5 "c:\\program files (x86)\\gnu tools arm embedded\\9 2019-q4-major\\arm-none-eabi\\include\
+ 430              		.file 6 "Core/Inc/api.h"
+ 431              		.file 7 "Core/Inc/fips202.h"
+ 432              		.file 8 "Core/Inc/kex.h"
+ARM GAS  C:\Users\11410\AppData\Local\Temp\ccjf4LnK.s 			page 10
+
+
+DEFINED SYMBOLS
+                            *ABS*:00000000 kex.c
+C:\Users\11410\AppData\Local\Temp\ccjf4LnK.s:18     .text.kyber_uake_initA:00000000 $t
+C:\Users\11410\AppData\Local\Temp\ccjf4LnK.s:26     .text.kyber_uake_initA:00000000 kyber_uake_initA
+C:\Users\11410\AppData\Local\Temp\ccjf4LnK.s:64     .text.kyber_uake_sharedB:00000000 $t
+C:\Users\11410\AppData\Local\Temp\ccjf4LnK.s:71     .text.kyber_uake_sharedB:00000000 kyber_uake_sharedB
+C:\Users\11410\AppData\Local\Temp\ccjf4LnK.s:128    .text.kyber_uake_sharedA:00000000 $t
+C:\Users\11410\AppData\Local\Temp\ccjf4LnK.s:135    .text.kyber_uake_sharedA:00000000 kyber_uake_sharedA
+C:\Users\11410\AppData\Local\Temp\ccjf4LnK.s:215    .text.kyber_ake_initA:00000000 $t
+C:\Users\11410\AppData\Local\Temp\ccjf4LnK.s:222    .text.kyber_ake_initA:00000000 kyber_ake_initA
+C:\Users\11410\AppData\Local\Temp\ccjf4LnK.s:259    .text.kyber_ake_sharedB:00000000 $t
+C:\Users\11410\AppData\Local\Temp\ccjf4LnK.s:266    .text.kyber_ake_sharedB:00000000 kyber_ake_sharedB
+C:\Users\11410\AppData\Local\Temp\ccjf4LnK.s:331    .text.kyber_ake_sharedA:00000000 $t
+C:\Users\11410\AppData\Local\Temp\ccjf4LnK.s:338    .text.kyber_ake_sharedA:00000000 kyber_ake_sharedA
+
+UNDEFINED SYMBOLS
+crypto_kem_keypair
+crypto_kem_enc
+crypto_kem_dec
+shake256

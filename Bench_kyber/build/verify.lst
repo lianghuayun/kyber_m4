@@ -1,0 +1,242 @@
+ARM GAS  C:\Users\11410\AppData\Local\Temp\ccuabUW8.s 			page 1
+
+
+   1              		.cpu cortex-m4
+   2              		.eabi_attribute 27, 1
+   3              		.eabi_attribute 28, 1
+   4              		.eabi_attribute 20, 1
+   5              		.eabi_attribute 21, 1
+   6              		.eabi_attribute 23, 3
+   7              		.eabi_attribute 24, 1
+   8              		.eabi_attribute 25, 1
+   9              		.eabi_attribute 26, 1
+  10              		.eabi_attribute 30, 1
+  11              		.eabi_attribute 34, 1
+  12              		.eabi_attribute 18, 4
+  13              		.file	"verify.c"
+  14              		.text
+  15              	.Ltext0:
+  16              		.cfi_sections	.debug_frame
+  17              		.section	.text.verify,"ax",%progbits
+  18              		.align	1
+  19              		.global	verify
+  20              		.arch armv7e-m
+  21              		.syntax unified
+  22              		.thumb
+  23              		.thumb_func
+  24              		.fpu fpv4-sp-d16
+  26              	verify:
+  27              	.LVL0:
+  28              	.LFB0:
+  29              		.file 1 "Core/Src/verify.c"
+   1:Core/Src/verify.c **** #include <string.h>
+   2:Core/Src/verify.c **** #include <stdint.h>
+   3:Core/Src/verify.c **** 
+   4:Core/Src/verify.c **** /*************************************************
+   5:Core/Src/verify.c **** * Name:        verify
+   6:Core/Src/verify.c **** * 
+   7:Core/Src/verify.c **** * Description: Compare two arrays for equality in constant time.
+   8:Core/Src/verify.c **** *
+   9:Core/Src/verify.c **** * Arguments:   const unsigned char *a: pointer to first byte array
+  10:Core/Src/verify.c **** *              const unsigned char *b: pointer to second byte array
+  11:Core/Src/verify.c **** *              size_t len:             length of the byte arrays
+  12:Core/Src/verify.c **** *
+  13:Core/Src/verify.c **** * Returns 0 if the byte arrays are equal, 1 otherwise
+  14:Core/Src/verify.c **** **************************************************/
+  15:Core/Src/verify.c **** int verify(const unsigned char *a, const unsigned char *b, size_t len)
+  16:Core/Src/verify.c **** {
+  30              		.loc 1 16 1 view -0
+  31              		.cfi_startproc
+  32              		@ args = 0, pretend = 0, frame = 0
+  33              		@ frame_needed = 0, uses_anonymous_args = 0
+  34              		@ link register save eliminated.
+  35              		.loc 1 16 1 is_stmt 0 view .LVU1
+  36 0000 70B4     		push	{r4, r5, r6}
+  37              	.LCFI0:
+  38              		.cfi_def_cfa_offset 12
+  39              		.cfi_offset 4, -12
+  40              		.cfi_offset 5, -8
+  41              		.cfi_offset 6, -4
+  17:Core/Src/verify.c ****   uint32_t r;
+ARM GAS  C:\Users\11410\AppData\Local\Temp\ccuabUW8.s 			page 2
+
+
+  42              		.loc 1 17 3 is_stmt 1 view .LVU2
+  18:Core/Src/verify.c ****   size_t i;
+  43              		.loc 1 18 3 view .LVU3
+  19:Core/Src/verify.c ****   r = 0;
+  44              		.loc 1 19 3 view .LVU4
+  45              	.LVL1:
+  20:Core/Src/verify.c ****   
+  21:Core/Src/verify.c ****   for(i=0;i<len;i++)
+  46              		.loc 1 21 3 view .LVU5
+  47              		.loc 1 21 8 is_stmt 0 view .LVU6
+  48 0002 0023     		movs	r3, #0
+  19:Core/Src/verify.c ****   r = 0;
+  49              		.loc 1 19 5 view .LVU7
+  50 0004 1D46     		mov	r5, r3
+  51              	.LVL2:
+  52              	.L2:
+  53              		.loc 1 21 11 is_stmt 1 discriminator 1 view .LVU8
+  54              		.loc 1 21 3 is_stmt 0 discriminator 1 view .LVU9
+  55 0006 9342     		cmp	r3, r2
+  56 0008 05D2     		bcs	.L5
+  22:Core/Src/verify.c ****     r |= a[i] ^ b[i];
+  57              		.loc 1 22 5 is_stmt 1 discriminator 3 view .LVU10
+  58              		.loc 1 22 11 is_stmt 0 discriminator 3 view .LVU11
+  59 000a C45C     		ldrb	r4, [r0, r3]	@ zero_extendqisi2
+  60              		.loc 1 22 18 discriminator 3 view .LVU12
+  61 000c CE5C     		ldrb	r6, [r1, r3]	@ zero_extendqisi2
+  62              		.loc 1 22 15 discriminator 3 view .LVU13
+  63 000e 7440     		eors	r4, r4, r6
+  64              		.loc 1 22 7 discriminator 3 view .LVU14
+  65 0010 2543     		orrs	r5, r5, r4
+  66              	.LVL3:
+  21:Core/Src/verify.c ****     r |= a[i] ^ b[i];
+  67              		.loc 1 21 17 is_stmt 1 discriminator 3 view .LVU15
+  21:Core/Src/verify.c ****     r |= a[i] ^ b[i];
+  68              		.loc 1 21 18 is_stmt 0 discriminator 3 view .LVU16
+  69 0012 0133     		adds	r3, r3, #1
+  70              	.LVL4:
+  21:Core/Src/verify.c ****     r |= a[i] ^ b[i];
+  71              		.loc 1 21 18 discriminator 3 view .LVU17
+  72 0014 F7E7     		b	.L2
+  73              	.L5:
+  23:Core/Src/verify.c **** 
+  24:Core/Src/verify.c ****   r = (-r) >> 31;
+  74              		.loc 1 24 3 is_stmt 1 view .LVU18
+  75              		.loc 1 24 8 is_stmt 0 view .LVU19
+  76 0016 6842     		rsbs	r0, r5, #0
+  77              	.LVL5:
+  25:Core/Src/verify.c ****   return r;
+  78              		.loc 1 25 3 is_stmt 1 view .LVU20
+  26:Core/Src/verify.c **** }
+  79              		.loc 1 26 1 is_stmt 0 view .LVU21
+  80 0018 C00F     		lsrs	r0, r0, #31
+  81              	.LVL6:
+  82              		.loc 1 26 1 view .LVU22
+  83 001a 70BC     		pop	{r4, r5, r6}
+  84              	.LCFI1:
+  85              		.cfi_restore 6
+ARM GAS  C:\Users\11410\AppData\Local\Temp\ccuabUW8.s 			page 3
+
+
+  86              		.cfi_restore 5
+  87              		.cfi_restore 4
+  88              		.cfi_def_cfa_offset 0
+  89 001c 7047     		bx	lr
+  90              		.cfi_endproc
+  91              	.LFE0:
+  93              		.section	.text.cmov,"ax",%progbits
+  94              		.align	1
+  95              		.global	cmov
+  96              		.syntax unified
+  97              		.thumb
+  98              		.thumb_func
+  99              		.fpu fpv4-sp-d16
+ 101              	cmov:
+ 102              	.LVL7:
+ 103              	.LFB1:
+  27:Core/Src/verify.c **** 
+  28:Core/Src/verify.c **** /*************************************************
+  29:Core/Src/verify.c **** * Name:        cmov
+  30:Core/Src/verify.c **** * 
+  31:Core/Src/verify.c **** * Description: Copy len bytes from x to r if b is 1;
+  32:Core/Src/verify.c **** *              don't modify x if b is 0. Requires b to be in {0,1};
+  33:Core/Src/verify.c **** *              assumes two's complement representation of negative integers.
+  34:Core/Src/verify.c **** *              Runs in constant time.
+  35:Core/Src/verify.c **** *
+  36:Core/Src/verify.c **** * Arguments:   unsigned char *r:       pointer to output byte array
+  37:Core/Src/verify.c **** *              const unsigned char *x: pointer to input byte array
+  38:Core/Src/verify.c **** *              size_t len:             Amount of bytes to be copied
+  39:Core/Src/verify.c **** *              unsigned char b:        Condition bit; has to be in {0,1}
+  40:Core/Src/verify.c **** **************************************************/
+  41:Core/Src/verify.c **** void cmov(unsigned char *r, const unsigned char *x, size_t len, unsigned char b)
+  42:Core/Src/verify.c **** {
+ 104              		.loc 1 42 1 is_stmt 1 view -0
+ 105              		.cfi_startproc
+ 106              		@ args = 0, pretend = 0, frame = 0
+ 107              		@ frame_needed = 0, uses_anonymous_args = 0
+ 108              		@ link register save eliminated.
+ 109              		.loc 1 42 1 is_stmt 0 view .LVU24
+ 110 0000 70B4     		push	{r4, r5, r6}
+ 111              	.LCFI2:
+ 112              		.cfi_def_cfa_offset 12
+ 113              		.cfi_offset 4, -12
+ 114              		.cfi_offset 5, -8
+ 115              		.cfi_offset 6, -4
+  43:Core/Src/verify.c ****   size_t i;
+ 116              		.loc 1 43 3 is_stmt 1 view .LVU25
+  44:Core/Src/verify.c **** 
+  45:Core/Src/verify.c ****   b = -b;
+ 117              		.loc 1 45 3 view .LVU26
+ 118              		.loc 1 45 5 is_stmt 0 view .LVU27
+ 119 0002 5E42     		rsbs	r6, r3, #0
+ 120 0004 F6B2     		uxtb	r6, r6
+ 121              	.LVL8:
+  46:Core/Src/verify.c ****   for(i=0;i<len;i++)
+ 122              		.loc 1 46 3 is_stmt 1 view .LVU28
+ 123              		.loc 1 46 8 is_stmt 0 view .LVU29
+ 124 0006 0023     		movs	r3, #0
+ARM GAS  C:\Users\11410\AppData\Local\Temp\ccuabUW8.s 			page 4
+
+
+ 125              	.LVL9:
+ 126              	.L7:
+ 127              		.loc 1 46 11 is_stmt 1 discriminator 1 view .LVU30
+ 128              		.loc 1 46 3 is_stmt 0 discriminator 1 view .LVU31
+ 129 0008 9342     		cmp	r3, r2
+ 130 000a 07D2     		bcs	.L10
+  47:Core/Src/verify.c ****     r[i] ^= b & (x[i] ^ r[i]);
+ 131              		.loc 1 47 5 is_stmt 1 discriminator 3 view .LVU32
+ 132              		.loc 1 47 10 is_stmt 0 discriminator 3 view .LVU33
+ 133 000c C55C     		ldrb	r5, [r0, r3]	@ zero_extendqisi2
+ 134              		.loc 1 47 19 discriminator 3 view .LVU34
+ 135 000e CC5C     		ldrb	r4, [r1, r3]	@ zero_extendqisi2
+ 136              		.loc 1 47 10 discriminator 3 view .LVU35
+ 137 0010 6C40     		eors	r4, r4, r5
+ 138 0012 3440     		ands	r4, r4, r6
+ 139 0014 6C40     		eors	r4, r4, r5
+ 140 0016 C454     		strb	r4, [r0, r3]
+  46:Core/Src/verify.c ****   for(i=0;i<len;i++)
+ 141              		.loc 1 46 17 is_stmt 1 discriminator 3 view .LVU36
+  46:Core/Src/verify.c ****   for(i=0;i<len;i++)
+ 142              		.loc 1 46 18 is_stmt 0 discriminator 3 view .LVU37
+ 143 0018 0133     		adds	r3, r3, #1
+ 144              	.LVL10:
+  46:Core/Src/verify.c ****   for(i=0;i<len;i++)
+ 145              		.loc 1 46 18 discriminator 3 view .LVU38
+ 146 001a F5E7     		b	.L7
+ 147              	.L10:
+  48:Core/Src/verify.c **** }
+ 148              		.loc 1 48 1 view .LVU39
+ 149 001c 70BC     		pop	{r4, r5, r6}
+ 150              	.LCFI3:
+ 151              		.cfi_restore 6
+ 152              		.cfi_restore 5
+ 153              		.cfi_restore 4
+ 154              		.cfi_def_cfa_offset 0
+ 155              	.LVL11:
+ 156              		.loc 1 48 1 view .LVU40
+ 157 001e 7047     		bx	lr
+ 158              		.cfi_endproc
+ 159              	.LFE1:
+ 161              		.text
+ 162              	.Letext0:
+ 163              		.file 2 "c:\\program files (x86)\\gnu tools arm embedded\\9 2019-q4-major\\lib\\gcc\\arm-none-eabi
+ 164              		.file 3 "c:\\program files (x86)\\gnu tools arm embedded\\9 2019-q4-major\\arm-none-eabi\\include\
+ 165              		.file 4 "c:\\program files (x86)\\gnu tools arm embedded\\9 2019-q4-major\\arm-none-eabi\\include\
+ 166              		.file 5 "c:\\program files (x86)\\gnu tools arm embedded\\9 2019-q4-major\\arm-none-eabi\\include\
+ 167              		.file 6 "c:\\program files (x86)\\gnu tools arm embedded\\9 2019-q4-major\\arm-none-eabi\\include\
+ 168              		.file 7 "c:\\program files (x86)\\gnu tools arm embedded\\9 2019-q4-major\\arm-none-eabi\\include\
+ARM GAS  C:\Users\11410\AppData\Local\Temp\ccuabUW8.s 			page 5
+
+
+DEFINED SYMBOLS
+                            *ABS*:00000000 verify.c
+C:\Users\11410\AppData\Local\Temp\ccuabUW8.s:18     .text.verify:00000000 $t
+C:\Users\11410\AppData\Local\Temp\ccuabUW8.s:26     .text.verify:00000000 verify
+C:\Users\11410\AppData\Local\Temp\ccuabUW8.s:94     .text.cmov:00000000 $t
+C:\Users\11410\AppData\Local\Temp\ccuabUW8.s:101    .text.cmov:00000000 cmov
+
+NO UNDEFINED SYMBOLS

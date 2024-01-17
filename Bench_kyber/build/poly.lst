@@ -1,0 +1,1574 @@
+ARM GAS  C:\Users\11410\AppData\Local\Temp\ccqyw4Mw.s 			page 1
+
+
+   1              		.cpu cortex-m4
+   2              		.eabi_attribute 27, 1
+   3              		.eabi_attribute 28, 1
+   4              		.eabi_attribute 20, 1
+   5              		.eabi_attribute 21, 1
+   6              		.eabi_attribute 23, 3
+   7              		.eabi_attribute 24, 1
+   8              		.eabi_attribute 25, 1
+   9              		.eabi_attribute 26, 1
+  10              		.eabi_attribute 30, 1
+  11              		.eabi_attribute 34, 1
+  12              		.eabi_attribute 18, 4
+  13              		.file	"poly.c"
+  14              		.text
+  15              	.Ltext0:
+  16              		.cfi_sections	.debug_frame
+  17              		.section	.text.poly_compress,"ax",%progbits
+  18              		.align	1
+  19              		.global	poly_compress
+  20              		.arch armv7e-m
+  21              		.syntax unified
+  22              		.thumb
+  23              		.thumb_func
+  24              		.fpu fpv4-sp-d16
+  26              	poly_compress:
+  27              	.LVL0:
+  28              	.LFB3:
+  29              		.file 1 "Core/Src/poly.c"
+   1:Core/Src/poly.c **** #include <stdio.h>
+   2:Core/Src/poly.c **** #include "poly.h"
+   3:Core/Src/poly.c **** #include "ntt.h"
+   4:Core/Src/poly.c **** #include "polyvec.h"
+   5:Core/Src/poly.c **** #include "reduce.h"
+   6:Core/Src/poly.c **** #include "cbd.h"
+   7:Core/Src/poly.c **** #include "fips202.h"
+   8:Core/Src/poly.c **** 
+   9:Core/Src/poly.c **** extern void pointwise_add(uint16_t* r, const uint16_t* a, const uint16_t* b);
+  10:Core/Src/poly.c **** extern void pointwise_sub(uint16_t* r, const uint16_t* a, const uint16_t* b);
+  11:Core/Src/poly.c **** 
+  12:Core/Src/poly.c **** /*************************************************
+  13:Core/Src/poly.c **** * Name:        poly_compress
+  14:Core/Src/poly.c **** * 
+  15:Core/Src/poly.c **** * Description: Compression and subsequent serialization of a polynomial
+  16:Core/Src/poly.c **** *
+  17:Core/Src/poly.c **** * Arguments:   - unsigned char *r: pointer to output byte array
+  18:Core/Src/poly.c **** *              - const poly *a:    pointer to input polynomial
+  19:Core/Src/poly.c **** **************************************************/
+  20:Core/Src/poly.c **** void poly_compress(unsigned char *r, const poly *a)
+  21:Core/Src/poly.c **** {
+  30              		.loc 1 21 1 view -0
+  31              		.cfi_startproc
+  32              		@ args = 0, pretend = 0, frame = 32
+  33              		@ frame_needed = 0, uses_anonymous_args = 0
+  34              		.loc 1 21 1 is_stmt 0 view .LVU1
+  35 0000 2DE9F041 		push	{r4, r5, r6, r7, r8, lr}
+  36              	.LCFI0:
+  37              		.cfi_def_cfa_offset 24
+ARM GAS  C:\Users\11410\AppData\Local\Temp\ccqyw4Mw.s 			page 2
+
+
+  38              		.cfi_offset 4, -24
+  39              		.cfi_offset 5, -20
+  40              		.cfi_offset 6, -16
+  41              		.cfi_offset 7, -12
+  42              		.cfi_offset 8, -8
+  43              		.cfi_offset 14, -4
+  44 0004 88B0     		sub	sp, sp, #32
+  45              	.LCFI1:
+  46              		.cfi_def_cfa_offset 56
+  47 0006 8046     		mov	r8, r0
+  48 0008 0E46     		mov	r6, r1
+  22:Core/Src/poly.c ****   uint32_t t[8];
+  49              		.loc 1 22 3 is_stmt 1 view .LVU2
+  23:Core/Src/poly.c ****   unsigned int i,j,k=0;
+  50              		.loc 1 23 3 view .LVU3
+  51              	.LVL1:
+  24:Core/Src/poly.c **** 
+  25:Core/Src/poly.c ****   for(i=0;i<KYBER_N;i+=8)
+  52              		.loc 1 25 3 view .LVU4
+  23:Core/Src/poly.c ****   unsigned int i,j,k=0;
+  53              		.loc 1 23 20 is_stmt 0 view .LVU5
+  54 000a 0027     		movs	r7, #0
+  55              		.loc 1 25 8 view .LVU6
+  56 000c 3D46     		mov	r5, r7
+  57              		.loc 1 25 3 view .LVU7
+  58 000e 43E0     		b	.L2
+  59              	.LVL2:
+  60              	.L3:
+  26:Core/Src/poly.c ****   {
+  27:Core/Src/poly.c ****     for(j=0;j<8;j++)
+  28:Core/Src/poly.c ****       t[j] = (((freeze(a->coeffs[i+j]) << 3) + KYBER_Q/2)/KYBER_Q) & 7;
+  61              		.loc 1 28 7 is_stmt 1 discriminator 3 view .LVU8
+  62              		.loc 1 28 35 is_stmt 0 discriminator 3 view .LVU9
+  63 0010 2B19     		adds	r3, r5, r4
+  64              		.loc 1 28 17 discriminator 3 view .LVU10
+  65 0012 36F81300 		ldrh	r0, [r6, r3, lsl #1]
+  66 0016 FFF7FEFF 		bl	freeze
+  67              	.LVL3:
+  68              		.loc 1 28 40 discriminator 3 view .LVU11
+  69 001a C000     		lsls	r0, r0, #3
+  70              		.loc 1 28 46 discriminator 3 view .LVU12
+  71 001c 00F57060 		add	r0, r0, #3840
+  72              		.loc 1 28 58 discriminator 3 view .LVU13
+  73 0020 214B     		ldr	r3, .L8
+  74 0022 83FB0023 		smull	r2, r3, r3, r0
+  75 0026 C017     		asrs	r0, r0, #31
+  76 0028 C0EBE320 		rsb	r0, r0, r3, asr #11
+  77              		.loc 1 28 68 discriminator 3 view .LVU14
+  78 002c 00F00700 		and	r0, r0, #7
+  79              		.loc 1 28 12 discriminator 3 view .LVU15
+  80 0030 08AB     		add	r3, sp, #32
+  81 0032 03EB8403 		add	r3, r3, r4, lsl #2
+  82 0036 43F8200C 		str	r0, [r3, #-32]
+  27:Core/Src/poly.c ****       t[j] = (((freeze(a->coeffs[i+j]) << 3) + KYBER_Q/2)/KYBER_Q) & 7;
+  83              		.loc 1 27 17 is_stmt 1 discriminator 3 view .LVU16
+  27:Core/Src/poly.c ****       t[j] = (((freeze(a->coeffs[i+j]) << 3) + KYBER_Q/2)/KYBER_Q) & 7;
+  84              		.loc 1 27 18 is_stmt 0 discriminator 3 view .LVU17
+ARM GAS  C:\Users\11410\AppData\Local\Temp\ccqyw4Mw.s 			page 3
+
+
+  85 003a 0134     		adds	r4, r4, #1
+  86              	.LVL4:
+  87              	.L4:
+  27:Core/Src/poly.c ****       t[j] = (((freeze(a->coeffs[i+j]) << 3) + KYBER_Q/2)/KYBER_Q) & 7;
+  88              		.loc 1 27 13 is_stmt 1 discriminator 1 view .LVU18
+  27:Core/Src/poly.c ****       t[j] = (((freeze(a->coeffs[i+j]) << 3) + KYBER_Q/2)/KYBER_Q) & 7;
+  89              		.loc 1 27 5 is_stmt 0 discriminator 1 view .LVU19
+  90 003c 072C     		cmp	r4, #7
+  91 003e E7D9     		bls	.L3
+  29:Core/Src/poly.c **** 
+  30:Core/Src/poly.c ****     r[k]   =  t[0]       | (t[1] << 3) | (t[2] << 6);
+  92              		.loc 1 30 5 is_stmt 1 discriminator 2 view .LVU20
+  93              		.loc 1 30 30 is_stmt 0 discriminator 2 view .LVU21
+  94 0040 019B     		ldr	r3, [sp, #4]
+  95              		.loc 1 30 34 discriminator 2 view .LVU22
+  96 0042 DA00     		lsls	r2, r3, #3
+  97 0044 D2B2     		uxtb	r2, r2
+  98              		.loc 1 30 26 discriminator 2 view .LVU23
+  99 0046 009B     		ldr	r3, [sp]
+ 100 0048 1A43     		orrs	r2, r2, r3
+ 101 004a D2B2     		uxtb	r2, r2
+ 102              		.loc 1 30 44 discriminator 2 view .LVU24
+ 103 004c 0298     		ldr	r0, [sp, #8]
+ 104              		.loc 1 30 48 discriminator 2 view .LVU25
+ 105 004e 8101     		lsls	r1, r0, #6
+ 106 0050 C9B2     		uxtb	r1, r1
+ 107              		.loc 1 30 40 discriminator 2 view .LVU26
+ 108 0052 0A43     		orrs	r2, r2, r1
+ 109              		.loc 1 30 12 discriminator 2 view .LVU27
+ 110 0054 08F80720 		strb	r2, [r8, r7]
+  31:Core/Src/poly.c ****     r[k+1] = (t[2] >> 2) | (t[3] << 1) | (t[4] << 4) | (t[5] << 7);
+ 111              		.loc 1 31 5 is_stmt 1 discriminator 2 view .LVU28
+ 112              		.loc 1 31 30 is_stmt 0 discriminator 2 view .LVU29
+ 113 0058 039B     		ldr	r3, [sp, #12]
+ 114              		.loc 1 31 34 discriminator 2 view .LVU30
+ 115 005a 5B00     		lsls	r3, r3, #1
+ 116 005c DBB2     		uxtb	r3, r3
+ 117              		.loc 1 31 26 discriminator 2 view .LVU31
+ 118 005e 43EA9003 		orr	r3, r3, r0, lsr #2
+ 119 0062 DBB2     		uxtb	r3, r3
+ 120              		.loc 1 31 44 discriminator 2 view .LVU32
+ 121 0064 049A     		ldr	r2, [sp, #16]
+ 122              		.loc 1 31 48 discriminator 2 view .LVU33
+ 123 0066 1201     		lsls	r2, r2, #4
+ 124 0068 D2B2     		uxtb	r2, r2
+ 125              		.loc 1 31 40 discriminator 2 view .LVU34
+ 126 006a 1343     		orrs	r3, r3, r2
+ 127              		.loc 1 31 58 discriminator 2 view .LVU35
+ 128 006c 0599     		ldr	r1, [sp, #20]
+ 129              		.loc 1 31 62 discriminator 2 view .LVU36
+ 130 006e CA01     		lsls	r2, r1, #7
+ 131 0070 D2B2     		uxtb	r2, r2
+ 132              		.loc 1 31 6 discriminator 2 view .LVU37
+ 133 0072 781C     		adds	r0, r7, #1
+ 134              		.loc 1 31 54 discriminator 2 view .LVU38
+ 135 0074 1343     		orrs	r3, r3, r2
+ 136              		.loc 1 31 12 discriminator 2 view .LVU39
+ARM GAS  C:\Users\11410\AppData\Local\Temp\ccqyw4Mw.s 			page 4
+
+
+ 137 0076 08F80030 		strb	r3, [r8, r0]
+  32:Core/Src/poly.c ****     r[k+2] = (t[5] >> 1) | (t[6] << 2) | (t[7] << 5);
+ 138              		.loc 1 32 5 is_stmt 1 discriminator 2 view .LVU40
+ 139              		.loc 1 32 30 is_stmt 0 discriminator 2 view .LVU41
+ 140 007a 069B     		ldr	r3, [sp, #24]
+ 141              		.loc 1 32 34 discriminator 2 view .LVU42
+ 142 007c 9B00     		lsls	r3, r3, #2
+ 143 007e DBB2     		uxtb	r3, r3
+ 144              		.loc 1 32 26 discriminator 2 view .LVU43
+ 145 0080 43EA5103 		orr	r3, r3, r1, lsr #1
+ 146 0084 DBB2     		uxtb	r3, r3
+ 147              		.loc 1 32 44 discriminator 2 view .LVU44
+ 148 0086 079A     		ldr	r2, [sp, #28]
+ 149              		.loc 1 32 48 discriminator 2 view .LVU45
+ 150 0088 5201     		lsls	r2, r2, #5
+ 151 008a D2B2     		uxtb	r2, r2
+ 152              		.loc 1 32 6 discriminator 2 view .LVU46
+ 153 008c B91C     		adds	r1, r7, #2
+ 154              		.loc 1 32 40 discriminator 2 view .LVU47
+ 155 008e 1343     		orrs	r3, r3, r2
+ 156              		.loc 1 32 12 discriminator 2 view .LVU48
+ 157 0090 08F80130 		strb	r3, [r8, r1]
+  33:Core/Src/poly.c ****     k += 3;
+ 158              		.loc 1 33 5 is_stmt 1 discriminator 2 view .LVU49
+ 159              		.loc 1 33 7 is_stmt 0 discriminator 2 view .LVU50
+ 160 0094 0337     		adds	r7, r7, #3
+ 161              	.LVL5:
+  25:Core/Src/poly.c ****   {
+ 162              		.loc 1 25 21 is_stmt 1 discriminator 2 view .LVU51
+  25:Core/Src/poly.c ****   {
+ 163              		.loc 1 25 22 is_stmt 0 discriminator 2 view .LVU52
+ 164 0096 0835     		adds	r5, r5, #8
+ 165              	.LVL6:
+ 166              	.L2:
+  25:Core/Src/poly.c ****   {
+ 167              		.loc 1 25 11 is_stmt 1 discriminator 1 view .LVU53
+  25:Core/Src/poly.c ****   {
+ 168              		.loc 1 25 3 is_stmt 0 discriminator 1 view .LVU54
+ 169 0098 FF2D     		cmp	r5, #255
+ 170 009a 01D8     		bhi	.L7
+  27:Core/Src/poly.c ****       t[j] = (((freeze(a->coeffs[i+j]) << 3) + KYBER_Q/2)/KYBER_Q) & 7;
+ 171              		.loc 1 27 10 view .LVU55
+ 172 009c 0024     		movs	r4, #0
+ 173 009e CDE7     		b	.L4
+ 174              	.L7:
+  34:Core/Src/poly.c ****   }
+  35:Core/Src/poly.c **** }
+ 175              		.loc 1 35 1 view .LVU56
+ 176 00a0 08B0     		add	sp, sp, #32
+ 177              	.LCFI2:
+ 178              		.cfi_def_cfa_offset 24
+ 179              		@ sp needed
+ 180 00a2 BDE8F081 		pop	{r4, r5, r6, r7, r8, pc}
+ 181              	.LVL7:
+ 182              	.L9:
+ 183              		.loc 1 35 1 view .LVU57
+ 184 00a6 00BF     		.align	2
+ARM GAS  C:\Users\11410\AppData\Local\Temp\ccqyw4Mw.s 			page 5
+
+
+ 185              	.L8:
+ 186 00a8 CDFD4144 		.word	1145175501
+ 187              		.cfi_endproc
+ 188              	.LFE3:
+ 190              		.section	.text.poly_decompress,"ax",%progbits
+ 191              		.align	1
+ 192              		.global	poly_decompress
+ 193              		.syntax unified
+ 194              		.thumb
+ 195              		.thumb_func
+ 196              		.fpu fpv4-sp-d16
+ 198              	poly_decompress:
+ 199              	.LVL8:
+ 200              	.LFB4:
+  36:Core/Src/poly.c **** 
+  37:Core/Src/poly.c **** /*************************************************
+  38:Core/Src/poly.c **** * Name:        poly_decompress
+  39:Core/Src/poly.c **** * 
+  40:Core/Src/poly.c **** * Description: De-serialization and subsequent decompression of a polynomial; 
+  41:Core/Src/poly.c **** *              approximate inverse of poly_compress
+  42:Core/Src/poly.c **** *
+  43:Core/Src/poly.c **** * Arguments:   - poly *r:                pointer to output polynomial
+  44:Core/Src/poly.c **** *              - const unsigned char *a: pointer to input byte array
+  45:Core/Src/poly.c **** **************************************************/
+  46:Core/Src/poly.c **** void poly_decompress(poly *r, const unsigned char *a)
+  47:Core/Src/poly.c **** {
+ 201              		.loc 1 47 1 is_stmt 1 view -0
+ 202              		.cfi_startproc
+ 203              		@ args = 0, pretend = 0, frame = 0
+ 204              		@ frame_needed = 0, uses_anonymous_args = 0
+ 205              		@ link register save eliminated.
+  48:Core/Src/poly.c ****   unsigned int i;
+ 206              		.loc 1 48 3 view .LVU59
+  49:Core/Src/poly.c ****   for(i=0;i<KYBER_N;i+=8)
+ 207              		.loc 1 49 3 view .LVU60
+ 208              		.loc 1 49 8 is_stmt 0 view .LVU61
+ 209 0000 0022     		movs	r2, #0
+ 210              	.LVL9:
+ 211              		.loc 1 49 11 is_stmt 1 view .LVU62
+ 212              		.loc 1 49 3 is_stmt 0 view .LVU63
+ 213 0002 FF2A     		cmp	r2, #255
+ 214 0004 6ED8     		bhi	.L16
+  47:Core/Src/poly.c ****   unsigned int i;
+ 215              		.loc 1 47 1 view .LVU64
+ 216 0006 10B4     		push	{r4}
+ 217              	.LCFI3:
+ 218              		.cfi_def_cfa_offset 4
+ 219              		.cfi_offset 4, -4
+ 220              	.L12:
+  50:Core/Src/poly.c ****   {
+  51:Core/Src/poly.c ****     r->coeffs[i+0] =  (((a[0] & 7) * KYBER_Q) + 4)>> 3;
+ 221              		.loc 1 51 5 is_stmt 1 discriminator 3 view .LVU65
+ 222              		.loc 1 51 27 is_stmt 0 discriminator 3 view .LVU66
+ 223 0008 0B78     		ldrb	r3, [r1]	@ zero_extendqisi2
+ 224              		.loc 1 51 31 discriminator 3 view .LVU67
+ 225 000a 03F00703 		and	r3, r3, #7
+ 226              		.loc 1 51 36 discriminator 3 view .LVU68
+ARM GAS  C:\Users\11410\AppData\Local\Temp\ccqyw4Mw.s 			page 6
+
+
+ 227 000e C3EB0314 		rsb	r4, r3, r3, lsl #4
+ 228 0012 03EB4423 		add	r3, r3, r4, lsl #9
+ 229              		.loc 1 51 47 discriminator 3 view .LVU69
+ 230 0016 0433     		adds	r3, r3, #4
+ 231              		.loc 1 51 51 discriminator 3 view .LVU70
+ 232 0018 DB10     		asrs	r3, r3, #3
+ 233              		.loc 1 51 20 discriminator 3 view .LVU71
+ 234 001a 20F81230 		strh	r3, [r0, r2, lsl #1]	@ movhi
+  52:Core/Src/poly.c ****     r->coeffs[i+1] = ((((a[0] >> 3) & 7) * KYBER_Q)+ 4) >> 3;
+ 235              		.loc 1 52 5 is_stmt 1 discriminator 3 view .LVU72
+ 236              		.loc 1 52 27 is_stmt 0 discriminator 3 view .LVU73
+ 237 001e 0B78     		ldrb	r3, [r1]	@ zero_extendqisi2
+ 238              		.loc 1 52 37 discriminator 3 view .LVU74
+ 239 0020 C3F3C203 		ubfx	r3, r3, #3, #3
+ 240              		.loc 1 52 42 discriminator 3 view .LVU75
+ 241 0024 C3EB0314 		rsb	r4, r3, r3, lsl #4
+ 242 0028 03EB4423 		add	r3, r3, r4, lsl #9
+ 243              		.loc 1 52 52 discriminator 3 view .LVU76
+ 244 002c 0433     		adds	r3, r3, #4
+ 245              		.loc 1 52 57 discriminator 3 view .LVU77
+ 246 002e DB10     		asrs	r3, r3, #3
+ 247              		.loc 1 52 16 discriminator 3 view .LVU78
+ 248 0030 541C     		adds	r4, r2, #1
+ 249              		.loc 1 52 20 discriminator 3 view .LVU79
+ 250 0032 20F81430 		strh	r3, [r0, r4, lsl #1]	@ movhi
+  53:Core/Src/poly.c ****     r->coeffs[i+2] = ((((a[0] >> 6) | ((a[1] << 2) & 4)) * KYBER_Q) + 4)>> 3;
+ 251              		.loc 1 53 5 is_stmt 1 discriminator 3 view .LVU80
+ 252              		.loc 1 53 27 is_stmt 0 discriminator 3 view .LVU81
+ 253 0036 0C78     		ldrb	r4, [r1]	@ zero_extendqisi2
+ 254              		.loc 1 53 42 discriminator 3 view .LVU82
+ 255 0038 4B78     		ldrb	r3, [r1, #1]	@ zero_extendqisi2
+ 256              		.loc 1 53 46 discriminator 3 view .LVU83
+ 257 003a 9B00     		lsls	r3, r3, #2
+ 258              		.loc 1 53 52 discriminator 3 view .LVU84
+ 259 003c 03F00403 		and	r3, r3, #4
+ 260              		.loc 1 53 37 discriminator 3 view .LVU85
+ 261 0040 43EA9413 		orr	r3, r3, r4, lsr #6
+ 262              		.loc 1 53 58 discriminator 3 view .LVU86
+ 263 0044 C3EB0314 		rsb	r4, r3, r3, lsl #4
+ 264 0048 03EB4423 		add	r3, r3, r4, lsl #9
+ 265              		.loc 1 53 69 discriminator 3 view .LVU87
+ 266 004c 0433     		adds	r3, r3, #4
+ 267              		.loc 1 53 73 discriminator 3 view .LVU88
+ 268 004e DB10     		asrs	r3, r3, #3
+ 269              		.loc 1 53 16 discriminator 3 view .LVU89
+ 270 0050 941C     		adds	r4, r2, #2
+ 271              		.loc 1 53 20 discriminator 3 view .LVU90
+ 272 0052 20F81430 		strh	r3, [r0, r4, lsl #1]	@ movhi
+  54:Core/Src/poly.c ****     r->coeffs[i+3] = ((((a[1] >> 1) & 7) * KYBER_Q) + 4)>> 3;
+ 273              		.loc 1 54 5 is_stmt 1 discriminator 3 view .LVU91
+ 274              		.loc 1 54 27 is_stmt 0 discriminator 3 view .LVU92
+ 275 0056 4B78     		ldrb	r3, [r1, #1]	@ zero_extendqisi2
+ 276              		.loc 1 54 37 discriminator 3 view .LVU93
+ 277 0058 C3F34203 		ubfx	r3, r3, #1, #3
+ 278              		.loc 1 54 42 discriminator 3 view .LVU94
+ 279 005c C3EB0314 		rsb	r4, r3, r3, lsl #4
+ 280 0060 03EB4423 		add	r3, r3, r4, lsl #9
+ARM GAS  C:\Users\11410\AppData\Local\Temp\ccqyw4Mw.s 			page 7
+
+
+ 281              		.loc 1 54 53 discriminator 3 view .LVU95
+ 282 0064 0433     		adds	r3, r3, #4
+ 283              		.loc 1 54 57 discriminator 3 view .LVU96
+ 284 0066 DB10     		asrs	r3, r3, #3
+ 285              		.loc 1 54 16 discriminator 3 view .LVU97
+ 286 0068 D41C     		adds	r4, r2, #3
+ 287              		.loc 1 54 20 discriminator 3 view .LVU98
+ 288 006a 20F81430 		strh	r3, [r0, r4, lsl #1]	@ movhi
+  55:Core/Src/poly.c ****     r->coeffs[i+4] = ((((a[1] >> 4) & 7) * KYBER_Q) + 4)>> 3;
+ 289              		.loc 1 55 5 is_stmt 1 discriminator 3 view .LVU99
+ 290              		.loc 1 55 27 is_stmt 0 discriminator 3 view .LVU100
+ 291 006e 4C78     		ldrb	r4, [r1, #1]	@ zero_extendqisi2
+ 292              		.loc 1 55 37 discriminator 3 view .LVU101
+ 293 0070 C4F30213 		ubfx	r3, r4, #4, #3
+ 294              		.loc 1 55 42 discriminator 3 view .LVU102
+ 295 0074 04F07004 		and	r4, r4, #112
+ 296 0078 E41A     		subs	r4, r4, r3
+ 297 007a 03EB4423 		add	r3, r3, r4, lsl #9
+ 298              		.loc 1 55 53 discriminator 3 view .LVU103
+ 299 007e 0433     		adds	r3, r3, #4
+ 300              		.loc 1 55 57 discriminator 3 view .LVU104
+ 301 0080 DB10     		asrs	r3, r3, #3
+ 302              		.loc 1 55 16 discriminator 3 view .LVU105
+ 303 0082 141D     		adds	r4, r2, #4
+ 304              		.loc 1 55 20 discriminator 3 view .LVU106
+ 305 0084 20F81430 		strh	r3, [r0, r4, lsl #1]	@ movhi
+  56:Core/Src/poly.c ****     r->coeffs[i+5] = ((((a[1] >> 7) | ((a[2] << 1) & 6)) * KYBER_Q) + 4)>> 3;
+ 306              		.loc 1 56 5 is_stmt 1 discriminator 3 view .LVU107
+ 307              		.loc 1 56 27 is_stmt 0 discriminator 3 view .LVU108
+ 308 0088 4C78     		ldrb	r4, [r1, #1]	@ zero_extendqisi2
+ 309              		.loc 1 56 42 discriminator 3 view .LVU109
+ 310 008a 8B78     		ldrb	r3, [r1, #2]	@ zero_extendqisi2
+ 311              		.loc 1 56 46 discriminator 3 view .LVU110
+ 312 008c 5B00     		lsls	r3, r3, #1
+ 313              		.loc 1 56 52 discriminator 3 view .LVU111
+ 314 008e 03F00603 		and	r3, r3, #6
+ 315              		.loc 1 56 37 discriminator 3 view .LVU112
+ 316 0092 43EAD413 		orr	r3, r3, r4, lsr #7
+ 317              		.loc 1 56 58 discriminator 3 view .LVU113
+ 318 0096 C3EB0314 		rsb	r4, r3, r3, lsl #4
+ 319 009a 03EB4423 		add	r3, r3, r4, lsl #9
+ 320              		.loc 1 56 69 discriminator 3 view .LVU114
+ 321 009e 0433     		adds	r3, r3, #4
+ 322              		.loc 1 56 73 discriminator 3 view .LVU115
+ 323 00a0 DB10     		asrs	r3, r3, #3
+ 324              		.loc 1 56 16 discriminator 3 view .LVU116
+ 325 00a2 541D     		adds	r4, r2, #5
+ 326              		.loc 1 56 20 discriminator 3 view .LVU117
+ 327 00a4 20F81430 		strh	r3, [r0, r4, lsl #1]	@ movhi
+  57:Core/Src/poly.c ****     r->coeffs[i+6] = ((((a[2] >> 2) & 7) * KYBER_Q) + 4)>> 3;
+ 328              		.loc 1 57 5 is_stmt 1 discriminator 3 view .LVU118
+ 329              		.loc 1 57 27 is_stmt 0 discriminator 3 view .LVU119
+ 330 00a8 8B78     		ldrb	r3, [r1, #2]	@ zero_extendqisi2
+ 331              		.loc 1 57 37 discriminator 3 view .LVU120
+ 332 00aa C3F38203 		ubfx	r3, r3, #2, #3
+ 333              		.loc 1 57 42 discriminator 3 view .LVU121
+ 334 00ae C3EB0314 		rsb	r4, r3, r3, lsl #4
+ARM GAS  C:\Users\11410\AppData\Local\Temp\ccqyw4Mw.s 			page 8
+
+
+ 335 00b2 03EB4423 		add	r3, r3, r4, lsl #9
+ 336              		.loc 1 57 53 discriminator 3 view .LVU122
+ 337 00b6 0433     		adds	r3, r3, #4
+ 338              		.loc 1 57 57 discriminator 3 view .LVU123
+ 339 00b8 DB10     		asrs	r3, r3, #3
+ 340              		.loc 1 57 16 discriminator 3 view .LVU124
+ 341 00ba 941D     		adds	r4, r2, #6
+ 342              		.loc 1 57 20 discriminator 3 view .LVU125
+ 343 00bc 20F81430 		strh	r3, [r0, r4, lsl #1]	@ movhi
+  58:Core/Src/poly.c ****     r->coeffs[i+7] = ((((a[2] >> 5)) * KYBER_Q) + 4)>> 3;
+ 344              		.loc 1 58 5 is_stmt 1 discriminator 3 view .LVU126
+ 345              		.loc 1 58 27 is_stmt 0 discriminator 3 view .LVU127
+ 346 00c0 8B78     		ldrb	r3, [r1, #2]	@ zero_extendqisi2
+ 347              		.loc 1 58 31 discriminator 3 view .LVU128
+ 348 00c2 5B09     		lsrs	r3, r3, #5
+ 349              		.loc 1 58 38 discriminator 3 view .LVU129
+ 350 00c4 C3EB0314 		rsb	r4, r3, r3, lsl #4
+ 351 00c8 03EB4423 		add	r3, r3, r4, lsl #9
+ 352              		.loc 1 58 49 discriminator 3 view .LVU130
+ 353 00cc 0433     		adds	r3, r3, #4
+ 354              		.loc 1 58 53 discriminator 3 view .LVU131
+ 355 00ce DB10     		asrs	r3, r3, #3
+ 356              		.loc 1 58 16 discriminator 3 view .LVU132
+ 357 00d0 D41D     		adds	r4, r2, #7
+ 358              		.loc 1 58 20 discriminator 3 view .LVU133
+ 359 00d2 20F81430 		strh	r3, [r0, r4, lsl #1]	@ movhi
+  59:Core/Src/poly.c ****     a += 3;
+ 360              		.loc 1 59 5 is_stmt 1 discriminator 3 view .LVU134
+ 361              		.loc 1 59 7 is_stmt 0 discriminator 3 view .LVU135
+ 362 00d6 0331     		adds	r1, r1, #3
+ 363              	.LVL10:
+  49:Core/Src/poly.c ****   {
+ 364              		.loc 1 49 21 is_stmt 1 discriminator 3 view .LVU136
+  49:Core/Src/poly.c ****   {
+ 365              		.loc 1 49 22 is_stmt 0 discriminator 3 view .LVU137
+ 366 00d8 0832     		adds	r2, r2, #8
+ 367              	.LVL11:
+  49:Core/Src/poly.c ****   {
+ 368              		.loc 1 49 11 is_stmt 1 discriminator 3 view .LVU138
+  49:Core/Src/poly.c ****   {
+ 369              		.loc 1 49 3 is_stmt 0 discriminator 3 view .LVU139
+ 370 00da FF2A     		cmp	r2, #255
+ 371 00dc 94D9     		bls	.L12
+  60:Core/Src/poly.c ****   }
+  61:Core/Src/poly.c **** }
+ 372              		.loc 1 61 1 view .LVU140
+ 373 00de 5DF8044B 		ldr	r4, [sp], #4
+ 374              	.LCFI4:
+ 375              		.cfi_restore 4
+ 376              		.cfi_def_cfa_offset 0
+ 377 00e2 7047     		bx	lr
+ 378              	.L16:
+ 379              		.loc 1 61 1 view .LVU141
+ 380 00e4 7047     		bx	lr
+ 381              		.cfi_endproc
+ 382              	.LFE4:
+ 384              		.section	.text.poly_tobytes,"ax",%progbits
+ARM GAS  C:\Users\11410\AppData\Local\Temp\ccqyw4Mw.s 			page 9
+
+
+ 385              		.align	1
+ 386              		.global	poly_tobytes
+ 387              		.syntax unified
+ 388              		.thumb
+ 389              		.thumb_func
+ 390              		.fpu fpv4-sp-d16
+ 392              	poly_tobytes:
+ 393              	.LVL12:
+ 394              	.LFB5:
+  62:Core/Src/poly.c **** 
+  63:Core/Src/poly.c **** /*************************************************
+  64:Core/Src/poly.c **** * Name:        poly_tobytes
+  65:Core/Src/poly.c **** * 
+  66:Core/Src/poly.c **** * Description: Serialization of a polynomial
+  67:Core/Src/poly.c **** *
+  68:Core/Src/poly.c **** * Arguments:   - unsigned char *r: pointer to output byte array
+  69:Core/Src/poly.c **** *              - const poly *a:    pointer to input polynomial
+  70:Core/Src/poly.c **** **************************************************/
+  71:Core/Src/poly.c **** void poly_tobytes(unsigned char *r, const poly *a)
+  72:Core/Src/poly.c **** {
+ 395              		.loc 1 72 1 is_stmt 1 view -0
+ 396              		.cfi_startproc
+ 397              		@ args = 0, pretend = 0, frame = 16
+ 398              		@ frame_needed = 0, uses_anonymous_args = 0
+ 399              		.loc 1 72 1 is_stmt 0 view .LVU143
+ 400 0000 F0B5     		push	{r4, r5, r6, r7, lr}
+ 401              	.LCFI5:
+ 402              		.cfi_def_cfa_offset 20
+ 403              		.cfi_offset 4, -20
+ 404              		.cfi_offset 5, -16
+ 405              		.cfi_offset 6, -12
+ 406              		.cfi_offset 7, -8
+ 407              		.cfi_offset 14, -4
+ 408 0002 85B0     		sub	sp, sp, #20
+ 409              	.LCFI6:
+ 410              		.cfi_def_cfa_offset 40
+ 411 0004 0646     		mov	r6, r0
+ 412 0006 0F46     		mov	r7, r1
+  73:Core/Src/poly.c ****   int i,j;
+ 413              		.loc 1 73 3 is_stmt 1 view .LVU144
+  74:Core/Src/poly.c ****   uint16_t t[8];
+ 414              		.loc 1 74 3 view .LVU145
+  75:Core/Src/poly.c **** 
+  76:Core/Src/poly.c ****   for(i=0;i<KYBER_N/8;i++)
+ 415              		.loc 1 76 3 view .LVU146
+ 416              	.LVL13:
+ 417              		.loc 1 76 8 is_stmt 0 view .LVU147
+ 418 0008 0025     		movs	r5, #0
+ 419              		.loc 1 76 3 view .LVU148
+ 420 000a 59E0     		b	.L18
+ 421              	.LVL14:
+ 422              	.L19:
+  77:Core/Src/poly.c ****   {
+  78:Core/Src/poly.c ****     for(j=0;j<8;j++)
+  79:Core/Src/poly.c ****       t[j] = freeze(a->coeffs[8*i+j]);
+ 423              		.loc 1 79 7 is_stmt 1 discriminator 3 view .LVU149
+ 424              		.loc 1 79 34 is_stmt 0 discriminator 3 view .LVU150
+ARM GAS  C:\Users\11410\AppData\Local\Temp\ccqyw4Mw.s 			page 10
+
+
+ 425 000c 04EBC503 		add	r3, r4, r5, lsl #3
+ 426              		.loc 1 79 14 discriminator 3 view .LVU151
+ 427 0010 37F81300 		ldrh	r0, [r7, r3, lsl #1]
+ 428 0014 FFF7FEFF 		bl	freeze
+ 429              	.LVL15:
+ 430              		.loc 1 79 12 discriminator 3 view .LVU152
+ 431 0018 04AB     		add	r3, sp, #16
+ 432 001a 03EB4403 		add	r3, r3, r4, lsl #1
+ 433 001e 23F8100C 		strh	r0, [r3, #-16]	@ movhi
+  78:Core/Src/poly.c ****       t[j] = freeze(a->coeffs[8*i+j]);
+ 434              		.loc 1 78 17 is_stmt 1 discriminator 3 view .LVU153
+  78:Core/Src/poly.c ****       t[j] = freeze(a->coeffs[8*i+j]);
+ 435              		.loc 1 78 18 is_stmt 0 discriminator 3 view .LVU154
+ 436 0022 0134     		adds	r4, r4, #1
+ 437              	.LVL16:
+ 438              	.L20:
+  78:Core/Src/poly.c ****       t[j] = freeze(a->coeffs[8*i+j]);
+ 439              		.loc 1 78 13 is_stmt 1 discriminator 1 view .LVU155
+  78:Core/Src/poly.c ****       t[j] = freeze(a->coeffs[8*i+j]);
+ 440              		.loc 1 78 5 is_stmt 0 discriminator 1 view .LVU156
+ 441 0024 072C     		cmp	r4, #7
+ 442 0026 F1DD     		ble	.L19
+  80:Core/Src/poly.c **** 
+  81:Core/Src/poly.c ****     r[13*i+ 0] =  t[0]        & 0xff;
+ 443              		.loc 1 81 5 is_stmt 1 discriminator 2 view .LVU157
+ 444              		.loc 1 81 20 is_stmt 0 discriminator 2 view .LVU158
+ 445 0028 BDF80010 		ldrh	r1, [sp]
+ 446              		.loc 1 81 9 discriminator 2 view .LVU159
+ 447 002c 05EB4503 		add	r3, r5, r5, lsl #1
+ 448 0030 05EB8303 		add	r3, r5, r3, lsl #2
+ 449              		.loc 1 81 16 discriminator 2 view .LVU160
+ 450 0034 F154     		strb	r1, [r6, r3]
+  82:Core/Src/poly.c ****     r[13*i+ 1] = (t[0] >>  8) | ((t[1] & 0x07) << 5);
+ 451              		.loc 1 82 5 is_stmt 1 discriminator 2 view .LVU161
+ 452              		.loc 1 82 36 is_stmt 0 discriminator 2 view .LVU162
+ 453 0036 BDF80220 		ldrh	r2, [sp, #2]
+ 454              		.loc 1 82 6 discriminator 2 view .LVU163
+ 455 003a 581C     		adds	r0, r3, #1
+ 456              		.loc 1 82 31 discriminator 2 view .LVU164
+ 457 003c 090A     		lsrs	r1, r1, #8
+ 458 003e 41EA4211 		orr	r1, r1, r2, lsl #5
+ 459              		.loc 1 82 16 discriminator 2 view .LVU165
+ 460 0042 3154     		strb	r1, [r6, r0]
+  83:Core/Src/poly.c ****     r[13*i+ 2] = (t[1] >>  3) & 0xff;
+ 461              		.loc 1 83 5 is_stmt 1 discriminator 2 view .LVU166
+ 462              		.loc 1 83 6 is_stmt 0 discriminator 2 view .LVU167
+ 463 0044 991C     		adds	r1, r3, #2
+ 464              		.loc 1 83 16 discriminator 2 view .LVU168
+ 465 0046 D008     		lsrs	r0, r2, #3
+ 466 0048 7054     		strb	r0, [r6, r1]
+  84:Core/Src/poly.c ****     r[13*i+ 3] = (t[1] >> 11) | ((t[2] & 0x3f) << 2);
+ 467              		.loc 1 84 5 is_stmt 1 discriminator 2 view .LVU169
+ 468              		.loc 1 84 36 is_stmt 0 discriminator 2 view .LVU170
+ 469 004a BDF80400 		ldrh	r0, [sp, #4]
+ 470              		.loc 1 84 6 discriminator 2 view .LVU171
+ 471 004e D91C     		adds	r1, r3, #3
+ 472              		.loc 1 84 31 discriminator 2 view .LVU172
+ARM GAS  C:\Users\11410\AppData\Local\Temp\ccqyw4Mw.s 			page 11
+
+
+ 473 0050 D20A     		lsrs	r2, r2, #11
+ 474 0052 42EA8002 		orr	r2, r2, r0, lsl #2
+ 475              		.loc 1 84 16 discriminator 2 view .LVU173
+ 476 0056 7254     		strb	r2, [r6, r1]
+  85:Core/Src/poly.c ****     r[13*i+ 4] = (t[2] >>  6) | ((t[3] & 0x01) << 7);
+ 477              		.loc 1 85 5 is_stmt 1 discriminator 2 view .LVU174
+ 478              		.loc 1 85 36 is_stmt 0 discriminator 2 view .LVU175
+ 479 0058 BDF80610 		ldrh	r1, [sp, #6]
+ 480              		.loc 1 85 6 discriminator 2 view .LVU176
+ 481 005c 1A1D     		adds	r2, r3, #4
+ 482              		.loc 1 85 31 discriminator 2 view .LVU177
+ 483 005e 8009     		lsrs	r0, r0, #6
+ 484 0060 40EAC110 		orr	r0, r0, r1, lsl #7
+ 485              		.loc 1 85 16 discriminator 2 view .LVU178
+ 486 0064 B054     		strb	r0, [r6, r2]
+  86:Core/Src/poly.c ****     r[13*i+ 5] = (t[3] >>  1) & 0xff;
+ 487              		.loc 1 86 5 is_stmt 1 discriminator 2 view .LVU179
+ 488              		.loc 1 86 6 is_stmt 0 discriminator 2 view .LVU180
+ 489 0066 5A1D     		adds	r2, r3, #5
+ 490              		.loc 1 86 16 discriminator 2 view .LVU181
+ 491 0068 4808     		lsrs	r0, r1, #1
+ 492 006a B054     		strb	r0, [r6, r2]
+  87:Core/Src/poly.c ****     r[13*i+ 6] = (t[3] >>  9) | ((t[4] & 0x0f) << 4);
+ 493              		.loc 1 87 5 is_stmt 1 discriminator 2 view .LVU182
+ 494              		.loc 1 87 36 is_stmt 0 discriminator 2 view .LVU183
+ 495 006c BDF80820 		ldrh	r2, [sp, #8]
+ 496              		.loc 1 87 6 discriminator 2 view .LVU184
+ 497 0070 981D     		adds	r0, r3, #6
+ 498              		.loc 1 87 31 discriminator 2 view .LVU185
+ 499 0072 490A     		lsrs	r1, r1, #9
+ 500 0074 41EA0211 		orr	r1, r1, r2, lsl #4
+ 501              		.loc 1 87 16 discriminator 2 view .LVU186
+ 502 0078 3154     		strb	r1, [r6, r0]
+  88:Core/Src/poly.c ****     r[13*i+ 7] = (t[4] >>  4) & 0xff;
+ 503              		.loc 1 88 5 is_stmt 1 discriminator 2 view .LVU187
+ 504              		.loc 1 88 6 is_stmt 0 discriminator 2 view .LVU188
+ 505 007a D91D     		adds	r1, r3, #7
+ 506              		.loc 1 88 16 discriminator 2 view .LVU189
+ 507 007c 1009     		lsrs	r0, r2, #4
+ 508 007e 7054     		strb	r0, [r6, r1]
+  89:Core/Src/poly.c ****     r[13*i+ 8] = (t[4] >> 12) | ((t[5] & 0x7f) << 1);
+ 509              		.loc 1 89 5 is_stmt 1 discriminator 2 view .LVU190
+ 510              		.loc 1 89 36 is_stmt 0 discriminator 2 view .LVU191
+ 511 0080 BDF80A10 		ldrh	r1, [sp, #10]
+ 512              		.loc 1 89 6 discriminator 2 view .LVU192
+ 513 0084 03F10800 		add	r0, r3, #8
+ 514              		.loc 1 89 31 discriminator 2 view .LVU193
+ 515 0088 120B     		lsrs	r2, r2, #12
+ 516 008a 42EA4102 		orr	r2, r2, r1, lsl #1
+ 517              		.loc 1 89 16 discriminator 2 view .LVU194
+ 518 008e 3254     		strb	r2, [r6, r0]
+  90:Core/Src/poly.c ****     r[13*i+ 9] = (t[5] >>  7) | ((t[6] & 0x03) << 6);
+ 519              		.loc 1 90 5 is_stmt 1 discriminator 2 view .LVU195
+ 520              		.loc 1 90 36 is_stmt 0 discriminator 2 view .LVU196
+ 521 0090 BDF80C20 		ldrh	r2, [sp, #12]
+ 522              		.loc 1 90 6 discriminator 2 view .LVU197
+ 523 0094 03F10900 		add	r0, r3, #9
+ARM GAS  C:\Users\11410\AppData\Local\Temp\ccqyw4Mw.s 			page 12
+
+
+ 524              		.loc 1 90 31 discriminator 2 view .LVU198
+ 525 0098 C909     		lsrs	r1, r1, #7
+ 526 009a 41EA8211 		orr	r1, r1, r2, lsl #6
+ 527              		.loc 1 90 16 discriminator 2 view .LVU199
+ 528 009e 3154     		strb	r1, [r6, r0]
+  91:Core/Src/poly.c ****     r[13*i+10] = (t[6] >>  2) & 0xff;
+ 529              		.loc 1 91 5 is_stmt 1 discriminator 2 view .LVU200
+ 530              		.loc 1 91 6 is_stmt 0 discriminator 2 view .LVU201
+ 531 00a0 03F10A01 		add	r1, r3, #10
+ 532              		.loc 1 91 16 discriminator 2 view .LVU202
+ 533 00a4 9008     		lsrs	r0, r2, #2
+ 534 00a6 7054     		strb	r0, [r6, r1]
+  92:Core/Src/poly.c ****     r[13*i+11] = (t[6] >> 10) | ((t[7] & 0x1f) << 3);
+ 535              		.loc 1 92 5 is_stmt 1 discriminator 2 view .LVU203
+ 536              		.loc 1 92 36 is_stmt 0 discriminator 2 view .LVU204
+ 537 00a8 BDF80E10 		ldrh	r1, [sp, #14]
+ 538              		.loc 1 92 6 discriminator 2 view .LVU205
+ 539 00ac 03F10B00 		add	r0, r3, #11
+ 540              		.loc 1 92 31 discriminator 2 view .LVU206
+ 541 00b0 920A     		lsrs	r2, r2, #10
+ 542 00b2 42EAC102 		orr	r2, r2, r1, lsl #3
+ 543              		.loc 1 92 16 discriminator 2 view .LVU207
+ 544 00b6 3254     		strb	r2, [r6, r0]
+  93:Core/Src/poly.c ****     r[13*i+12] = (t[7] >>  5);
+ 545              		.loc 1 93 5 is_stmt 1 discriminator 2 view .LVU208
+ 546              		.loc 1 93 6 is_stmt 0 discriminator 2 view .LVU209
+ 547 00b8 0C33     		adds	r3, r3, #12
+ 548              		.loc 1 93 16 discriminator 2 view .LVU210
+ 549 00ba 4909     		lsrs	r1, r1, #5
+ 550 00bc F154     		strb	r1, [r6, r3]
+  76:Core/Src/poly.c ****   {
+ 551              		.loc 1 76 23 is_stmt 1 discriminator 2 view .LVU211
+  76:Core/Src/poly.c ****   {
+ 552              		.loc 1 76 24 is_stmt 0 discriminator 2 view .LVU212
+ 553 00be 0135     		adds	r5, r5, #1
+ 554              	.LVL17:
+ 555              	.L18:
+  76:Core/Src/poly.c ****   {
+ 556              		.loc 1 76 11 is_stmt 1 discriminator 1 view .LVU213
+  76:Core/Src/poly.c ****   {
+ 557              		.loc 1 76 3 is_stmt 0 discriminator 1 view .LVU214
+ 558 00c0 1F2D     		cmp	r5, #31
+ 559 00c2 01DC     		bgt	.L23
+  78:Core/Src/poly.c ****       t[j] = freeze(a->coeffs[8*i+j]);
+ 560              		.loc 1 78 10 view .LVU215
+ 561 00c4 0024     		movs	r4, #0
+ 562 00c6 ADE7     		b	.L20
+ 563              	.L23:
+  94:Core/Src/poly.c ****   }
+  95:Core/Src/poly.c **** }
+ 564              		.loc 1 95 1 view .LVU216
+ 565 00c8 05B0     		add	sp, sp, #20
+ 566              	.LCFI7:
+ 567              		.cfi_def_cfa_offset 20
+ 568              		@ sp needed
+ 569 00ca F0BD     		pop	{r4, r5, r6, r7, pc}
+ 570              		.loc 1 95 1 view .LVU217
+ARM GAS  C:\Users\11410\AppData\Local\Temp\ccqyw4Mw.s 			page 13
+
+
+ 571              		.cfi_endproc
+ 572              	.LFE5:
+ 574              		.section	.text.poly_frombytes,"ax",%progbits
+ 575              		.align	1
+ 576              		.global	poly_frombytes
+ 577              		.syntax unified
+ 578              		.thumb
+ 579              		.thumb_func
+ 580              		.fpu fpv4-sp-d16
+ 582              	poly_frombytes:
+ 583              	.LVL18:
+ 584              	.LFB6:
+  96:Core/Src/poly.c **** 
+  97:Core/Src/poly.c **** /*************************************************
+  98:Core/Src/poly.c **** * Name:        poly_frombytes
+  99:Core/Src/poly.c **** * 
+ 100:Core/Src/poly.c **** * Description: De-serialization of a polynomial; 
+ 101:Core/Src/poly.c **** *              inverse of poly_tobytes
+ 102:Core/Src/poly.c **** *
+ 103:Core/Src/poly.c **** * Arguments:   - poly *r:                pointer to output polynomial
+ 104:Core/Src/poly.c **** *              - const unsigned char *a: pointer to input byte array
+ 105:Core/Src/poly.c **** **************************************************/
+ 106:Core/Src/poly.c **** void poly_frombytes(poly *r, const unsigned char *a)
+ 107:Core/Src/poly.c **** {
+ 585              		.loc 1 107 1 is_stmt 1 view -0
+ 586              		.cfi_startproc
+ 587              		@ args = 0, pretend = 0, frame = 0
+ 588              		@ frame_needed = 0, uses_anonymous_args = 0
+ 589              		.loc 1 107 1 is_stmt 0 view .LVU219
+ 590 0000 F0B5     		push	{r4, r5, r6, r7, lr}
+ 591              	.LCFI8:
+ 592              		.cfi_def_cfa_offset 20
+ 593              		.cfi_offset 4, -20
+ 594              		.cfi_offset 5, -16
+ 595              		.cfi_offset 6, -12
+ 596              		.cfi_offset 7, -8
+ 597              		.cfi_offset 14, -4
+ 108:Core/Src/poly.c ****   int i;
+ 598              		.loc 1 108 3 is_stmt 1 view .LVU220
+ 109:Core/Src/poly.c ****   for(i=0;i<KYBER_N/8;i++)
+ 599              		.loc 1 109 3 view .LVU221
+ 600              	.LVL19:
+ 601              		.loc 1 109 8 is_stmt 0 view .LVU222
+ 602 0002 0025     		movs	r5, #0
+ 603              	.LVL20:
+ 604              	.L25:
+ 605              		.loc 1 109 11 is_stmt 1 discriminator 1 view .LVU223
+ 606              		.loc 1 109 3 is_stmt 0 discriminator 1 view .LVU224
+ 607 0004 1F2D     		cmp	r5, #31
+ 608 0006 76DC     		bgt	.L28
+ 110:Core/Src/poly.c ****   {
+ 111:Core/Src/poly.c ****     r->coeffs[8*i+0] =  a[13*i+ 0]       | (((uint16_t)a[13*i+ 1] & 0x1f) << 8);
+ 609              		.loc 1 111 5 is_stmt 1 discriminator 3 view .LVU225
+ 610              		.loc 1 111 29 is_stmt 0 discriminator 3 view .LVU226
+ 611 0008 05EB4503 		add	r3, r5, r5, lsl #1
+ 612 000c 05EB8303 		add	r3, r5, r3, lsl #2
+ 613              		.loc 1 111 26 discriminator 3 view .LVU227
+ARM GAS  C:\Users\11410\AppData\Local\Temp\ccqyw4Mw.s 			page 14
+
+
+ 614 0010 CE5C     		ldrb	r6, [r1, r3]	@ zero_extendqisi2
+ 615              		.loc 1 111 57 discriminator 3 view .LVU228
+ 616 0012 5F1C     		adds	r7, r3, #1
+ 617 0014 CC5D     		ldrb	r4, [r1, r7]	@ zero_extendqisi2
+ 618              		.loc 1 111 75 discriminator 3 view .LVU229
+ 619 0016 2402     		lsls	r4, r4, #8
+ 620 0018 04F4F854 		and	r4, r4, #7936
+ 621              		.loc 1 111 18 discriminator 3 view .LVU230
+ 622 001c EA00     		lsls	r2, r5, #3
+ 623              		.loc 1 111 42 discriminator 3 view .LVU231
+ 624 001e 3443     		orrs	r4, r4, r6
+ 625              		.loc 1 111 22 discriminator 3 view .LVU232
+ 626 0020 20F81240 		strh	r4, [r0, r2, lsl #1]	@ movhi
+ 112:Core/Src/poly.c ****     r->coeffs[8*i+1] = (a[13*i+ 1] >> 5) | (((uint16_t)a[13*i+ 2]       ) << 3) | (((uint16_t)a[13*
+ 627              		.loc 1 112 5 is_stmt 1 discriminator 3 view .LVU233
+ 628              		.loc 1 112 26 is_stmt 0 discriminator 3 view .LVU234
+ 629 0024 CC5D     		ldrb	r4, [r1, r7]	@ zero_extendqisi2
+ 630              		.loc 1 112 57 discriminator 3 view .LVU235
+ 631 0026 CE18     		adds	r6, r1, r3
+ 632 0028 B778     		ldrb	r7, [r6, #2]	@ zero_extendqisi2
+ 633              		.loc 1 112 42 discriminator 3 view .LVU236
+ 634 002a 6409     		lsrs	r4, r4, #5
+ 635 002c 44EAC704 		orr	r4, r4, r7, lsl #3
+ 636              		.loc 1 112 96 discriminator 3 view .LVU237
+ 637 0030 03F1030C 		add	ip, r3, #3
+ 638 0034 11F80C70 		ldrb	r7, [r1, ip]	@ zero_extendqisi2
+ 639              		.loc 1 112 114 discriminator 3 view .LVU238
+ 640 0038 FF02     		lsls	r7, r7, #11
+ 641 003a 07F4C057 		and	r7, r7, #6144
+ 642              		.loc 1 112 18 discriminator 3 view .LVU239
+ 643 003e 02F1010E 		add	lr, r2, #1
+ 644              		.loc 1 112 81 discriminator 3 view .LVU240
+ 645 0042 3C43     		orrs	r4, r4, r7
+ 646              		.loc 1 112 22 discriminator 3 view .LVU241
+ 647 0044 20F81E40 		strh	r4, [r0, lr, lsl #1]	@ movhi
+ 113:Core/Src/poly.c ****     r->coeffs[8*i+2] = (a[13*i+ 3] >> 2) | (((uint16_t)a[13*i+ 4] & 0x7f) << 6);
+ 648              		.loc 1 113 5 is_stmt 1 discriminator 3 view .LVU242
+ 649              		.loc 1 113 26 is_stmt 0 discriminator 3 view .LVU243
+ 650 0048 11F80CE0 		ldrb	lr, [r1, ip]	@ zero_extendqisi2
+ 651              		.loc 1 113 57 discriminator 3 view .LVU244
+ 652 004c 1F1D     		adds	r7, r3, #4
+ 653 004e CC5D     		ldrb	r4, [r1, r7]	@ zero_extendqisi2
+ 654              		.loc 1 113 75 discriminator 3 view .LVU245
+ 655 0050 A401     		lsls	r4, r4, #6
+ 656 0052 04F4FE54 		and	r4, r4, #8128
+ 657              		.loc 1 113 18 discriminator 3 view .LVU246
+ 658 0056 02F1020C 		add	ip, r2, #2
+ 659              		.loc 1 113 42 discriminator 3 view .LVU247
+ 660 005a 44EA9E04 		orr	r4, r4, lr, lsr #2
+ 661              		.loc 1 113 22 discriminator 3 view .LVU248
+ 662 005e 20F81C40 		strh	r4, [r0, ip, lsl #1]	@ movhi
+ 114:Core/Src/poly.c ****     r->coeffs[8*i+3] = (a[13*i+ 4] >> 7) | (((uint16_t)a[13*i+ 5]       ) << 1) | (((uint16_t)a[13*
+ 663              		.loc 1 114 5 is_stmt 1 discriminator 3 view .LVU249
+ 664              		.loc 1 114 26 is_stmt 0 discriminator 3 view .LVU250
+ 665 0062 CC5D     		ldrb	r4, [r1, r7]	@ zero_extendqisi2
+ 666              		.loc 1 114 57 discriminator 3 view .LVU251
+ 667 0064 7779     		ldrb	r7, [r6, #5]	@ zero_extendqisi2
+ARM GAS  C:\Users\11410\AppData\Local\Temp\ccqyw4Mw.s 			page 15
+
+
+ 668              		.loc 1 114 42 discriminator 3 view .LVU252
+ 669 0066 E409     		lsrs	r4, r4, #7
+ 670 0068 44EA4704 		orr	r4, r4, r7, lsl #1
+ 671              		.loc 1 114 96 discriminator 3 view .LVU253
+ 672 006c 03F1060C 		add	ip, r3, #6
+ 673 0070 11F80C70 		ldrb	r7, [r1, ip]	@ zero_extendqisi2
+ 674              		.loc 1 114 114 discriminator 3 view .LVU254
+ 675 0074 7F02     		lsls	r7, r7, #9
+ 676 0076 07F4F057 		and	r7, r7, #7680
+ 677              		.loc 1 114 18 discriminator 3 view .LVU255
+ 678 007a 02F1030E 		add	lr, r2, #3
+ 679              		.loc 1 114 81 discriminator 3 view .LVU256
+ 680 007e 3C43     		orrs	r4, r4, r7
+ 681              		.loc 1 114 22 discriminator 3 view .LVU257
+ 682 0080 20F81E40 		strh	r4, [r0, lr, lsl #1]	@ movhi
+ 115:Core/Src/poly.c ****     r->coeffs[8*i+4] = (a[13*i+ 6] >> 4) | (((uint16_t)a[13*i+ 7]       ) << 4) | (((uint16_t)a[13*
+ 683              		.loc 1 115 5 is_stmt 1 discriminator 3 view .LVU258
+ 684              		.loc 1 115 26 is_stmt 0 discriminator 3 view .LVU259
+ 685 0084 11F80C40 		ldrb	r4, [r1, ip]	@ zero_extendqisi2
+ 686              		.loc 1 115 57 discriminator 3 view .LVU260
+ 687 0088 F779     		ldrb	r7, [r6, #7]	@ zero_extendqisi2
+ 688              		.loc 1 115 42 discriminator 3 view .LVU261
+ 689 008a 2409     		lsrs	r4, r4, #4
+ 690 008c 44EA0717 		orr	r7, r4, r7, lsl #4
+ 691              		.loc 1 115 96 discriminator 3 view .LVU262
+ 692 0090 03F1080C 		add	ip, r3, #8
+ 693 0094 11F80C40 		ldrb	r4, [r1, ip]	@ zero_extendqisi2
+ 694              		.loc 1 115 114 discriminator 3 view .LVU263
+ 695 0098 2403     		lsls	r4, r4, #12
+ 696 009a 04F48054 		and	r4, r4, #4096
+ 697              		.loc 1 115 18 discriminator 3 view .LVU264
+ 698 009e 02F1040E 		add	lr, r2, #4
+ 699              		.loc 1 115 81 discriminator 3 view .LVU265
+ 700 00a2 3C43     		orrs	r4, r4, r7
+ 701              		.loc 1 115 22 discriminator 3 view .LVU266
+ 702 00a4 20F81E40 		strh	r4, [r0, lr, lsl #1]	@ movhi
+ 116:Core/Src/poly.c ****     r->coeffs[8*i+5] = (a[13*i+ 8] >> 1) | (((uint16_t)a[13*i+ 9] & 0x3f) << 7);
+ 703              		.loc 1 116 5 is_stmt 1 discriminator 3 view .LVU267
+ 704              		.loc 1 116 26 is_stmt 0 discriminator 3 view .LVU268
+ 705 00a8 11F80CE0 		ldrb	lr, [r1, ip]	@ zero_extendqisi2
+ 706              		.loc 1 116 57 discriminator 3 view .LVU269
+ 707 00ac 03F10907 		add	r7, r3, #9
+ 708 00b0 CC5D     		ldrb	r4, [r1, r7]	@ zero_extendqisi2
+ 709              		.loc 1 116 75 discriminator 3 view .LVU270
+ 710 00b2 E401     		lsls	r4, r4, #7
+ 711 00b4 04F4FC54 		and	r4, r4, #8064
+ 712              		.loc 1 116 18 discriminator 3 view .LVU271
+ 713 00b8 02F1050C 		add	ip, r2, #5
+ 714              		.loc 1 116 42 discriminator 3 view .LVU272
+ 715 00bc 44EA5E04 		orr	r4, r4, lr, lsr #1
+ 716              		.loc 1 116 22 discriminator 3 view .LVU273
+ 717 00c0 20F81C40 		strh	r4, [r0, ip, lsl #1]	@ movhi
+ 117:Core/Src/poly.c ****     r->coeffs[8*i+6] = (a[13*i+ 9] >> 6) | (((uint16_t)a[13*i+10]       ) << 2) | (((uint16_t)a[13*
+ 718              		.loc 1 117 5 is_stmt 1 discriminator 3 view .LVU274
+ 719              		.loc 1 117 26 is_stmt 0 discriminator 3 view .LVU275
+ 720 00c4 CC5D     		ldrb	r4, [r1, r7]	@ zero_extendqisi2
+ 721              		.loc 1 117 57 discriminator 3 view .LVU276
+ARM GAS  C:\Users\11410\AppData\Local\Temp\ccqyw4Mw.s 			page 16
+
+
+ 722 00c6 B77A     		ldrb	r7, [r6, #10]	@ zero_extendqisi2
+ 723              		.loc 1 117 42 discriminator 3 view .LVU277
+ 724 00c8 A409     		lsrs	r4, r4, #6
+ 725 00ca 44EA8704 		orr	r4, r4, r7, lsl #2
+ 726              		.loc 1 117 96 discriminator 3 view .LVU278
+ 727 00ce 0B33     		adds	r3, r3, #11
+ 728 00d0 CF5C     		ldrb	r7, [r1, r3]	@ zero_extendqisi2
+ 729              		.loc 1 117 114 discriminator 3 view .LVU279
+ 730 00d2 BF02     		lsls	r7, r7, #10
+ 731 00d4 07F4E057 		and	r7, r7, #7168
+ 732              		.loc 1 117 18 discriminator 3 view .LVU280
+ 733 00d8 02F1060C 		add	ip, r2, #6
+ 734              		.loc 1 117 81 discriminator 3 view .LVU281
+ 735 00dc 3C43     		orrs	r4, r4, r7
+ 736              		.loc 1 117 22 discriminator 3 view .LVU282
+ 737 00de 20F81C40 		strh	r4, [r0, ip, lsl #1]	@ movhi
+ 118:Core/Src/poly.c ****     r->coeffs[8*i+7] = (a[13*i+11] >> 3) | (((uint16_t)a[13*i+12]       ) << 5);
+ 738              		.loc 1 118 5 is_stmt 1 discriminator 3 view .LVU283
+ 739              		.loc 1 118 26 is_stmt 0 discriminator 3 view .LVU284
+ 740 00e2 CB5C     		ldrb	r3, [r1, r3]	@ zero_extendqisi2
+ 741              		.loc 1 118 57 discriminator 3 view .LVU285
+ 742 00e4 347B     		ldrb	r4, [r6, #12]	@ zero_extendqisi2
+ 743              		.loc 1 118 18 discriminator 3 view .LVU286
+ 744 00e6 0732     		adds	r2, r2, #7
+ 745              		.loc 1 118 42 discriminator 3 view .LVU287
+ 746 00e8 DB08     		lsrs	r3, r3, #3
+ 747 00ea 43EA4413 		orr	r3, r3, r4, lsl #5
+ 748              		.loc 1 118 22 discriminator 3 view .LVU288
+ 749 00ee 20F81230 		strh	r3, [r0, r2, lsl #1]	@ movhi
+ 109:Core/Src/poly.c ****   {
+ 750              		.loc 1 109 23 is_stmt 1 discriminator 3 view .LVU289
+ 109:Core/Src/poly.c ****   {
+ 751              		.loc 1 109 24 is_stmt 0 discriminator 3 view .LVU290
+ 752 00f2 0135     		adds	r5, r5, #1
+ 753              	.LVL21:
+ 109:Core/Src/poly.c ****   {
+ 754              		.loc 1 109 24 discriminator 3 view .LVU291
+ 755 00f4 86E7     		b	.L25
+ 756              	.L28:
+ 119:Core/Src/poly.c ****   }
+ 120:Core/Src/poly.c **** }
+ 757              		.loc 1 120 1 view .LVU292
+ 758 00f6 F0BD     		pop	{r4, r5, r6, r7, pc}
+ 759              		.loc 1 120 1 view .LVU293
+ 760              		.cfi_endproc
+ 761              	.LFE6:
+ 763              		.section	.text.poly_getnoise,"ax",%progbits
+ 764              		.align	1
+ 765              		.global	poly_getnoise
+ 766              		.syntax unified
+ 767              		.thumb
+ 768              		.thumb_func
+ 769              		.fpu fpv4-sp-d16
+ 771              	poly_getnoise:
+ 772              	.LVL22:
+ 773              	.LFB7:
+ 121:Core/Src/poly.c **** 
+ARM GAS  C:\Users\11410\AppData\Local\Temp\ccqyw4Mw.s 			page 17
+
+
+ 122:Core/Src/poly.c **** /*************************************************
+ 123:Core/Src/poly.c **** * Name:        poly_getnoise
+ 124:Core/Src/poly.c **** * 
+ 125:Core/Src/poly.c **** * Description: Sample a polynomial deterministically from a seed and a nonce,
+ 126:Core/Src/poly.c **** *              with output polynomial close to centered binomial distribution
+ 127:Core/Src/poly.c **** *              with parameter KYBER_ETA
+ 128:Core/Src/poly.c **** *
+ 129:Core/Src/poly.c **** * Arguments:   - poly *r:                   pointer to output polynomial
+ 130:Core/Src/poly.c **** *              - const unsigned char *seed: pointer to input seed 
+ 131:Core/Src/poly.c **** *              - unsigned char nonce:       one-byte input nonce
+ 132:Core/Src/poly.c **** **************************************************/
+ 133:Core/Src/poly.c **** void poly_getnoise(poly *r,const unsigned char *seed, unsigned char nonce)
+ 134:Core/Src/poly.c **** {
+ 774              		.loc 1 134 1 is_stmt 1 view -0
+ 775              		.cfi_startproc
+ 776              		@ args = 0, pretend = 0, frame = 296
+ 777              		@ frame_needed = 0, uses_anonymous_args = 0
+ 778              		.loc 1 134 1 is_stmt 0 view .LVU295
+ 779 0000 70B5     		push	{r4, r5, r6, lr}
+ 780              	.LCFI9:
+ 781              		.cfi_def_cfa_offset 16
+ 782              		.cfi_offset 4, -16
+ 783              		.cfi_offset 5, -12
+ 784              		.cfi_offset 6, -8
+ 785              		.cfi_offset 14, -4
+ 786 0002 CEB0     		sub	sp, sp, #312
+ 787              	.LCFI10:
+ 788              		.cfi_def_cfa_offset 328
+ 789 0004 0646     		mov	r6, r0
+ 135:Core/Src/poly.c ****   unsigned char buf[KYBER_ETA*KYBER_N/4];
+ 790              		.loc 1 135 3 is_stmt 1 view .LVU296
+ 136:Core/Src/poly.c ****   unsigned char extseed[KYBER_SYMBYTES+1];
+ 791              		.loc 1 136 3 view .LVU297
+ 137:Core/Src/poly.c ****   int i;
+ 792              		.loc 1 137 3 view .LVU298
+ 138:Core/Src/poly.c **** 
+ 139:Core/Src/poly.c ****   for(i=0;i<KYBER_SYMBYTES;i++)
+ 793              		.loc 1 139 3 view .LVU299
+ 794              	.LVL23:
+ 795              		.loc 1 139 8 is_stmt 0 view .LVU300
+ 796 0006 0023     		movs	r3, #0
+ 797              	.LVL24:
+ 798              	.L30:
+ 799              		.loc 1 139 11 is_stmt 1 discriminator 1 view .LVU301
+ 800              		.loc 1 139 3 is_stmt 0 discriminator 1 view .LVU302
+ 801 0008 1F2B     		cmp	r3, #31
+ 802 000a 04DC     		bgt	.L33
+ 140:Core/Src/poly.c ****     extseed[i] = seed[i];
+ 803              		.loc 1 140 5 is_stmt 1 discriminator 3 view .LVU303
+ 804              		.loc 1 140 22 is_stmt 0 discriminator 3 view .LVU304
+ 805 000c CD5C     		ldrb	r5, [r1, r3]	@ zero_extendqisi2
+ 806              		.loc 1 140 16 discriminator 3 view .LVU305
+ 807 000e 05AC     		add	r4, sp, #20
+ 808 0010 E554     		strb	r5, [r4, r3]
+ 139:Core/Src/poly.c ****     extseed[i] = seed[i];
+ 809              		.loc 1 139 28 is_stmt 1 discriminator 3 view .LVU306
+ 139:Core/Src/poly.c ****     extseed[i] = seed[i];
+ARM GAS  C:\Users\11410\AppData\Local\Temp\ccqyw4Mw.s 			page 18
+
+
+ 810              		.loc 1 139 29 is_stmt 0 discriminator 3 view .LVU307
+ 811 0012 0133     		adds	r3, r3, #1
+ 812              	.LVL25:
+ 139:Core/Src/poly.c ****     extseed[i] = seed[i];
+ 813              		.loc 1 139 29 discriminator 3 view .LVU308
+ 814 0014 F8E7     		b	.L30
+ 815              	.L33:
+ 141:Core/Src/poly.c ****   extseed[KYBER_SYMBYTES] = nonce;
+ 816              		.loc 1 141 3 is_stmt 1 view .LVU309
+ 817              		.loc 1 141 27 is_stmt 0 view .LVU310
+ 818 0016 05AB     		add	r3, sp, #20
+ 819              	.LVL26:
+ 820              		.loc 1 141 27 view .LVU311
+ 821 0018 8DF83420 		strb	r2, [sp, #52]
+ 142:Core/Src/poly.c ****      
+ 143:Core/Src/poly.c ****   shake256(buf,KYBER_ETA*KYBER_N/4,extseed,KYBER_SYMBYTES+1);
+ 822              		.loc 1 143 3 is_stmt 1 view .LVU312
+ 823 001c 2120     		movs	r0, #33
+ 824              	.LVL27:
+ 825              		.loc 1 143 3 is_stmt 0 view .LVU313
+ 826 001e 0021     		movs	r1, #0
+ 827              	.LVL28:
+ 828              		.loc 1 143 3 view .LVU314
+ 829 0020 CDE90201 		strd	r0, [sp, #8]
+ 830 0024 0093     		str	r3, [sp]
+ 831 0026 4FF48072 		mov	r2, #256
+ 832              	.LVL29:
+ 833              		.loc 1 143 3 view .LVU315
+ 834 002a 0023     		movs	r3, #0
+ 835 002c 0EA8     		add	r0, sp, #56
+ 836 002e FFF7FEFF 		bl	shake256
+ 837              	.LVL30:
+ 144:Core/Src/poly.c **** 
+ 145:Core/Src/poly.c ****   cbd(r, buf);
+ 838              		.loc 1 145 3 is_stmt 1 view .LVU316
+ 839 0032 0EA9     		add	r1, sp, #56
+ 840 0034 3046     		mov	r0, r6
+ 841 0036 FFF7FEFF 		bl	cbd
+ 842              	.LVL31:
+ 146:Core/Src/poly.c **** }
+ 843              		.loc 1 146 1 is_stmt 0 view .LVU317
+ 844 003a 4EB0     		add	sp, sp, #312
+ 845              	.LCFI11:
+ 846              		.cfi_def_cfa_offset 16
+ 847              		@ sp needed
+ 848 003c 70BD     		pop	{r4, r5, r6, pc}
+ 849              		.loc 1 146 1 view .LVU318
+ 850              		.cfi_endproc
+ 851              	.LFE7:
+ 853              		.section	.text.poly_ntt,"ax",%progbits
+ 854              		.align	1
+ 855              		.global	poly_ntt
+ 856              		.syntax unified
+ 857              		.thumb
+ 858              		.thumb_func
+ 859              		.fpu fpv4-sp-d16
+ 861              	poly_ntt:
+ARM GAS  C:\Users\11410\AppData\Local\Temp\ccqyw4Mw.s 			page 19
+
+
+ 862              	.LVL32:
+ 863              	.LFB8:
+ 147:Core/Src/poly.c **** 
+ 148:Core/Src/poly.c **** /*************************************************
+ 149:Core/Src/poly.c **** * Name:        poly_ntt
+ 150:Core/Src/poly.c **** * 
+ 151:Core/Src/poly.c **** * Description: Computes negacyclic number-theoretic transform (NTT) of
+ 152:Core/Src/poly.c **** *              a polynomial in place; 
+ 153:Core/Src/poly.c **** *              inputs assumed to be in normal order, output in bitreversed order
+ 154:Core/Src/poly.c **** *
+ 155:Core/Src/poly.c **** * Arguments:   - uint16_t *r: pointer to in/output polynomial
+ 156:Core/Src/poly.c **** **************************************************/
+ 157:Core/Src/poly.c **** void poly_ntt(poly *r)
+ 158:Core/Src/poly.c **** {
+ 864              		.loc 1 158 1 is_stmt 1 view -0
+ 865              		.cfi_startproc
+ 866              		@ args = 0, pretend = 0, frame = 0
+ 867              		@ frame_needed = 0, uses_anonymous_args = 0
+ 868              		.loc 1 158 1 is_stmt 0 view .LVU320
+ 869 0000 08B5     		push	{r3, lr}
+ 870              	.LCFI12:
+ 871              		.cfi_def_cfa_offset 8
+ 872              		.cfi_offset 3, -8
+ 873              		.cfi_offset 14, -4
+ 159:Core/Src/poly.c ****   ntt(r->coeffs);
+ 874              		.loc 1 159 3 is_stmt 1 view .LVU321
+ 875 0002 FFF7FEFF 		bl	ntt
+ 876              	.LVL33:
+ 160:Core/Src/poly.c **** }
+ 877              		.loc 1 160 1 is_stmt 0 view .LVU322
+ 878 0006 08BD     		pop	{r3, pc}
+ 879              		.cfi_endproc
+ 880              	.LFE8:
+ 882              		.section	.text.poly_invntt,"ax",%progbits
+ 883              		.align	1
+ 884              		.global	poly_invntt
+ 885              		.syntax unified
+ 886              		.thumb
+ 887              		.thumb_func
+ 888              		.fpu fpv4-sp-d16
+ 890              	poly_invntt:
+ 891              	.LVL34:
+ 892              	.LFB9:
+ 161:Core/Src/poly.c **** 
+ 162:Core/Src/poly.c **** /*************************************************
+ 163:Core/Src/poly.c **** * Name:        poly_invntt
+ 164:Core/Src/poly.c **** * 
+ 165:Core/Src/poly.c **** * Description: Computes inverse of negacyclic number-theoretic transform (NTT) of
+ 166:Core/Src/poly.c **** *              a polynomial in place; 
+ 167:Core/Src/poly.c **** *              inputs assumed to be in bitreversed order, output in normal order
+ 168:Core/Src/poly.c **** *
+ 169:Core/Src/poly.c **** * Arguments:   - uint16_t *a: pointer to in/output polynomial
+ 170:Core/Src/poly.c **** **************************************************/
+ 171:Core/Src/poly.c **** void poly_invntt(poly *r)
+ 172:Core/Src/poly.c **** {
+ 893              		.loc 1 172 1 is_stmt 1 view -0
+ 894              		.cfi_startproc
+ARM GAS  C:\Users\11410\AppData\Local\Temp\ccqyw4Mw.s 			page 20
+
+
+ 895              		@ args = 0, pretend = 0, frame = 0
+ 896              		@ frame_needed = 0, uses_anonymous_args = 0
+ 897              		.loc 1 172 1 is_stmt 0 view .LVU324
+ 898 0000 08B5     		push	{r3, lr}
+ 899              	.LCFI13:
+ 900              		.cfi_def_cfa_offset 8
+ 901              		.cfi_offset 3, -8
+ 902              		.cfi_offset 14, -4
+ 173:Core/Src/poly.c ****   invntt(r->coeffs);
+ 903              		.loc 1 173 3 is_stmt 1 view .LVU325
+ 904 0002 FFF7FEFF 		bl	invntt
+ 905              	.LVL35:
+ 174:Core/Src/poly.c **** }
+ 906              		.loc 1 174 1 is_stmt 0 view .LVU326
+ 907 0006 08BD     		pop	{r3, pc}
+ 908              		.cfi_endproc
+ 909              	.LFE9:
+ 911              		.section	.text.poly_add,"ax",%progbits
+ 912              		.align	1
+ 913              		.global	poly_add
+ 914              		.syntax unified
+ 915              		.thumb
+ 916              		.thumb_func
+ 917              		.fpu fpv4-sp-d16
+ 919              	poly_add:
+ 920              	.LVL36:
+ 921              	.LFB10:
+ 175:Core/Src/poly.c ****  
+ 176:Core/Src/poly.c **** /*************************************************
+ 177:Core/Src/poly.c **** * Name:        poly_add
+ 178:Core/Src/poly.c **** * 
+ 179:Core/Src/poly.c **** * Description: Add two polynomials
+ 180:Core/Src/poly.c **** *
+ 181:Core/Src/poly.c **** * Arguments: - poly *r:       pointer to output polynomial
+ 182:Core/Src/poly.c **** *            - const poly *a: pointer to first input polynomial
+ 183:Core/Src/poly.c **** *            - const poly *b: pointer to second input polynomial
+ 184:Core/Src/poly.c **** **************************************************/ 
+ 185:Core/Src/poly.c **** void poly_add(poly *r, const poly *a, const poly *b)
+ 186:Core/Src/poly.c **** {
+ 922              		.loc 1 186 1 is_stmt 1 view -0
+ 923              		.cfi_startproc
+ 924              		@ args = 0, pretend = 0, frame = 0
+ 925              		@ frame_needed = 0, uses_anonymous_args = 0
+ 926              		.loc 1 186 1 is_stmt 0 view .LVU328
+ 927 0000 08B5     		push	{r3, lr}
+ 928              	.LCFI14:
+ 929              		.cfi_def_cfa_offset 8
+ 930              		.cfi_offset 3, -8
+ 931              		.cfi_offset 14, -4
+ 187:Core/Src/poly.c ****   pointwise_add(r->coeffs, a->coeffs, b->coeffs);
+ 932              		.loc 1 187 3 is_stmt 1 view .LVU329
+ 933 0002 FFF7FEFF 		bl	pointwise_add
+ 934              	.LVL37:
+ 188:Core/Src/poly.c **** }
+ 935              		.loc 1 188 1 is_stmt 0 view .LVU330
+ 936 0006 08BD     		pop	{r3, pc}
+ 937              		.cfi_endproc
+ARM GAS  C:\Users\11410\AppData\Local\Temp\ccqyw4Mw.s 			page 21
+
+
+ 938              	.LFE10:
+ 940              		.section	.text.poly_sub,"ax",%progbits
+ 941              		.align	1
+ 942              		.global	poly_sub
+ 943              		.syntax unified
+ 944              		.thumb
+ 945              		.thumb_func
+ 946              		.fpu fpv4-sp-d16
+ 948              	poly_sub:
+ 949              	.LVL38:
+ 950              	.LFB11:
+ 189:Core/Src/poly.c **** 
+ 190:Core/Src/poly.c **** /*************************************************
+ 191:Core/Src/poly.c **** * Name:        poly_sub
+ 192:Core/Src/poly.c **** * 
+ 193:Core/Src/poly.c **** * Description: Subtract two polynomials
+ 194:Core/Src/poly.c **** *
+ 195:Core/Src/poly.c **** * Arguments: - poly *r:       pointer to output polynomial
+ 196:Core/Src/poly.c **** *            - const poly *a: pointer to first input polynomial
+ 197:Core/Src/poly.c **** *            - const poly *b: pointer to second input polynomial
+ 198:Core/Src/poly.c **** **************************************************/ 
+ 199:Core/Src/poly.c **** void poly_sub(poly *r, const poly *a, const poly *b)
+ 200:Core/Src/poly.c **** {
+ 951              		.loc 1 200 1 is_stmt 1 view -0
+ 952              		.cfi_startproc
+ 953              		@ args = 0, pretend = 0, frame = 0
+ 954              		@ frame_needed = 0, uses_anonymous_args = 0
+ 955              		.loc 1 200 1 is_stmt 0 view .LVU332
+ 956 0000 08B5     		push	{r3, lr}
+ 957              	.LCFI15:
+ 958              		.cfi_def_cfa_offset 8
+ 959              		.cfi_offset 3, -8
+ 960              		.cfi_offset 14, -4
+ 201:Core/Src/poly.c ****   pointwise_sub(r->coeffs, a->coeffs, b->coeffs);
+ 961              		.loc 1 201 3 is_stmt 1 view .LVU333
+ 962 0002 FFF7FEFF 		bl	pointwise_sub
+ 963              	.LVL39:
+ 202:Core/Src/poly.c **** }
+ 964              		.loc 1 202 1 is_stmt 0 view .LVU334
+ 965 0006 08BD     		pop	{r3, pc}
+ 966              		.cfi_endproc
+ 967              	.LFE11:
+ 969              		.section	.text.poly_frommsg,"ax",%progbits
+ 970              		.align	1
+ 971              		.global	poly_frommsg
+ 972              		.syntax unified
+ 973              		.thumb
+ 974              		.thumb_func
+ 975              		.fpu fpv4-sp-d16
+ 977              	poly_frommsg:
+ 978              	.LVL40:
+ 979              	.LFB12:
+ 203:Core/Src/poly.c **** 
+ 204:Core/Src/poly.c **** /*************************************************
+ 205:Core/Src/poly.c **** * Name:        poly_frommsg
+ 206:Core/Src/poly.c **** * 
+ 207:Core/Src/poly.c **** * Description: Convert 32-byte message to polynomial
+ARM GAS  C:\Users\11410\AppData\Local\Temp\ccqyw4Mw.s 			page 22
+
+
+ 208:Core/Src/poly.c **** *
+ 209:Core/Src/poly.c **** * Arguments:   - poly *r:                  pointer to output polynomial
+ 210:Core/Src/poly.c **** *              - const unsigned char *msg: pointer to input message
+ 211:Core/Src/poly.c **** **************************************************/
+ 212:Core/Src/poly.c **** void poly_frommsg(poly *r, const unsigned char msg[KYBER_SYMBYTES])
+ 213:Core/Src/poly.c **** {
+ 980              		.loc 1 213 1 is_stmt 1 view -0
+ 981              		.cfi_startproc
+ 982              		@ args = 0, pretend = 0, frame = 0
+ 983              		@ frame_needed = 0, uses_anonymous_args = 0
+ 984              		@ link register save eliminated.
+ 985              		.loc 1 213 1 is_stmt 0 view .LVU336
+ 986 0000 30B4     		push	{r4, r5}
+ 987              	.LCFI16:
+ 988              		.cfi_def_cfa_offset 8
+ 989              		.cfi_offset 4, -8
+ 990              		.cfi_offset 5, -4
+ 214:Core/Src/poly.c ****   uint16_t i,j,mask;
+ 991              		.loc 1 214 3 is_stmt 1 view .LVU337
+ 215:Core/Src/poly.c **** 
+ 216:Core/Src/poly.c ****   for(i=0;i<KYBER_SYMBYTES;i++)
+ 992              		.loc 1 216 3 view .LVU338
+ 993              	.LVL41:
+ 994              		.loc 1 216 8 is_stmt 0 view .LVU339
+ 995 0002 0024     		movs	r4, #0
+ 996              		.loc 1 216 3 view .LVU340
+ 997 0004 11E0     		b	.L43
+ 998              	.LVL42:
+ 999              	.L44:
+ 217:Core/Src/poly.c ****   {
+ 218:Core/Src/poly.c ****     for(j=0;j<8;j++)
+ 219:Core/Src/poly.c ****     {   
+ 220:Core/Src/poly.c ****       mask = -((msg[i] >> j)&1);
+ 1000              		.loc 1 220 7 is_stmt 1 discriminator 3 view .LVU341
+ 1001              		.loc 1 220 20 is_stmt 0 discriminator 3 view .LVU342
+ 1002 0006 0B5D     		ldrb	r3, [r1, r4]	@ zero_extendqisi2
+ 1003              		.loc 1 220 24 discriminator 3 view .LVU343
+ 1004 0008 1341     		asrs	r3, r3, r2
+ 1005              		.loc 1 220 12 discriminator 3 view .LVU344
+ 1006 000a 43F30003 		sbfx	r3, r3, #0, #1
+ 1007              	.LVL43:
+ 221:Core/Src/poly.c ****       r->coeffs[8*i+j] = mask & ((KYBER_Q+1)/2);
+ 1008              		.loc 1 221 7 is_stmt 1 discriminator 3 view .LVU345
+ 1009              		.loc 1 221 20 is_stmt 0 discriminator 3 view .LVU346
+ 1010 000e 02EBC405 		add	r5, r2, r4, lsl #3
+ 1011              		.loc 1 221 31 discriminator 3 view .LVU347
+ 1012 0012 23F0FE03 		bic	r3, r3, #254
+ 1013              	.LVL44:
+ 1014              		.loc 1 221 31 discriminator 3 view .LVU348
+ 1015 0016 1B05     		lsls	r3, r3, #20
+ 1016 0018 1B0D     		lsrs	r3, r3, #20
+ 1017              		.loc 1 221 24 discriminator 3 view .LVU349
+ 1018 001a 20F81530 		strh	r3, [r0, r5, lsl #1]	@ movhi
+ 1019              	.LVL45:
+ 218:Core/Src/poly.c ****     {   
+ 1020              		.loc 1 218 17 is_stmt 1 discriminator 3 view .LVU350
+ 218:Core/Src/poly.c ****     {   
+ARM GAS  C:\Users\11410\AppData\Local\Temp\ccqyw4Mw.s 			page 23
+
+
+ 1021              		.loc 1 218 18 is_stmt 0 discriminator 3 view .LVU351
+ 1022 001e 0132     		adds	r2, r2, #1
+ 1023              	.LVL46:
+ 218:Core/Src/poly.c ****     {   
+ 1024              		.loc 1 218 18 discriminator 3 view .LVU352
+ 1025 0020 92B2     		uxth	r2, r2
+ 1026              	.LVL47:
+ 1027              	.L45:
+ 218:Core/Src/poly.c ****     {   
+ 1028              		.loc 1 218 13 is_stmt 1 discriminator 1 view .LVU353
+ 218:Core/Src/poly.c ****     {   
+ 1029              		.loc 1 218 5 is_stmt 0 discriminator 1 view .LVU354
+ 1030 0022 072A     		cmp	r2, #7
+ 1031 0024 EFD9     		bls	.L44
+ 216:Core/Src/poly.c ****   {
+ 1032              		.loc 1 216 28 is_stmt 1 discriminator 2 view .LVU355
+ 216:Core/Src/poly.c ****   {
+ 1033              		.loc 1 216 29 is_stmt 0 discriminator 2 view .LVU356
+ 1034 0026 0134     		adds	r4, r4, #1
+ 1035              	.LVL48:
+ 216:Core/Src/poly.c ****   {
+ 1036              		.loc 1 216 29 discriminator 2 view .LVU357
+ 1037 0028 A4B2     		uxth	r4, r4
+ 1038              	.LVL49:
+ 1039              	.L43:
+ 216:Core/Src/poly.c ****   {
+ 1040              		.loc 1 216 11 is_stmt 1 discriminator 1 view .LVU358
+ 216:Core/Src/poly.c ****   {
+ 1041              		.loc 1 216 3 is_stmt 0 discriminator 1 view .LVU359
+ 1042 002a 1F2C     		cmp	r4, #31
+ 1043 002c 01D8     		bhi	.L48
+ 218:Core/Src/poly.c ****     {   
+ 1044              		.loc 1 218 10 view .LVU360
+ 1045 002e 0022     		movs	r2, #0
+ 1046 0030 F7E7     		b	.L45
+ 1047              	.L48:
+ 222:Core/Src/poly.c ****     }   
+ 223:Core/Src/poly.c ****   }
+ 224:Core/Src/poly.c **** }
+ 1048              		.loc 1 224 1 view .LVU361
+ 1049 0032 30BC     		pop	{r4, r5}
+ 1050              	.LCFI17:
+ 1051              		.cfi_restore 5
+ 1052              		.cfi_restore 4
+ 1053              		.cfi_def_cfa_offset 0
+ 1054              	.LVL50:
+ 1055              		.loc 1 224 1 view .LVU362
+ 1056 0034 7047     		bx	lr
+ 1057              		.cfi_endproc
+ 1058              	.LFE12:
+ 1060              		.section	.text.poly_tomsg,"ax",%progbits
+ 1061              		.align	1
+ 1062              		.global	poly_tomsg
+ 1063              		.syntax unified
+ 1064              		.thumb
+ 1065              		.thumb_func
+ 1066              		.fpu fpv4-sp-d16
+ARM GAS  C:\Users\11410\AppData\Local\Temp\ccqyw4Mw.s 			page 24
+
+
+ 1068              	poly_tomsg:
+ 1069              	.LVL51:
+ 1070              	.LFB13:
+ 225:Core/Src/poly.c **** 
+ 226:Core/Src/poly.c **** /*************************************************
+ 227:Core/Src/poly.c **** * Name:        poly_tomsg
+ 228:Core/Src/poly.c **** * 
+ 229:Core/Src/poly.c **** * Description: Convert polynomial to 32-byte message
+ 230:Core/Src/poly.c **** *
+ 231:Core/Src/poly.c **** * Arguments:   - unsigned char *msg: pointer to output message
+ 232:Core/Src/poly.c **** *              - const poly *a:      pointer to input polynomial
+ 233:Core/Src/poly.c **** **************************************************/
+ 234:Core/Src/poly.c **** void poly_tomsg(unsigned char msg[KYBER_SYMBYTES], const poly *a)
+ 235:Core/Src/poly.c **** {
+ 1071              		.loc 1 235 1 is_stmt 1 view -0
+ 1072              		.cfi_startproc
+ 1073              		@ args = 0, pretend = 0, frame = 0
+ 1074              		@ frame_needed = 0, uses_anonymous_args = 0
+ 1075              		.loc 1 235 1 is_stmt 0 view .LVU364
+ 1076 0000 2DE9F041 		push	{r4, r5, r6, r7, r8, lr}
+ 1077              	.LCFI18:
+ 1078              		.cfi_def_cfa_offset 24
+ 1079              		.cfi_offset 4, -24
+ 1080              		.cfi_offset 5, -20
+ 1081              		.cfi_offset 6, -16
+ 1082              		.cfi_offset 7, -12
+ 1083              		.cfi_offset 8, -8
+ 1084              		.cfi_offset 14, -4
+ 1085 0004 8046     		mov	r8, r0
+ 1086 0006 0F46     		mov	r7, r1
+ 236:Core/Src/poly.c ****   uint16_t t;
+ 1087              		.loc 1 236 3 is_stmt 1 view .LVU365
+ 237:Core/Src/poly.c ****   int i,j;
+ 1088              		.loc 1 237 3 view .LVU366
+ 238:Core/Src/poly.c **** 
+ 239:Core/Src/poly.c ****   for(i=0;i<KYBER_SYMBYTES;i++)
+ 1089              		.loc 1 239 3 view .LVU367
+ 1090              	.LVL52:
+ 1091              		.loc 1 239 8 is_stmt 0 view .LVU368
+ 1092 0008 0026     		movs	r6, #0
+ 1093              		.loc 1 239 3 view .LVU369
+ 1094 000a 18E0     		b	.L50
+ 1095              	.LVL53:
+ 1096              	.L52:
+ 240:Core/Src/poly.c ****   {
+ 241:Core/Src/poly.c ****     msg[i] = 0;
+ 242:Core/Src/poly.c ****     for(j=0;j<8;j++)
+ 243:Core/Src/poly.c ****     {
+ 244:Core/Src/poly.c ****       t = (((freeze(a->coeffs[8*i+j]) << 1) + KYBER_Q/2)/KYBER_Q) & 1;
+ 1097              		.loc 1 244 7 is_stmt 1 discriminator 3 view .LVU370
+ 1098              		.loc 1 244 34 is_stmt 0 discriminator 3 view .LVU371
+ 1099 000c 04EBC603 		add	r3, r4, r6, lsl #3
+ 1100              		.loc 1 244 14 discriminator 3 view .LVU372
+ 1101 0010 37F81300 		ldrh	r0, [r7, r3, lsl #1]
+ 1102 0014 FFF7FEFF 		bl	freeze
+ 1103              	.LVL54:
+ 1104              		.loc 1 244 39 discriminator 3 view .LVU373
+ARM GAS  C:\Users\11410\AppData\Local\Temp\ccqyw4Mw.s 			page 25
+
+
+ 1105 0018 4000     		lsls	r0, r0, #1
+ 1106              		.loc 1 244 45 discriminator 3 view .LVU374
+ 1107 001a 00F57060 		add	r0, r0, #3840
+ 1108              		.loc 1 244 57 discriminator 3 view .LVU375
+ 1109 001e 0D4B     		ldr	r3, .L56
+ 1110 0020 83FB0023 		smull	r2, r3, r3, r0
+ 1111 0024 C017     		asrs	r0, r0, #31
+ 1112 0026 C0EBE320 		rsb	r0, r0, r3, asr #11
+ 1113              		.loc 1 244 9 discriminator 3 view .LVU376
+ 1114 002a 00F00100 		and	r0, r0, #1
+ 1115              	.LVL55:
+ 245:Core/Src/poly.c ****       msg[i] |= t << j;
+ 1116              		.loc 1 245 7 is_stmt 1 discriminator 3 view .LVU377
+ 1117              		.loc 1 245 19 is_stmt 0 discriminator 3 view .LVU378
+ 1118 002e A040     		lsls	r0, r0, r4
+ 1119              	.LVL56:
+ 1120              		.loc 1 245 14 discriminator 3 view .LVU379
+ 1121 0030 2B78     		ldrb	r3, [r5]	@ zero_extendqisi2
+ 1122              		.loc 1 245 14 discriminator 3 view .LVU380
+ 1123 0032 1843     		orrs	r0, r0, r3
+ 1124 0034 2870     		strb	r0, [r5]
+ 242:Core/Src/poly.c ****     {
+ 1125              		.loc 1 242 17 is_stmt 1 discriminator 3 view .LVU381
+ 242:Core/Src/poly.c ****     {
+ 1126              		.loc 1 242 18 is_stmt 0 discriminator 3 view .LVU382
+ 1127 0036 0134     		adds	r4, r4, #1
+ 1128              	.LVL57:
+ 1129              	.L51:
+ 242:Core/Src/poly.c ****     {
+ 1130              		.loc 1 242 13 is_stmt 1 discriminator 1 view .LVU383
+ 242:Core/Src/poly.c ****     {
+ 1131              		.loc 1 242 5 is_stmt 0 discriminator 1 view .LVU384
+ 1132 0038 072C     		cmp	r4, #7
+ 1133 003a E7DD     		ble	.L52
+ 239:Core/Src/poly.c ****   {
+ 1134              		.loc 1 239 28 is_stmt 1 discriminator 2 view .LVU385
+ 239:Core/Src/poly.c ****   {
+ 1135              		.loc 1 239 29 is_stmt 0 discriminator 2 view .LVU386
+ 1136 003c 0136     		adds	r6, r6, #1
+ 1137              	.LVL58:
+ 1138              	.L50:
+ 239:Core/Src/poly.c ****   {
+ 1139              		.loc 1 239 11 is_stmt 1 discriminator 1 view .LVU387
+ 239:Core/Src/poly.c ****   {
+ 1140              		.loc 1 239 3 is_stmt 0 discriminator 1 view .LVU388
+ 1141 003e 1F2E     		cmp	r6, #31
+ 1142 0040 05DC     		bgt	.L55
+ 241:Core/Src/poly.c ****     for(j=0;j<8;j++)
+ 1143              		.loc 1 241 5 is_stmt 1 view .LVU389
+ 241:Core/Src/poly.c ****     for(j=0;j<8;j++)
+ 1144              		.loc 1 241 8 is_stmt 0 view .LVU390
+ 1145 0042 08EB0605 		add	r5, r8, r6
+ 241:Core/Src/poly.c ****     for(j=0;j<8;j++)
+ 1146              		.loc 1 241 12 view .LVU391
+ 1147 0046 0024     		movs	r4, #0
+ 1148 0048 08F80640 		strb	r4, [r8, r6]
+ 242:Core/Src/poly.c ****     {
+ARM GAS  C:\Users\11410\AppData\Local\Temp\ccqyw4Mw.s 			page 26
+
+
+ 1149              		.loc 1 242 5 is_stmt 1 view .LVU392
+ 1150              	.LVL59:
+ 242:Core/Src/poly.c ****     {
+ 1151              		.loc 1 242 5 is_stmt 0 view .LVU393
+ 1152 004c F4E7     		b	.L51
+ 1153              	.LVL60:
+ 1154              	.L55:
+ 246:Core/Src/poly.c ****     }
+ 247:Core/Src/poly.c ****   }
+ 248:Core/Src/poly.c **** }
+ 1155              		.loc 1 248 1 view .LVU394
+ 1156 004e BDE8F081 		pop	{r4, r5, r6, r7, r8, pc}
+ 1157              	.LVL61:
+ 1158              	.L57:
+ 1159              		.loc 1 248 1 view .LVU395
+ 1160 0052 00BF     		.align	2
+ 1161              	.L56:
+ 1162 0054 CDFD4144 		.word	1145175501
+ 1163              		.cfi_endproc
+ 1164              	.LFE13:
+ 1166              		.text
+ 1167              	.Letext0:
+ 1168              		.file 2 "c:\\program files (x86)\\gnu tools arm embedded\\9 2019-q4-major\\arm-none-eabi\\include\
+ 1169              		.file 3 "c:\\program files (x86)\\gnu tools arm embedded\\9 2019-q4-major\\arm-none-eabi\\include\
+ 1170              		.file 4 "c:\\program files (x86)\\gnu tools arm embedded\\9 2019-q4-major\\arm-none-eabi\\include\
+ 1171              		.file 5 "c:\\program files (x86)\\gnu tools arm embedded\\9 2019-q4-major\\lib\\gcc\\arm-none-eabi
+ 1172              		.file 6 "c:\\program files (x86)\\gnu tools arm embedded\\9 2019-q4-major\\arm-none-eabi\\include\
+ 1173              		.file 7 "c:\\program files (x86)\\gnu tools arm embedded\\9 2019-q4-major\\arm-none-eabi\\include\
+ 1174              		.file 8 "Core/Inc/poly.h"
+ 1175              		.file 9 "Core/Inc/reduce.h"
+ 1176              		.file 10 "Core/Inc/ntt.h"
+ 1177              		.file 11 "Core/Inc/fips202.h"
+ 1178              		.file 12 "Core/Inc/cbd.h"
+ARM GAS  C:\Users\11410\AppData\Local\Temp\ccqyw4Mw.s 			page 27
+
+
+DEFINED SYMBOLS
+                            *ABS*:00000000 poly.c
+C:\Users\11410\AppData\Local\Temp\ccqyw4Mw.s:18     .text.poly_compress:00000000 $t
+C:\Users\11410\AppData\Local\Temp\ccqyw4Mw.s:26     .text.poly_compress:00000000 poly_compress
+C:\Users\11410\AppData\Local\Temp\ccqyw4Mw.s:186    .text.poly_compress:000000a8 $d
+C:\Users\11410\AppData\Local\Temp\ccqyw4Mw.s:191    .text.poly_decompress:00000000 $t
+C:\Users\11410\AppData\Local\Temp\ccqyw4Mw.s:198    .text.poly_decompress:00000000 poly_decompress
+C:\Users\11410\AppData\Local\Temp\ccqyw4Mw.s:385    .text.poly_tobytes:00000000 $t
+C:\Users\11410\AppData\Local\Temp\ccqyw4Mw.s:392    .text.poly_tobytes:00000000 poly_tobytes
+C:\Users\11410\AppData\Local\Temp\ccqyw4Mw.s:575    .text.poly_frombytes:00000000 $t
+C:\Users\11410\AppData\Local\Temp\ccqyw4Mw.s:582    .text.poly_frombytes:00000000 poly_frombytes
+C:\Users\11410\AppData\Local\Temp\ccqyw4Mw.s:764    .text.poly_getnoise:00000000 $t
+C:\Users\11410\AppData\Local\Temp\ccqyw4Mw.s:771    .text.poly_getnoise:00000000 poly_getnoise
+C:\Users\11410\AppData\Local\Temp\ccqyw4Mw.s:854    .text.poly_ntt:00000000 $t
+C:\Users\11410\AppData\Local\Temp\ccqyw4Mw.s:861    .text.poly_ntt:00000000 poly_ntt
+C:\Users\11410\AppData\Local\Temp\ccqyw4Mw.s:883    .text.poly_invntt:00000000 $t
+C:\Users\11410\AppData\Local\Temp\ccqyw4Mw.s:890    .text.poly_invntt:00000000 poly_invntt
+C:\Users\11410\AppData\Local\Temp\ccqyw4Mw.s:912    .text.poly_add:00000000 $t
+C:\Users\11410\AppData\Local\Temp\ccqyw4Mw.s:919    .text.poly_add:00000000 poly_add
+C:\Users\11410\AppData\Local\Temp\ccqyw4Mw.s:941    .text.poly_sub:00000000 $t
+C:\Users\11410\AppData\Local\Temp\ccqyw4Mw.s:948    .text.poly_sub:00000000 poly_sub
+C:\Users\11410\AppData\Local\Temp\ccqyw4Mw.s:970    .text.poly_frommsg:00000000 $t
+C:\Users\11410\AppData\Local\Temp\ccqyw4Mw.s:977    .text.poly_frommsg:00000000 poly_frommsg
+C:\Users\11410\AppData\Local\Temp\ccqyw4Mw.s:1061   .text.poly_tomsg:00000000 $t
+C:\Users\11410\AppData\Local\Temp\ccqyw4Mw.s:1068   .text.poly_tomsg:00000000 poly_tomsg
+C:\Users\11410\AppData\Local\Temp\ccqyw4Mw.s:1162   .text.poly_tomsg:00000054 $d
+
+UNDEFINED SYMBOLS
+freeze
+shake256
+cbd
+ntt
+invntt
+pointwise_add
+pointwise_sub

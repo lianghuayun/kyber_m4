@@ -1,0 +1,1446 @@
+ARM GAS  C:\Users\11410\AppData\Local\Temp\cc67E3Sn.s 			page 1
+
+
+   1              		.cpu cortex-m4
+   2              		.eabi_attribute 27, 1
+   3              		.eabi_attribute 28, 1
+   4              		.eabi_attribute 20, 1
+   5              		.eabi_attribute 21, 1
+   6              		.eabi_attribute 23, 3
+   7              		.eabi_attribute 24, 1
+   8              		.eabi_attribute 25, 1
+   9              		.eabi_attribute 26, 1
+  10              		.eabi_attribute 30, 1
+  11              		.eabi_attribute 34, 1
+  12              		.eabi_attribute 18, 4
+  13              		.file	"polyvec.c"
+  14              		.text
+  15              	.Ltext0:
+  16              		.cfi_sections	.debug_frame
+  17              		.section	.text.polyvec_compress,"ax",%progbits
+  18              		.align	1
+  19              		.global	polyvec_compress
+  20              		.arch armv7e-m
+  21              		.syntax unified
+  22              		.thumb
+  23              		.thumb_func
+  24              		.fpu fpv4-sp-d16
+  26              	polyvec_compress:
+  27              	.LVL0:
+  28              	.LFB3:
+  29              		.file 1 "Core/Src/polyvec.c"
+   1:Core/Src/polyvec.c **** #include <stdio.h>
+   2:Core/Src/polyvec.c **** #include "polyvec.h"
+   3:Core/Src/polyvec.c **** #include "fips202.h"
+   4:Core/Src/polyvec.c **** #include "cbd.h"
+   5:Core/Src/polyvec.c **** #include "reduce.h"
+   6:Core/Src/polyvec.c **** 
+   7:Core/Src/polyvec.c **** #if (KYBER_POLYVECCOMPRESSEDBYTES == (KYBER_K * 352))
+   8:Core/Src/polyvec.c **** 
+   9:Core/Src/polyvec.c **** /*************************************************
+  10:Core/Src/polyvec.c **** * Name:        polyvec_compress
+  11:Core/Src/polyvec.c **** * 
+  12:Core/Src/polyvec.c **** * Description: Compress and serialize vector of polynomials
+  13:Core/Src/polyvec.c **** *
+  14:Core/Src/polyvec.c **** * Arguments:   - unsigned char *r: pointer to output byte array 
+  15:Core/Src/polyvec.c **** *              - const polyvec *a: pointer to input vector of polynomials
+  16:Core/Src/polyvec.c **** **************************************************/
+  17:Core/Src/polyvec.c **** void polyvec_compress(unsigned char *r, const polyvec *a)
+  18:Core/Src/polyvec.c **** {
+  30              		.loc 1 18 1 view -0
+  31              		.cfi_startproc
+  32              		@ args = 0, pretend = 0, frame = 16
+  33              		@ frame_needed = 0, uses_anonymous_args = 0
+  34              		.loc 1 18 1 is_stmt 0 view .LVU1
+  35 0000 2DE9F041 		push	{r4, r5, r6, r7, r8, lr}
+  36              	.LCFI0:
+  37              		.cfi_def_cfa_offset 24
+  38              		.cfi_offset 4, -24
+  39              		.cfi_offset 5, -20
+  40              		.cfi_offset 6, -16
+ARM GAS  C:\Users\11410\AppData\Local\Temp\cc67E3Sn.s 			page 2
+
+
+  41              		.cfi_offset 7, -12
+  42              		.cfi_offset 8, -8
+  43              		.cfi_offset 14, -4
+  44 0004 84B0     		sub	sp, sp, #16
+  45              	.LCFI1:
+  46              		.cfi_def_cfa_offset 40
+  47 0006 0646     		mov	r6, r0
+  48 0008 8846     		mov	r8, r1
+  19:Core/Src/polyvec.c ****   int i,j,k;
+  49              		.loc 1 19 3 is_stmt 1 view .LVU2
+  20:Core/Src/polyvec.c ****   uint16_t t[8];
+  50              		.loc 1 20 3 view .LVU3
+  21:Core/Src/polyvec.c ****   for(i=0;i<KYBER_K;i++)
+  51              		.loc 1 21 3 view .LVU4
+  52              	.LVL1:
+  53              		.loc 1 21 8 is_stmt 0 view .LVU5
+  54 000a 0027     		movs	r7, #0
+  55              		.loc 1 21 3 view .LVU6
+  56 000c 62E0     		b	.L2
+  57              	.LVL2:
+  58              	.L3:
+  22:Core/Src/polyvec.c ****   {
+  23:Core/Src/polyvec.c ****     for(j=0;j<KYBER_N/8;j++)
+  24:Core/Src/polyvec.c ****     {
+  25:Core/Src/polyvec.c ****       for(k=0;k<8;k++)
+  26:Core/Src/polyvec.c ****         t[k] = ((((uint32_t)freeze(a->vec[i].coeffs[8*j+k]) << 11) + KYBER_Q/2)/ KYBER_Q) & 0x7ff;
+  59              		.loc 1 26 9 is_stmt 1 discriminator 3 view .LVU7
+  60              		.loc 1 26 56 is_stmt 0 discriminator 3 view .LVU8
+  61 000e 04EBC503 		add	r3, r4, r5, lsl #3
+  62              		.loc 1 26 29 discriminator 3 view .LVU9
+  63 0012 03EB0723 		add	r3, r3, r7, lsl #8
+  64 0016 38F81300 		ldrh	r0, [r8, r3, lsl #1]
+  65 001a FFF7FEFF 		bl	freeze
+  66              	.LVL3:
+  67              		.loc 1 26 61 discriminator 3 view .LVU10
+  68 001e C302     		lsls	r3, r0, #11
+  69              		.loc 1 26 68 discriminator 3 view .LVU11
+  70 0020 03F57063 		add	r3, r3, #3840
+  71              		.loc 1 26 80 discriminator 3 view .LVU12
+  72 0024 2F48     		ldr	r0, .L11
+  73 0026 A0FB0323 		umull	r2, r3, r0, r3
+  74              		.loc 1 26 91 discriminator 3 view .LVU13
+  75 002a C3F3CA23 		ubfx	r3, r3, #11, #11
+  76              		.loc 1 26 14 discriminator 3 view .LVU14
+  77 002e 04AA     		add	r2, sp, #16
+  78 0030 02EB4402 		add	r2, r2, r4, lsl #1
+  79 0034 22F8103C 		strh	r3, [r2, #-16]	@ movhi
+  25:Core/Src/polyvec.c ****         t[k] = ((((uint32_t)freeze(a->vec[i].coeffs[8*j+k]) << 11) + KYBER_Q/2)/ KYBER_Q) & 0x7ff;
+  80              		.loc 1 25 19 is_stmt 1 discriminator 3 view .LVU15
+  25:Core/Src/polyvec.c ****         t[k] = ((((uint32_t)freeze(a->vec[i].coeffs[8*j+k]) << 11) + KYBER_Q/2)/ KYBER_Q) & 0x7ff;
+  81              		.loc 1 25 20 is_stmt 0 discriminator 3 view .LVU16
+  82 0038 0134     		adds	r4, r4, #1
+  83              	.LVL4:
+  84              	.L4:
+  25:Core/Src/polyvec.c ****         t[k] = ((((uint32_t)freeze(a->vec[i].coeffs[8*j+k]) << 11) + KYBER_Q/2)/ KYBER_Q) & 0x7ff;
+  85              		.loc 1 25 15 is_stmt 1 discriminator 1 view .LVU17
+  25:Core/Src/polyvec.c ****         t[k] = ((((uint32_t)freeze(a->vec[i].coeffs[8*j+k]) << 11) + KYBER_Q/2)/ KYBER_Q) & 0x7ff;
+ARM GAS  C:\Users\11410\AppData\Local\Temp\cc67E3Sn.s 			page 3
+
+
+  86              		.loc 1 25 7 is_stmt 0 discriminator 1 view .LVU18
+  87 003a 072C     		cmp	r4, #7
+  88 003c E7DD     		ble	.L3
+  27:Core/Src/polyvec.c **** 
+  28:Core/Src/polyvec.c ****       r[11*j+ 0] =  t[0] & 0xff;
+  89              		.loc 1 28 7 is_stmt 1 discriminator 2 view .LVU19
+  90              		.loc 1 28 22 is_stmt 0 discriminator 2 view .LVU20
+  91 003e BDF80020 		ldrh	r2, [sp]
+  92              		.loc 1 28 11 discriminator 2 view .LVU21
+  93 0042 05EB8503 		add	r3, r5, r5, lsl #2
+  94 0046 05EB4303 		add	r3, r5, r3, lsl #1
+  95              		.loc 1 28 18 discriminator 2 view .LVU22
+  96 004a F254     		strb	r2, [r6, r3]
+  29:Core/Src/polyvec.c ****       r[11*j+ 1] = (t[0] >>  8) | ((t[1] & 0x1f) << 3);
+  97              		.loc 1 29 7 is_stmt 1 discriminator 2 view .LVU23
+  98              		.loc 1 29 38 is_stmt 0 discriminator 2 view .LVU24
+  99 004c BDF80210 		ldrh	r1, [sp, #2]
+ 100              		.loc 1 29 8 discriminator 2 view .LVU25
+ 101 0050 581C     		adds	r0, r3, #1
+ 102              		.loc 1 29 33 discriminator 2 view .LVU26
+ 103 0052 120A     		lsrs	r2, r2, #8
+ 104 0054 42EAC102 		orr	r2, r2, r1, lsl #3
+ 105              		.loc 1 29 18 discriminator 2 view .LVU27
+ 106 0058 3254     		strb	r2, [r6, r0]
+  30:Core/Src/polyvec.c ****       r[11*j+ 2] = (t[1] >>  5) | ((t[2] & 0x03) << 6);
+ 107              		.loc 1 30 7 is_stmt 1 discriminator 2 view .LVU28
+ 108              		.loc 1 30 38 is_stmt 0 discriminator 2 view .LVU29
+ 109 005a BDF80420 		ldrh	r2, [sp, #4]
+ 110              		.loc 1 30 8 discriminator 2 view .LVU30
+ 111 005e 981C     		adds	r0, r3, #2
+ 112              		.loc 1 30 33 discriminator 2 view .LVU31
+ 113 0060 4909     		lsrs	r1, r1, #5
+ 114 0062 41EA8211 		orr	r1, r1, r2, lsl #6
+ 115              		.loc 1 30 18 discriminator 2 view .LVU32
+ 116 0066 3154     		strb	r1, [r6, r0]
+  31:Core/Src/polyvec.c ****       r[11*j+ 3] = (t[2] >>  2) & 0xff;
+ 117              		.loc 1 31 7 is_stmt 1 discriminator 2 view .LVU33
+ 118              		.loc 1 31 8 is_stmt 0 discriminator 2 view .LVU34
+ 119 0068 D91C     		adds	r1, r3, #3
+ 120              		.loc 1 31 18 discriminator 2 view .LVU35
+ 121 006a 9008     		lsrs	r0, r2, #2
+ 122 006c 7054     		strb	r0, [r6, r1]
+  32:Core/Src/polyvec.c ****       r[11*j+ 4] = (t[2] >> 10) | ((t[3] & 0x7f) << 1);
+ 123              		.loc 1 32 7 is_stmt 1 discriminator 2 view .LVU36
+ 124              		.loc 1 32 38 is_stmt 0 discriminator 2 view .LVU37
+ 125 006e BDF80600 		ldrh	r0, [sp, #6]
+ 126              		.loc 1 32 8 discriminator 2 view .LVU38
+ 127 0072 191D     		adds	r1, r3, #4
+ 128              		.loc 1 32 33 discriminator 2 view .LVU39
+ 129 0074 920A     		lsrs	r2, r2, #10
+ 130 0076 42EA4002 		orr	r2, r2, r0, lsl #1
+ 131              		.loc 1 32 18 discriminator 2 view .LVU40
+ 132 007a 7254     		strb	r2, [r6, r1]
+  33:Core/Src/polyvec.c ****       r[11*j+ 5] = (t[3] >>  7) | ((t[4] & 0x0f) << 4);
+ 133              		.loc 1 33 7 is_stmt 1 discriminator 2 view .LVU41
+ 134              		.loc 1 33 38 is_stmt 0 discriminator 2 view .LVU42
+ 135 007c BDF80810 		ldrh	r1, [sp, #8]
+ARM GAS  C:\Users\11410\AppData\Local\Temp\cc67E3Sn.s 			page 4
+
+
+ 136              		.loc 1 33 8 discriminator 2 view .LVU43
+ 137 0080 5A1D     		adds	r2, r3, #5
+ 138              		.loc 1 33 33 discriminator 2 view .LVU44
+ 139 0082 C009     		lsrs	r0, r0, #7
+ 140 0084 40EA0110 		orr	r0, r0, r1, lsl #4
+ 141              		.loc 1 33 18 discriminator 2 view .LVU45
+ 142 0088 B054     		strb	r0, [r6, r2]
+  34:Core/Src/polyvec.c ****       r[11*j+ 6] = (t[4] >>  4) | ((t[5] & 0x01) << 7);
+ 143              		.loc 1 34 7 is_stmt 1 discriminator 2 view .LVU46
+ 144              		.loc 1 34 38 is_stmt 0 discriminator 2 view .LVU47
+ 145 008a BDF80A20 		ldrh	r2, [sp, #10]
+ 146              		.loc 1 34 8 discriminator 2 view .LVU48
+ 147 008e 981D     		adds	r0, r3, #6
+ 148              		.loc 1 34 33 discriminator 2 view .LVU49
+ 149 0090 0909     		lsrs	r1, r1, #4
+ 150 0092 41EAC211 		orr	r1, r1, r2, lsl #7
+ 151              		.loc 1 34 18 discriminator 2 view .LVU50
+ 152 0096 3154     		strb	r1, [r6, r0]
+  35:Core/Src/polyvec.c ****       r[11*j+ 7] = (t[5] >>  1) & 0xff;
+ 153              		.loc 1 35 7 is_stmt 1 discriminator 2 view .LVU51
+ 154              		.loc 1 35 8 is_stmt 0 discriminator 2 view .LVU52
+ 155 0098 D91D     		adds	r1, r3, #7
+ 156              		.loc 1 35 18 discriminator 2 view .LVU53
+ 157 009a 5008     		lsrs	r0, r2, #1
+ 158 009c 7054     		strb	r0, [r6, r1]
+  36:Core/Src/polyvec.c ****       r[11*j+ 8] = (t[5] >>  9) | ((t[6] & 0x3f) << 2);
+ 159              		.loc 1 36 7 is_stmt 1 discriminator 2 view .LVU54
+ 160              		.loc 1 36 38 is_stmt 0 discriminator 2 view .LVU55
+ 161 009e BDF80C10 		ldrh	r1, [sp, #12]
+ 162              		.loc 1 36 8 discriminator 2 view .LVU56
+ 163 00a2 03F10800 		add	r0, r3, #8
+ 164              		.loc 1 36 33 discriminator 2 view .LVU57
+ 165 00a6 520A     		lsrs	r2, r2, #9
+ 166 00a8 42EA8102 		orr	r2, r2, r1, lsl #2
+ 167              		.loc 1 36 18 discriminator 2 view .LVU58
+ 168 00ac 3254     		strb	r2, [r6, r0]
+  37:Core/Src/polyvec.c ****       r[11*j+ 9] = (t[6] >>  6) | ((t[7] & 0x07) << 5);
+ 169              		.loc 1 37 7 is_stmt 1 discriminator 2 view .LVU59
+ 170              		.loc 1 37 38 is_stmt 0 discriminator 2 view .LVU60
+ 171 00ae BDF80E20 		ldrh	r2, [sp, #14]
+ 172              		.loc 1 37 8 discriminator 2 view .LVU61
+ 173 00b2 03F10900 		add	r0, r3, #9
+ 174              		.loc 1 37 33 discriminator 2 view .LVU62
+ 175 00b6 8909     		lsrs	r1, r1, #6
+ 176 00b8 41EA4211 		orr	r1, r1, r2, lsl #5
+ 177              		.loc 1 37 18 discriminator 2 view .LVU63
+ 178 00bc 3154     		strb	r1, [r6, r0]
+  38:Core/Src/polyvec.c ****       r[11*j+10] = (t[7] >>  3);
+ 179              		.loc 1 38 7 is_stmt 1 discriminator 2 view .LVU64
+ 180              		.loc 1 38 8 is_stmt 0 discriminator 2 view .LVU65
+ 181 00be 0A33     		adds	r3, r3, #10
+ 182              		.loc 1 38 18 discriminator 2 view .LVU66
+ 183 00c0 D208     		lsrs	r2, r2, #3
+ 184 00c2 F254     		strb	r2, [r6, r3]
+  23:Core/Src/polyvec.c ****     {
+ 185              		.loc 1 23 25 is_stmt 1 discriminator 2 view .LVU67
+  23:Core/Src/polyvec.c ****     {
+ARM GAS  C:\Users\11410\AppData\Local\Temp\cc67E3Sn.s 			page 5
+
+
+ 186              		.loc 1 23 26 is_stmt 0 discriminator 2 view .LVU68
+ 187 00c4 0135     		adds	r5, r5, #1
+ 188              	.LVL5:
+ 189              	.L5:
+  23:Core/Src/polyvec.c ****     {
+ 190              		.loc 1 23 13 is_stmt 1 discriminator 1 view .LVU69
+  23:Core/Src/polyvec.c ****     {
+ 191              		.loc 1 23 5 is_stmt 0 discriminator 1 view .LVU70
+ 192 00c6 1F2D     		cmp	r5, #31
+ 193 00c8 01DC     		bgt	.L9
+  25:Core/Src/polyvec.c ****         t[k] = ((((uint32_t)freeze(a->vec[i].coeffs[8*j+k]) << 11) + KYBER_Q/2)/ KYBER_Q) & 0x7ff;
+ 194              		.loc 1 25 12 view .LVU71
+ 195 00ca 0024     		movs	r4, #0
+ 196 00cc B5E7     		b	.L4
+ 197              	.L9:
+  39:Core/Src/polyvec.c ****     }
+  40:Core/Src/polyvec.c ****     r += 352;
+ 198              		.loc 1 40 5 is_stmt 1 discriminator 2 view .LVU72
+ 199              		.loc 1 40 7 is_stmt 0 discriminator 2 view .LVU73
+ 200 00ce 06F5B076 		add	r6, r6, #352
+ 201              	.LVL6:
+  21:Core/Src/polyvec.c ****   {
+ 202              		.loc 1 21 21 is_stmt 1 discriminator 2 view .LVU74
+  21:Core/Src/polyvec.c ****   {
+ 203              		.loc 1 21 22 is_stmt 0 discriminator 2 view .LVU75
+ 204 00d2 0137     		adds	r7, r7, #1
+ 205              	.LVL7:
+ 206              	.L2:
+  21:Core/Src/polyvec.c ****   {
+ 207              		.loc 1 21 11 is_stmt 1 discriminator 1 view .LVU76
+  21:Core/Src/polyvec.c ****   {
+ 208              		.loc 1 21 3 is_stmt 0 discriminator 1 view .LVU77
+ 209 00d4 022F     		cmp	r7, #2
+ 210 00d6 01DC     		bgt	.L10
+  23:Core/Src/polyvec.c ****     {
+ 211              		.loc 1 23 10 view .LVU78
+ 212 00d8 0025     		movs	r5, #0
+ 213 00da F4E7     		b	.L5
+ 214              	.L10:
+  41:Core/Src/polyvec.c ****   }
+  42:Core/Src/polyvec.c **** }
+ 215              		.loc 1 42 1 view .LVU79
+ 216 00dc 04B0     		add	sp, sp, #16
+ 217              	.LCFI2:
+ 218              		.cfi_def_cfa_offset 24
+ 219              		@ sp needed
+ 220 00de BDE8F081 		pop	{r4, r5, r6, r7, r8, pc}
+ 221              	.LVL8:
+ 222              	.L12:
+ 223              		.loc 1 42 1 view .LVU80
+ 224 00e2 00BF     		.align	2
+ 225              	.L11:
+ 226 00e4 CDFD4144 		.word	1145175501
+ 227              		.cfi_endproc
+ 228              	.LFE3:
+ 230              		.section	.text.polyvec_decompress,"ax",%progbits
+ 231              		.align	1
+ARM GAS  C:\Users\11410\AppData\Local\Temp\cc67E3Sn.s 			page 6
+
+
+ 232              		.global	polyvec_decompress
+ 233              		.syntax unified
+ 234              		.thumb
+ 235              		.thumb_func
+ 236              		.fpu fpv4-sp-d16
+ 238              	polyvec_decompress:
+ 239              	.LVL9:
+ 240              	.LFB4:
+  43:Core/Src/polyvec.c **** 
+  44:Core/Src/polyvec.c **** /*************************************************
+  45:Core/Src/polyvec.c **** * Name:        polyvec_decompress
+  46:Core/Src/polyvec.c **** * 
+  47:Core/Src/polyvec.c **** * Description: De-serialize and decompress vector of polynomials;
+  48:Core/Src/polyvec.c **** *              approximate inverse of polyvec_compress
+  49:Core/Src/polyvec.c **** *
+  50:Core/Src/polyvec.c **** * Arguments:   - polyvec *r:       pointer to output vector of polynomials
+  51:Core/Src/polyvec.c **** *              - unsigned char *a: pointer to input byte array
+  52:Core/Src/polyvec.c **** **************************************************/
+  53:Core/Src/polyvec.c **** void polyvec_decompress(polyvec *r, const unsigned char *a)
+  54:Core/Src/polyvec.c **** {
+ 241              		.loc 1 54 1 is_stmt 1 view -0
+ 242              		.cfi_startproc
+ 243              		@ args = 0, pretend = 0, frame = 0
+ 244              		@ frame_needed = 0, uses_anonymous_args = 0
+  55:Core/Src/polyvec.c ****   int i,j;
+ 245              		.loc 1 55 3 view .LVU82
+  56:Core/Src/polyvec.c ****   for(i=0;i<KYBER_K;i++)
+ 246              		.loc 1 56 3 view .LVU83
+ 247              		.loc 1 56 8 is_stmt 0 view .LVU84
+ 248 0000 4FF0000C 		mov	ip, #0
+ 249              	.LVL10:
+ 250              		.loc 1 56 11 is_stmt 1 view .LVU85
+ 251              		.loc 1 56 3 is_stmt 0 view .LVU86
+ 252 0004 BCF1020F 		cmp	ip, #2
+ 253 0008 00F3CC80 		bgt	.L21
+  54:Core/Src/polyvec.c ****   int i,j;
+ 254              		.loc 1 54 1 view .LVU87
+ 255 000c 2DE9F041 		push	{r4, r5, r6, r7, r8, lr}
+ 256              	.LCFI3:
+ 257              		.cfi_def_cfa_offset 24
+ 258              		.cfi_offset 4, -24
+ 259              		.cfi_offset 5, -20
+ 260              		.cfi_offset 6, -16
+ 261              		.cfi_offset 7, -12
+ 262              		.cfi_offset 8, -8
+ 263              		.cfi_offset 14, -4
+ 264 0010 07E0     		b	.L17
+ 265              	.LVL11:
+ 266              	.L23:
+  57:Core/Src/polyvec.c ****   {
+  58:Core/Src/polyvec.c ****     for(j=0;j<KYBER_N/8;j++)
+  59:Core/Src/polyvec.c ****     {
+  60:Core/Src/polyvec.c ****       r->vec[i].coeffs[8*j+0] =  (((a[11*j+ 0]       | (((uint32_t)a[11*j+ 1] & 0x07) << 8)) * KYBE
+  61:Core/Src/polyvec.c ****       r->vec[i].coeffs[8*j+1] = ((((a[11*j+ 1] >> 3) | (((uint32_t)a[11*j+ 2] & 0x3f) << 5)) * KYBE
+  62:Core/Src/polyvec.c ****       r->vec[i].coeffs[8*j+2] = ((((a[11*j+ 2] >> 6) | (((uint32_t)a[11*j+ 3] & 0xff) << 2) |  (((u
+  63:Core/Src/polyvec.c ****       r->vec[i].coeffs[8*j+3] = ((((a[11*j+ 4] >> 1) | (((uint32_t)a[11*j+ 5] & 0x0f) << 7)) * KYBE
+  64:Core/Src/polyvec.c ****       r->vec[i].coeffs[8*j+4] = ((((a[11*j+ 5] >> 4) | (((uint32_t)a[11*j+ 6] & 0x7f) << 4)) * KYBE
+ARM GAS  C:\Users\11410\AppData\Local\Temp\cc67E3Sn.s 			page 7
+
+
+  65:Core/Src/polyvec.c ****       r->vec[i].coeffs[8*j+5] = ((((a[11*j+ 6] >> 7) | (((uint32_t)a[11*j+ 7] & 0xff) << 1) |  (((u
+  66:Core/Src/polyvec.c ****       r->vec[i].coeffs[8*j+6] = ((((a[11*j+ 8] >> 2) | (((uint32_t)a[11*j+ 9] & 0x1f) << 6)) * KYBE
+  67:Core/Src/polyvec.c ****       r->vec[i].coeffs[8*j+7] = ((((a[11*j+ 9] >> 5) | (((uint32_t)a[11*j+10] & 0xff) << 3)) * KYBE
+  68:Core/Src/polyvec.c ****     }
+  69:Core/Src/polyvec.c ****     a += 352;
+ 267              		.loc 1 69 5 is_stmt 1 discriminator 2 view .LVU88
+ 268              		.loc 1 69 7 is_stmt 0 discriminator 2 view .LVU89
+ 269 0012 01F5B071 		add	r1, r1, #352
+ 270              	.LVL12:
+  56:Core/Src/polyvec.c ****   {
+ 271              		.loc 1 56 21 is_stmt 1 discriminator 2 view .LVU90
+  56:Core/Src/polyvec.c ****   {
+ 272              		.loc 1 56 22 is_stmt 0 discriminator 2 view .LVU91
+ 273 0016 0CF1010C 		add	ip, ip, #1
+ 274              	.LVL13:
+  56:Core/Src/polyvec.c ****   {
+ 275              		.loc 1 56 11 is_stmt 1 discriminator 2 view .LVU92
+  56:Core/Src/polyvec.c ****   {
+ 276              		.loc 1 56 3 is_stmt 0 discriminator 2 view .LVU93
+ 277 001a BCF1020F 		cmp	ip, #2
+ 278 001e 00F3BF80 		bgt	.L22
+ 279              	.LVL14:
+ 280              	.L17:
+  58:Core/Src/polyvec.c ****     {
+ 281              		.loc 1 58 10 view .LVU94
+ 282 0022 0026     		movs	r6, #0
+ 283              	.L16:
+ 284              	.LVL15:
+  58:Core/Src/polyvec.c ****     {
+ 285              		.loc 1 58 13 is_stmt 1 discriminator 1 view .LVU95
+  58:Core/Src/polyvec.c ****     {
+ 286              		.loc 1 58 5 is_stmt 0 discriminator 1 view .LVU96
+ 287 0024 1F2E     		cmp	r6, #31
+ 288 0026 F4DC     		bgt	.L23
+  60:Core/Src/polyvec.c ****       r->vec[i].coeffs[8*j+1] = ((((a[11*j+ 1] >> 3) | (((uint32_t)a[11*j+ 2] & 0x3f) << 5)) * KYBE
+ 289              		.loc 1 60 7 is_stmt 1 discriminator 3 view .LVU97
+  60:Core/Src/polyvec.c ****       r->vec[i].coeffs[8*j+1] = ((((a[11*j+ 1] >> 3) | (((uint32_t)a[11*j+ 2] & 0x3f) << 5)) * KYBE
+ 290              		.loc 1 60 41 is_stmt 0 discriminator 3 view .LVU98
+ 291 0028 06EB8602 		add	r2, r6, r6, lsl #2
+ 292 002c 06EB4202 		add	r2, r6, r2, lsl #1
+  60:Core/Src/polyvec.c ****       r->vec[i].coeffs[8*j+1] = ((((a[11*j+ 1] >> 3) | (((uint32_t)a[11*j+ 2] & 0x3f) << 5)) * KYBE
+ 293              		.loc 1 60 38 discriminator 3 view .LVU99
+ 294 0030 8B5C     		ldrb	r3, [r1, r2]	@ zero_extendqisi2
+  60:Core/Src/polyvec.c ****       r->vec[i].coeffs[8*j+1] = ((((a[11*j+ 1] >> 3) | (((uint32_t)a[11*j+ 2] & 0x3f) << 5)) * KYBE
+ 295              		.loc 1 60 69 discriminator 3 view .LVU100
+ 296 0032 571C     		adds	r7, r2, #1
+ 297 0034 CC5D     		ldrb	r4, [r1, r7]	@ zero_extendqisi2
+  60:Core/Src/polyvec.c ****       r->vec[i].coeffs[8*j+1] = ((((a[11*j+ 1] >> 3) | (((uint32_t)a[11*j+ 2] & 0x3f) << 5)) * KYBE
+ 298              		.loc 1 60 87 discriminator 3 view .LVU101
+ 299 0036 2402     		lsls	r4, r4, #8
+ 300 0038 04F4E064 		and	r4, r4, #1792
+  60:Core/Src/polyvec.c ****       r->vec[i].coeffs[8*j+1] = ((((a[11*j+ 1] >> 3) | (((uint32_t)a[11*j+ 2] & 0x3f) << 5)) * KYBE
+ 301              		.loc 1 60 54 discriminator 3 view .LVU102
+ 302 003c 2343     		orrs	r3, r3, r4
+  60:Core/Src/polyvec.c ****       r->vec[i].coeffs[8*j+1] = ((((a[11*j+ 1] >> 3) | (((uint32_t)a[11*j+ 2] & 0x3f) << 5)) * KYBE
+ 303              		.loc 1 60 94 discriminator 3 view .LVU103
+ 304 003e C3EB0314 		rsb	r4, r3, r3, lsl #4
+ARM GAS  C:\Users\11410\AppData\Local\Temp\cc67E3Sn.s 			page 8
+
+
+ 305 0042 03EB4423 		add	r3, r3, r4, lsl #9
+  60:Core/Src/polyvec.c ****       r->vec[i].coeffs[8*j+1] = ((((a[11*j+ 1] >> 3) | (((uint32_t)a[11*j+ 2] & 0x3f) << 5)) * KYBE
+ 306              		.loc 1 60 105 discriminator 3 view .LVU104
+ 307 0046 03F58063 		add	r3, r3, #1024
+  60:Core/Src/polyvec.c ****       r->vec[i].coeffs[8*j+1] = ((((a[11*j+ 1] >> 3) | (((uint32_t)a[11*j+ 2] & 0x3f) << 5)) * KYBE
+ 308              		.loc 1 60 112 discriminator 3 view .LVU105
+ 309 004a DB0A     		lsrs	r3, r3, #11
+  60:Core/Src/polyvec.c ****       r->vec[i].coeffs[8*j+1] = ((((a[11*j+ 1] >> 3) | (((uint32_t)a[11*j+ 2] & 0x3f) << 5)) * KYBE
+ 310              		.loc 1 60 27 discriminator 3 view .LVU106
+ 311 004c F500     		lsls	r5, r6, #3
+  60:Core/Src/polyvec.c ****       r->vec[i].coeffs[8*j+1] = ((((a[11*j+ 1] >> 3) | (((uint32_t)a[11*j+ 2] & 0x3f) << 5)) * KYBE
+ 312              		.loc 1 60 31 discriminator 3 view .LVU107
+ 313 004e 4FEA0C24 		lsl	r4, ip, #8
+ 314 0052 04EBC60E 		add	lr, r4, r6, lsl #3
+ 315 0056 20F81E30 		strh	r3, [r0, lr, lsl #1]	@ movhi
+  61:Core/Src/polyvec.c ****       r->vec[i].coeffs[8*j+2] = ((((a[11*j+ 2] >> 6) | (((uint32_t)a[11*j+ 3] & 0xff) << 2) |  (((u
+ 316              		.loc 1 61 7 is_stmt 1 discriminator 3 view .LVU108
+  61:Core/Src/polyvec.c ****       r->vec[i].coeffs[8*j+2] = ((((a[11*j+ 2] >> 6) | (((uint32_t)a[11*j+ 3] & 0xff) << 2) |  (((u
+ 317              		.loc 1 61 38 is_stmt 0 discriminator 3 view .LVU109
+ 318 005a 11F807E0 		ldrb	lr, [r1, r7]	@ zero_extendqisi2
+  61:Core/Src/polyvec.c ****       r->vec[i].coeffs[8*j+2] = ((((a[11*j+ 2] >> 6) | (((uint32_t)a[11*j+ 3] & 0xff) << 2) |  (((u
+ 319              		.loc 1 61 69 discriminator 3 view .LVU110
+ 320 005e 971C     		adds	r7, r2, #2
+ 321 0060 CB5D     		ldrb	r3, [r1, r7]	@ zero_extendqisi2
+  61:Core/Src/polyvec.c ****       r->vec[i].coeffs[8*j+2] = ((((a[11*j+ 2] >> 6) | (((uint32_t)a[11*j+ 3] & 0xff) << 2) |  (((u
+ 322              		.loc 1 61 87 discriminator 3 view .LVU111
+ 323 0062 5B01     		lsls	r3, r3, #5
+ 324 0064 03F4FC63 		and	r3, r3, #2016
+  61:Core/Src/polyvec.c ****       r->vec[i].coeffs[8*j+2] = ((((a[11*j+ 2] >> 6) | (((uint32_t)a[11*j+ 3] & 0xff) << 2) |  (((u
+ 325              		.loc 1 61 54 discriminator 3 view .LVU112
+ 326 0068 43EADE03 		orr	r3, r3, lr, lsr #3
+  61:Core/Src/polyvec.c ****       r->vec[i].coeffs[8*j+2] = ((((a[11*j+ 2] >> 6) | (((uint32_t)a[11*j+ 3] & 0xff) << 2) |  (((u
+ 327              		.loc 1 61 94 discriminator 3 view .LVU113
+ 328 006c C3EB031E 		rsb	lr, r3, r3, lsl #4
+ 329 0070 03EB4E23 		add	r3, r3, lr, lsl #9
+  61:Core/Src/polyvec.c ****       r->vec[i].coeffs[8*j+2] = ((((a[11*j+ 2] >> 6) | (((uint32_t)a[11*j+ 3] & 0xff) << 2) |  (((u
+ 330              		.loc 1 61 105 discriminator 3 view .LVU114
+ 331 0074 03F58063 		add	r3, r3, #1024
+  61:Core/Src/polyvec.c ****       r->vec[i].coeffs[8*j+2] = ((((a[11*j+ 2] >> 6) | (((uint32_t)a[11*j+ 3] & 0xff) << 2) |  (((u
+ 332              		.loc 1 61 112 discriminator 3 view .LVU115
+ 333 0078 DB0A     		lsrs	r3, r3, #11
+  61:Core/Src/polyvec.c ****       r->vec[i].coeffs[8*j+2] = ((((a[11*j+ 2] >> 6) | (((uint32_t)a[11*j+ 3] & 0xff) << 2) |  (((u
+ 334              		.loc 1 61 27 discriminator 3 view .LVU116
+ 335 007a 05F1010E 		add	lr, r5, #1
+  61:Core/Src/polyvec.c ****       r->vec[i].coeffs[8*j+2] = ((((a[11*j+ 2] >> 6) | (((uint32_t)a[11*j+ 3] & 0xff) << 2) |  (((u
+ 336              		.loc 1 61 31 discriminator 3 view .LVU117
+ 337 007e A644     		add	lr, lr, r4
+ 338 0080 20F81E30 		strh	r3, [r0, lr, lsl #1]	@ movhi
+  62:Core/Src/polyvec.c ****       r->vec[i].coeffs[8*j+3] = ((((a[11*j+ 4] >> 1) | (((uint32_t)a[11*j+ 5] & 0x0f) << 7)) * KYBE
+ 339              		.loc 1 62 7 is_stmt 1 discriminator 3 view .LVU118
+  62:Core/Src/polyvec.c ****       r->vec[i].coeffs[8*j+3] = ((((a[11*j+ 4] >> 1) | (((uint32_t)a[11*j+ 5] & 0x0f) << 7)) * KYBE
+ 340              		.loc 1 62 38 is_stmt 0 discriminator 3 view .LVU119
+ 341 0084 11F807E0 		ldrb	lr, [r1, r7]	@ zero_extendqisi2
+  62:Core/Src/polyvec.c ****       r->vec[i].coeffs[8*j+3] = ((((a[11*j+ 4] >> 1) | (((uint32_t)a[11*j+ 5] & 0x0f) << 7)) * KYBE
+ 342              		.loc 1 62 69 discriminator 3 view .LVU120
+ 343 0088 8F18     		adds	r7, r1, r2
+ 344 008a FB78     		ldrb	r3, [r7, #3]	@ zero_extendqisi2
+ARM GAS  C:\Users\11410\AppData\Local\Temp\cc67E3Sn.s 			page 9
+
+
+  62:Core/Src/polyvec.c ****       r->vec[i].coeffs[8*j+3] = ((((a[11*j+ 4] >> 1) | (((uint32_t)a[11*j+ 5] & 0x0f) << 7)) * KYBE
+ 345              		.loc 1 62 87 discriminator 3 view .LVU121
+ 346 008c 9B00     		lsls	r3, r3, #2
+  62:Core/Src/polyvec.c ****       r->vec[i].coeffs[8*j+3] = ((((a[11*j+ 4] >> 1) | (((uint32_t)a[11*j+ 5] & 0x0f) << 7)) * KYBE
+ 347              		.loc 1 62 54 discriminator 3 view .LVU122
+ 348 008e 43EA9E13 		orr	r3, r3, lr, lsr #6
+  62:Core/Src/polyvec.c ****       r->vec[i].coeffs[8*j+3] = ((((a[11*j+ 4] >> 1) | (((uint32_t)a[11*j+ 5] & 0x0f) << 7)) * KYBE
+ 349              		.loc 1 62 109 discriminator 3 view .LVU123
+ 350 0092 02F1040E 		add	lr, r2, #4
+ 351 0096 11F80E80 		ldrb	r8, [r1, lr]	@ zero_extendqisi2
+  62:Core/Src/polyvec.c ****       r->vec[i].coeffs[8*j+3] = ((((a[11*j+ 4] >> 1) | (((uint32_t)a[11*j+ 5] & 0x0f) << 7)) * KYBE
+ 352              		.loc 1 62 127 discriminator 3 view .LVU124
+ 353 009a 4FEA8828 		lsl	r8, r8, #10
+ 354 009e 08F48068 		and	r8, r8, #1024
+  62:Core/Src/polyvec.c ****       r->vec[i].coeffs[8*j+3] = ((((a[11*j+ 4] >> 1) | (((uint32_t)a[11*j+ 5] & 0x0f) << 7)) * KYBE
+ 355              		.loc 1 62 93 discriminator 3 view .LVU125
+ 356 00a2 43EA0803 		orr	r3, r3, r8
+  62:Core/Src/polyvec.c ****       r->vec[i].coeffs[8*j+3] = ((((a[11*j+ 4] >> 1) | (((uint32_t)a[11*j+ 5] & 0x0f) << 7)) * KYBE
+ 357              		.loc 1 62 135 discriminator 3 view .LVU126
+ 358 00a6 C3EB0318 		rsb	r8, r3, r3, lsl #4
+ 359 00aa 03EB4823 		add	r3, r3, r8, lsl #9
+  62:Core/Src/polyvec.c ****       r->vec[i].coeffs[8*j+3] = ((((a[11*j+ 4] >> 1) | (((uint32_t)a[11*j+ 5] & 0x0f) << 7)) * KYBE
+ 360              		.loc 1 62 146 discriminator 3 view .LVU127
+ 361 00ae 03F58063 		add	r3, r3, #1024
+  62:Core/Src/polyvec.c ****       r->vec[i].coeffs[8*j+3] = ((((a[11*j+ 4] >> 1) | (((uint32_t)a[11*j+ 5] & 0x0f) << 7)) * KYBE
+ 362              		.loc 1 62 154 discriminator 3 view .LVU128
+ 363 00b2 DB0A     		lsrs	r3, r3, #11
+  62:Core/Src/polyvec.c ****       r->vec[i].coeffs[8*j+3] = ((((a[11*j+ 4] >> 1) | (((uint32_t)a[11*j+ 5] & 0x0f) << 7)) * KYBE
+ 364              		.loc 1 62 27 discriminator 3 view .LVU129
+ 365 00b4 05F10208 		add	r8, r5, #2
+  62:Core/Src/polyvec.c ****       r->vec[i].coeffs[8*j+3] = ((((a[11*j+ 4] >> 1) | (((uint32_t)a[11*j+ 5] & 0x0f) << 7)) * KYBE
+ 366              		.loc 1 62 31 discriminator 3 view .LVU130
+ 367 00b8 A044     		add	r8, r8, r4
+ 368 00ba 20F81830 		strh	r3, [r0, r8, lsl #1]	@ movhi
+  63:Core/Src/polyvec.c ****       r->vec[i].coeffs[8*j+4] = ((((a[11*j+ 5] >> 4) | (((uint32_t)a[11*j+ 6] & 0x7f) << 4)) * KYBE
+ 369              		.loc 1 63 7 is_stmt 1 discriminator 3 view .LVU131
+  63:Core/Src/polyvec.c ****       r->vec[i].coeffs[8*j+4] = ((((a[11*j+ 5] >> 4) | (((uint32_t)a[11*j+ 6] & 0x7f) << 4)) * KYBE
+ 370              		.loc 1 63 38 is_stmt 0 discriminator 3 view .LVU132
+ 371 00be 11F80E80 		ldrb	r8, [r1, lr]	@ zero_extendqisi2
+  63:Core/Src/polyvec.c ****       r->vec[i].coeffs[8*j+4] = ((((a[11*j+ 5] >> 4) | (((uint32_t)a[11*j+ 6] & 0x7f) << 4)) * KYBE
+ 372              		.loc 1 63 69 discriminator 3 view .LVU133
+ 373 00c2 02F1050E 		add	lr, r2, #5
+ 374 00c6 11F80E30 		ldrb	r3, [r1, lr]	@ zero_extendqisi2
+  63:Core/Src/polyvec.c ****       r->vec[i].coeffs[8*j+4] = ((((a[11*j+ 5] >> 4) | (((uint32_t)a[11*j+ 6] & 0x7f) << 4)) * KYBE
+ 375              		.loc 1 63 87 discriminator 3 view .LVU134
+ 376 00ca DB01     		lsls	r3, r3, #7
+ 377 00cc 03F4F063 		and	r3, r3, #1920
+  63:Core/Src/polyvec.c ****       r->vec[i].coeffs[8*j+4] = ((((a[11*j+ 5] >> 4) | (((uint32_t)a[11*j+ 6] & 0x7f) << 4)) * KYBE
+ 378              		.loc 1 63 54 discriminator 3 view .LVU135
+ 379 00d0 43EA5803 		orr	r3, r3, r8, lsr #1
+  63:Core/Src/polyvec.c ****       r->vec[i].coeffs[8*j+4] = ((((a[11*j+ 5] >> 4) | (((uint32_t)a[11*j+ 6] & 0x7f) << 4)) * KYBE
+ 380              		.loc 1 63 94 discriminator 3 view .LVU136
+ 381 00d4 C3EB0318 		rsb	r8, r3, r3, lsl #4
+ 382 00d8 03EB4823 		add	r3, r3, r8, lsl #9
+  63:Core/Src/polyvec.c ****       r->vec[i].coeffs[8*j+4] = ((((a[11*j+ 5] >> 4) | (((uint32_t)a[11*j+ 6] & 0x7f) << 4)) * KYBE
+ 383              		.loc 1 63 105 discriminator 3 view .LVU137
+ 384 00dc 03F58063 		add	r3, r3, #1024
+ARM GAS  C:\Users\11410\AppData\Local\Temp\cc67E3Sn.s 			page 10
+
+
+  63:Core/Src/polyvec.c ****       r->vec[i].coeffs[8*j+4] = ((((a[11*j+ 5] >> 4) | (((uint32_t)a[11*j+ 6] & 0x7f) << 4)) * KYBE
+ 385              		.loc 1 63 113 discriminator 3 view .LVU138
+ 386 00e0 DB0A     		lsrs	r3, r3, #11
+  63:Core/Src/polyvec.c ****       r->vec[i].coeffs[8*j+4] = ((((a[11*j+ 5] >> 4) | (((uint32_t)a[11*j+ 6] & 0x7f) << 4)) * KYBE
+ 387              		.loc 1 63 27 discriminator 3 view .LVU139
+ 388 00e2 05F10308 		add	r8, r5, #3
+  63:Core/Src/polyvec.c ****       r->vec[i].coeffs[8*j+4] = ((((a[11*j+ 5] >> 4) | (((uint32_t)a[11*j+ 6] & 0x7f) << 4)) * KYBE
+ 389              		.loc 1 63 31 discriminator 3 view .LVU140
+ 390 00e6 A044     		add	r8, r8, r4
+ 391 00e8 20F81830 		strh	r3, [r0, r8, lsl #1]	@ movhi
+  64:Core/Src/polyvec.c ****       r->vec[i].coeffs[8*j+5] = ((((a[11*j+ 6] >> 7) | (((uint32_t)a[11*j+ 7] & 0xff) << 1) |  (((u
+ 392              		.loc 1 64 7 is_stmt 1 discriminator 3 view .LVU141
+  64:Core/Src/polyvec.c ****       r->vec[i].coeffs[8*j+5] = ((((a[11*j+ 6] >> 7) | (((uint32_t)a[11*j+ 7] & 0xff) << 1) |  (((u
+ 393              		.loc 1 64 38 is_stmt 0 discriminator 3 view .LVU142
+ 394 00ec 11F80E80 		ldrb	r8, [r1, lr]	@ zero_extendqisi2
+  64:Core/Src/polyvec.c ****       r->vec[i].coeffs[8*j+5] = ((((a[11*j+ 6] >> 7) | (((uint32_t)a[11*j+ 7] & 0xff) << 1) |  (((u
+ 395              		.loc 1 64 69 discriminator 3 view .LVU143
+ 396 00f0 02F1060E 		add	lr, r2, #6
+ 397 00f4 11F80E30 		ldrb	r3, [r1, lr]	@ zero_extendqisi2
+  64:Core/Src/polyvec.c ****       r->vec[i].coeffs[8*j+5] = ((((a[11*j+ 6] >> 7) | (((uint32_t)a[11*j+ 7] & 0xff) << 1) |  (((u
+ 398              		.loc 1 64 87 discriminator 3 view .LVU144
+ 399 00f8 1B01     		lsls	r3, r3, #4
+ 400 00fa 03F4FE63 		and	r3, r3, #2032
+  64:Core/Src/polyvec.c ****       r->vec[i].coeffs[8*j+5] = ((((a[11*j+ 6] >> 7) | (((uint32_t)a[11*j+ 7] & 0xff) << 1) |  (((u
+ 401              		.loc 1 64 54 discriminator 3 view .LVU145
+ 402 00fe 43EA1813 		orr	r3, r3, r8, lsr #4
+  64:Core/Src/polyvec.c ****       r->vec[i].coeffs[8*j+5] = ((((a[11*j+ 6] >> 7) | (((uint32_t)a[11*j+ 7] & 0xff) << 1) |  (((u
+ 403              		.loc 1 64 94 discriminator 3 view .LVU146
+ 404 0102 C3EB0318 		rsb	r8, r3, r3, lsl #4
+ 405 0106 03EB4823 		add	r3, r3, r8, lsl #9
+  64:Core/Src/polyvec.c ****       r->vec[i].coeffs[8*j+5] = ((((a[11*j+ 6] >> 7) | (((uint32_t)a[11*j+ 7] & 0xff) << 1) |  (((u
+ 406              		.loc 1 64 105 discriminator 3 view .LVU147
+ 407 010a 03F58063 		add	r3, r3, #1024
+  64:Core/Src/polyvec.c ****       r->vec[i].coeffs[8*j+5] = ((((a[11*j+ 6] >> 7) | (((uint32_t)a[11*j+ 7] & 0xff) << 1) |  (((u
+ 408              		.loc 1 64 113 discriminator 3 view .LVU148
+ 409 010e DB0A     		lsrs	r3, r3, #11
+  64:Core/Src/polyvec.c ****       r->vec[i].coeffs[8*j+5] = ((((a[11*j+ 6] >> 7) | (((uint32_t)a[11*j+ 7] & 0xff) << 1) |  (((u
+ 410              		.loc 1 64 27 discriminator 3 view .LVU149
+ 411 0110 05F10408 		add	r8, r5, #4
+  64:Core/Src/polyvec.c ****       r->vec[i].coeffs[8*j+5] = ((((a[11*j+ 6] >> 7) | (((uint32_t)a[11*j+ 7] & 0xff) << 1) |  (((u
+ 412              		.loc 1 64 31 discriminator 3 view .LVU150
+ 413 0114 A044     		add	r8, r8, r4
+ 414 0116 20F81830 		strh	r3, [r0, r8, lsl #1]	@ movhi
+  65:Core/Src/polyvec.c ****       r->vec[i].coeffs[8*j+6] = ((((a[11*j+ 8] >> 2) | (((uint32_t)a[11*j+ 9] & 0x1f) << 6)) * KYBE
+ 415              		.loc 1 65 7 is_stmt 1 discriminator 3 view .LVU151
+  65:Core/Src/polyvec.c ****       r->vec[i].coeffs[8*j+6] = ((((a[11*j+ 8] >> 2) | (((uint32_t)a[11*j+ 9] & 0x1f) << 6)) * KYBE
+ 416              		.loc 1 65 38 is_stmt 0 discriminator 3 view .LVU152
+ 417 011a 11F80EE0 		ldrb	lr, [r1, lr]	@ zero_extendqisi2
+  65:Core/Src/polyvec.c ****       r->vec[i].coeffs[8*j+6] = ((((a[11*j+ 8] >> 2) | (((uint32_t)a[11*j+ 9] & 0x1f) << 6)) * KYBE
+ 418              		.loc 1 65 69 discriminator 3 view .LVU153
+ 419 011e FB79     		ldrb	r3, [r7, #7]	@ zero_extendqisi2
+  65:Core/Src/polyvec.c ****       r->vec[i].coeffs[8*j+6] = ((((a[11*j+ 8] >> 2) | (((uint32_t)a[11*j+ 9] & 0x1f) << 6)) * KYBE
+ 420              		.loc 1 65 87 discriminator 3 view .LVU154
+ 421 0120 5B00     		lsls	r3, r3, #1
+  65:Core/Src/polyvec.c ****       r->vec[i].coeffs[8*j+6] = ((((a[11*j+ 8] >> 2) | (((uint32_t)a[11*j+ 9] & 0x1f) << 6)) * KYBE
+ 422              		.loc 1 65 54 discriminator 3 view .LVU155
+ 423 0122 43EADE13 		orr	r3, r3, lr, lsr #7
+ARM GAS  C:\Users\11410\AppData\Local\Temp\cc67E3Sn.s 			page 11
+
+
+  65:Core/Src/polyvec.c ****       r->vec[i].coeffs[8*j+6] = ((((a[11*j+ 8] >> 2) | (((uint32_t)a[11*j+ 9] & 0x1f) << 6)) * KYBE
+ 424              		.loc 1 65 109 discriminator 3 view .LVU156
+ 425 0126 02F1080E 		add	lr, r2, #8
+ 426 012a 11F80E80 		ldrb	r8, [r1, lr]	@ zero_extendqisi2
+  65:Core/Src/polyvec.c ****       r->vec[i].coeffs[8*j+6] = ((((a[11*j+ 8] >> 2) | (((uint32_t)a[11*j+ 9] & 0x1f) << 6)) * KYBE
+ 427              		.loc 1 65 127 discriminator 3 view .LVU157
+ 428 012e 4FEA4828 		lsl	r8, r8, #9
+ 429 0132 08F4C068 		and	r8, r8, #1536
+  65:Core/Src/polyvec.c ****       r->vec[i].coeffs[8*j+6] = ((((a[11*j+ 8] >> 2) | (((uint32_t)a[11*j+ 9] & 0x1f) << 6)) * KYBE
+ 430              		.loc 1 65 93 discriminator 3 view .LVU158
+ 431 0136 43EA0803 		orr	r3, r3, r8
+  65:Core/Src/polyvec.c ****       r->vec[i].coeffs[8*j+6] = ((((a[11*j+ 8] >> 2) | (((uint32_t)a[11*j+ 9] & 0x1f) << 6)) * KYBE
+ 432              		.loc 1 65 135 discriminator 3 view .LVU159
+ 433 013a C3EB0318 		rsb	r8, r3, r3, lsl #4
+ 434 013e 03EB4823 		add	r3, r3, r8, lsl #9
+  65:Core/Src/polyvec.c ****       r->vec[i].coeffs[8*j+6] = ((((a[11*j+ 8] >> 2) | (((uint32_t)a[11*j+ 9] & 0x1f) << 6)) * KYBE
+ 435              		.loc 1 65 146 discriminator 3 view .LVU160
+ 436 0142 03F58063 		add	r3, r3, #1024
+  65:Core/Src/polyvec.c ****       r->vec[i].coeffs[8*j+6] = ((((a[11*j+ 8] >> 2) | (((uint32_t)a[11*j+ 9] & 0x1f) << 6)) * KYBE
+ 437              		.loc 1 65 154 discriminator 3 view .LVU161
+ 438 0146 DB0A     		lsrs	r3, r3, #11
+  65:Core/Src/polyvec.c ****       r->vec[i].coeffs[8*j+6] = ((((a[11*j+ 8] >> 2) | (((uint32_t)a[11*j+ 9] & 0x1f) << 6)) * KYBE
+ 439              		.loc 1 65 27 discriminator 3 view .LVU162
+ 440 0148 05F10508 		add	r8, r5, #5
+  65:Core/Src/polyvec.c ****       r->vec[i].coeffs[8*j+6] = ((((a[11*j+ 8] >> 2) | (((uint32_t)a[11*j+ 9] & 0x1f) << 6)) * KYBE
+ 441              		.loc 1 65 31 discriminator 3 view .LVU163
+ 442 014c A044     		add	r8, r8, r4
+ 443 014e 20F81830 		strh	r3, [r0, r8, lsl #1]	@ movhi
+  66:Core/Src/polyvec.c ****       r->vec[i].coeffs[8*j+7] = ((((a[11*j+ 9] >> 5) | (((uint32_t)a[11*j+10] & 0xff) << 3)) * KYBE
+ 444              		.loc 1 66 7 is_stmt 1 discriminator 3 view .LVU164
+  66:Core/Src/polyvec.c ****       r->vec[i].coeffs[8*j+7] = ((((a[11*j+ 9] >> 5) | (((uint32_t)a[11*j+10] & 0xff) << 3)) * KYBE
+ 445              		.loc 1 66 38 is_stmt 0 discriminator 3 view .LVU165
+ 446 0152 11F80EE0 		ldrb	lr, [r1, lr]	@ zero_extendqisi2
+  66:Core/Src/polyvec.c ****       r->vec[i].coeffs[8*j+7] = ((((a[11*j+ 9] >> 5) | (((uint32_t)a[11*j+10] & 0xff) << 3)) * KYBE
+ 447              		.loc 1 66 69 discriminator 3 view .LVU166
+ 448 0156 0932     		adds	r2, r2, #9
+ 449 0158 8B5C     		ldrb	r3, [r1, r2]	@ zero_extendqisi2
+  66:Core/Src/polyvec.c ****       r->vec[i].coeffs[8*j+7] = ((((a[11*j+ 9] >> 5) | (((uint32_t)a[11*j+10] & 0xff) << 3)) * KYBE
+ 450              		.loc 1 66 87 discriminator 3 view .LVU167
+ 451 015a 9B01     		lsls	r3, r3, #6
+ 452 015c 03F4F863 		and	r3, r3, #1984
+  66:Core/Src/polyvec.c ****       r->vec[i].coeffs[8*j+7] = ((((a[11*j+ 9] >> 5) | (((uint32_t)a[11*j+10] & 0xff) << 3)) * KYBE
+ 453              		.loc 1 66 54 discriminator 3 view .LVU168
+ 454 0160 43EA9E03 		orr	r3, r3, lr, lsr #2
+  66:Core/Src/polyvec.c ****       r->vec[i].coeffs[8*j+7] = ((((a[11*j+ 9] >> 5) | (((uint32_t)a[11*j+10] & 0xff) << 3)) * KYBE
+ 455              		.loc 1 66 94 discriminator 3 view .LVU169
+ 456 0164 C3EB031E 		rsb	lr, r3, r3, lsl #4
+ 457 0168 03EB4E23 		add	r3, r3, lr, lsl #9
+  66:Core/Src/polyvec.c ****       r->vec[i].coeffs[8*j+7] = ((((a[11*j+ 9] >> 5) | (((uint32_t)a[11*j+10] & 0xff) << 3)) * KYBE
+ 458              		.loc 1 66 105 discriminator 3 view .LVU170
+ 459 016c 03F58063 		add	r3, r3, #1024
+  66:Core/Src/polyvec.c ****       r->vec[i].coeffs[8*j+7] = ((((a[11*j+ 9] >> 5) | (((uint32_t)a[11*j+10] & 0xff) << 3)) * KYBE
+ 460              		.loc 1 66 113 discriminator 3 view .LVU171
+ 461 0170 DB0A     		lsrs	r3, r3, #11
+  66:Core/Src/polyvec.c ****       r->vec[i].coeffs[8*j+7] = ((((a[11*j+ 9] >> 5) | (((uint32_t)a[11*j+10] & 0xff) << 3)) * KYBE
+ 462              		.loc 1 66 27 discriminator 3 view .LVU172
+ 463 0172 05F1060E 		add	lr, r5, #6
+ARM GAS  C:\Users\11410\AppData\Local\Temp\cc67E3Sn.s 			page 12
+
+
+  66:Core/Src/polyvec.c ****       r->vec[i].coeffs[8*j+7] = ((((a[11*j+ 9] >> 5) | (((uint32_t)a[11*j+10] & 0xff) << 3)) * KYBE
+ 464              		.loc 1 66 31 discriminator 3 view .LVU173
+ 465 0176 A644     		add	lr, lr, r4
+ 466 0178 20F81E30 		strh	r3, [r0, lr, lsl #1]	@ movhi
+  67:Core/Src/polyvec.c ****     }
+ 467              		.loc 1 67 7 is_stmt 1 discriminator 3 view .LVU174
+  67:Core/Src/polyvec.c ****     }
+ 468              		.loc 1 67 38 is_stmt 0 discriminator 3 view .LVU175
+ 469 017c 8A5C     		ldrb	r2, [r1, r2]	@ zero_extendqisi2
+  67:Core/Src/polyvec.c ****     }
+ 470              		.loc 1 67 69 discriminator 3 view .LVU176
+ 471 017e BB7A     		ldrb	r3, [r7, #10]	@ zero_extendqisi2
+  67:Core/Src/polyvec.c ****     }
+ 472              		.loc 1 67 87 discriminator 3 view .LVU177
+ 473 0180 DB00     		lsls	r3, r3, #3
+  67:Core/Src/polyvec.c ****     }
+ 474              		.loc 1 67 54 discriminator 3 view .LVU178
+ 475 0182 43EA5213 		orr	r3, r3, r2, lsr #5
+  67:Core/Src/polyvec.c ****     }
+ 476              		.loc 1 67 94 discriminator 3 view .LVU179
+ 477 0186 C3EB0312 		rsb	r2, r3, r3, lsl #4
+ 478 018a 03EB4223 		add	r3, r3, r2, lsl #9
+  67:Core/Src/polyvec.c ****     }
+ 479              		.loc 1 67 105 discriminator 3 view .LVU180
+ 480 018e 03F58063 		add	r3, r3, #1024
+  67:Core/Src/polyvec.c ****     }
+ 481              		.loc 1 67 113 discriminator 3 view .LVU181
+ 482 0192 DB0A     		lsrs	r3, r3, #11
+  67:Core/Src/polyvec.c ****     }
+ 483              		.loc 1 67 27 discriminator 3 view .LVU182
+ 484 0194 0735     		adds	r5, r5, #7
+  67:Core/Src/polyvec.c ****     }
+ 485              		.loc 1 67 31 discriminator 3 view .LVU183
+ 486 0196 2C44     		add	r4, r4, r5
+ 487 0198 20F81430 		strh	r3, [r0, r4, lsl #1]	@ movhi
+  58:Core/Src/polyvec.c ****     {
+ 488              		.loc 1 58 25 is_stmt 1 discriminator 3 view .LVU184
+  58:Core/Src/polyvec.c ****     {
+ 489              		.loc 1 58 26 is_stmt 0 discriminator 3 view .LVU185
+ 490 019c 0136     		adds	r6, r6, #1
+ 491              	.LVL16:
+  58:Core/Src/polyvec.c ****     {
+ 492              		.loc 1 58 26 discriminator 3 view .LVU186
+ 493 019e 41E7     		b	.L16
+ 494              	.L22:
+  70:Core/Src/polyvec.c ****   }
+  71:Core/Src/polyvec.c **** }
+ 495              		.loc 1 71 1 view .LVU187
+ 496 01a0 BDE8F081 		pop	{r4, r5, r6, r7, r8, pc}
+ 497              	.LVL17:
+ 498              	.L21:
+ 499              	.LCFI4:
+ 500              		.cfi_def_cfa_offset 0
+ 501              		.cfi_restore 4
+ 502              		.cfi_restore 5
+ 503              		.cfi_restore 6
+ 504              		.cfi_restore 7
+ARM GAS  C:\Users\11410\AppData\Local\Temp\cc67E3Sn.s 			page 13
+
+
+ 505              		.cfi_restore 8
+ 506              		.cfi_restore 14
+ 507              		.loc 1 71 1 view .LVU188
+ 508 01a4 7047     		bx	lr
+ 509              		.cfi_endproc
+ 510              	.LFE4:
+ 512              		.section	.text.polyvec_tobytes,"ax",%progbits
+ 513              		.align	1
+ 514              		.global	polyvec_tobytes
+ 515              		.syntax unified
+ 516              		.thumb
+ 517              		.thumb_func
+ 518              		.fpu fpv4-sp-d16
+ 520              	polyvec_tobytes:
+ 521              	.LVL18:
+ 522              	.LFB5:
+  72:Core/Src/polyvec.c **** 
+  73:Core/Src/polyvec.c **** #elif (KYBER_POLYVECCOMPRESSEDBYTES == (KYBER_K * 320))
+  74:Core/Src/polyvec.c **** 
+  75:Core/Src/polyvec.c **** void polyvec_compress(unsigned char *r, const polyvec *a)
+  76:Core/Src/polyvec.c **** {
+  77:Core/Src/polyvec.c ****   int i,j,k;
+  78:Core/Src/polyvec.c ****   uint16_t t[4];
+  79:Core/Src/polyvec.c ****   for(i=0;i<KYBER_K;i++)
+  80:Core/Src/polyvec.c ****   {
+  81:Core/Src/polyvec.c ****     for(j=0;j<KYBER_N/4;j++)
+  82:Core/Src/polyvec.c ****     {
+  83:Core/Src/polyvec.c ****       for(k=0;k<4;k++)
+  84:Core/Src/polyvec.c ****         t[k] = ((((uint32_t)freeze(a->vec[i].coeffs[4*j+k]) << 10) + KYBER_Q/2)/ KYBER_Q) & 0x3ff;
+  85:Core/Src/polyvec.c **** 
+  86:Core/Src/polyvec.c ****       r[5*j+ 0] =  t[0] & 0xff;
+  87:Core/Src/polyvec.c ****       r[5*j+ 1] = (t[0] >>  8) | ((t[1] & 0x3f) << 2);
+  88:Core/Src/polyvec.c ****       r[5*j+ 2] = (t[1] >>  6) | ((t[2] & 0x0f) << 4);
+  89:Core/Src/polyvec.c ****       r[5*j+ 3] = (t[2] >>  4) | ((t[3] & 0x03) << 6);
+  90:Core/Src/polyvec.c ****       r[5*j+ 4] = (t[3] >>  2);
+  91:Core/Src/polyvec.c ****     }
+  92:Core/Src/polyvec.c ****     r += 320;
+  93:Core/Src/polyvec.c ****   }
+  94:Core/Src/polyvec.c **** }
+  95:Core/Src/polyvec.c **** 
+  96:Core/Src/polyvec.c **** void polyvec_decompress(polyvec *r, const unsigned char *a)
+  97:Core/Src/polyvec.c **** {
+  98:Core/Src/polyvec.c ****   int i,j;
+  99:Core/Src/polyvec.c ****   for(i=0;i<KYBER_K;i++)
+ 100:Core/Src/polyvec.c ****   {
+ 101:Core/Src/polyvec.c ****     for(j=0;j<KYBER_N/4;j++)
+ 102:Core/Src/polyvec.c ****     {
+ 103:Core/Src/polyvec.c ****       r->vec[i].coeffs[4*j+0] =  (((a[5*j+ 0]       | (((uint32_t)a[5*j+ 1] & 0x03) << 8)) * KYBER_
+ 104:Core/Src/polyvec.c ****       r->vec[i].coeffs[4*j+1] = ((((a[5*j+ 1] >> 2) | (((uint32_t)a[5*j+ 2] & 0x0f) << 6)) * KYBER_
+ 105:Core/Src/polyvec.c ****       r->vec[i].coeffs[4*j+2] = ((((a[5*j+ 2] >> 4) | (((uint32_t)a[5*j+ 3] & 0x3f) << 4)) * KYBER_
+ 106:Core/Src/polyvec.c ****       r->vec[i].coeffs[4*j+3] = ((((a[5*j+ 3] >> 6) | (((uint32_t)a[5*j+ 4] & 0xff) << 2)) * KYBER_
+ 107:Core/Src/polyvec.c ****     }
+ 108:Core/Src/polyvec.c ****     a += 320;
+ 109:Core/Src/polyvec.c ****   }
+ 110:Core/Src/polyvec.c **** }
+ 111:Core/Src/polyvec.c **** 
+ 112:Core/Src/polyvec.c **** #elif (KYBER_POLYVECCOMPRESSEDBYTES == (KYBER_K * 288))
+ARM GAS  C:\Users\11410\AppData\Local\Temp\cc67E3Sn.s 			page 14
+
+
+ 113:Core/Src/polyvec.c **** 
+ 114:Core/Src/polyvec.c **** void polyvec_compress(unsigned char *r, const polyvec *a)
+ 115:Core/Src/polyvec.c **** {
+ 116:Core/Src/polyvec.c ****   int i,j,k;
+ 117:Core/Src/polyvec.c ****   uint16_t t[8];
+ 118:Core/Src/polyvec.c ****   for(i=0;i<KYBER_K;i++)
+ 119:Core/Src/polyvec.c ****   {
+ 120:Core/Src/polyvec.c ****     for(j=0;j<KYBER_N/8;j++)
+ 121:Core/Src/polyvec.c ****     {
+ 122:Core/Src/polyvec.c ****       for(k=0;k<8;k++)
+ 123:Core/Src/polyvec.c ****         t[k] = ((((uint32_t)freeze(a->vec[i].coeffs[8*j+k]) << 9) + KYBER_Q/2)/ KYBER_Q) & 0x1ff;
+ 124:Core/Src/polyvec.c **** 
+ 125:Core/Src/polyvec.c ****       r[9*j+ 0] =  t[0] & 0xff;
+ 126:Core/Src/polyvec.c ****       r[9*j+ 1] = (t[0] >>  8) | ((t[1] & 0x7f) << 1);
+ 127:Core/Src/polyvec.c ****       r[9*j+ 2] = (t[1] >>  7) | ((t[2] & 0x3f) << 2);
+ 128:Core/Src/polyvec.c ****       r[9*j+ 3] = (t[2] >>  6) | ((t[3] & 0x1f) << 3);
+ 129:Core/Src/polyvec.c ****       r[9*j+ 4] = (t[3] >>  5) | ((t[4] & 0x0f) << 4);
+ 130:Core/Src/polyvec.c ****       r[9*j+ 5] = (t[4] >>  4) | ((t[5] & 0x07) << 5);
+ 131:Core/Src/polyvec.c ****       r[9*j+ 6] = (t[5] >>  3) | ((t[6] & 0x03) << 6);
+ 132:Core/Src/polyvec.c ****       r[9*j+ 7] = (t[6] >>  2) | ((t[7] & 0x01) << 7);
+ 133:Core/Src/polyvec.c ****       r[9*j+ 8] = (t[7] >>  1);
+ 134:Core/Src/polyvec.c ****     }
+ 135:Core/Src/polyvec.c ****     r += 288;
+ 136:Core/Src/polyvec.c ****   }
+ 137:Core/Src/polyvec.c **** }
+ 138:Core/Src/polyvec.c **** 
+ 139:Core/Src/polyvec.c **** void polyvec_decompress(polyvec *r, const unsigned char *a)
+ 140:Core/Src/polyvec.c **** {
+ 141:Core/Src/polyvec.c ****   int i,j;
+ 142:Core/Src/polyvec.c ****   for(i=0;i<KYBER_K;i++)
+ 143:Core/Src/polyvec.c ****   {
+ 144:Core/Src/polyvec.c ****     for(j=0;j<KYBER_N/8;j++)
+ 145:Core/Src/polyvec.c ****     {
+ 146:Core/Src/polyvec.c ****       r->vec[i].coeffs[8*j+0] =  (((a[9*j+ 0]       | (((uint32_t)a[9*j+ 1] & 0x01) << 8)) * KYBER_
+ 147:Core/Src/polyvec.c ****       r->vec[i].coeffs[8*j+1] = ((((a[9*j+ 1] >> 1) | (((uint32_t)a[9*j+ 2] & 0x03) << 7)) * KYBER_
+ 148:Core/Src/polyvec.c ****       r->vec[i].coeffs[8*j+2] = ((((a[9*j+ 2] >> 2) | (((uint32_t)a[9*j+ 3] & 0x07) << 6)) * KYBER_
+ 149:Core/Src/polyvec.c ****       r->vec[i].coeffs[8*j+3] = ((((a[9*j+ 3] >> 3) | (((uint32_t)a[9*j+ 4] & 0x0f) << 5)) * KYBER_
+ 150:Core/Src/polyvec.c ****       r->vec[i].coeffs[8*j+4] = ((((a[9*j+ 4] >> 4) | (((uint32_t)a[9*j+ 5] & 0x1f) << 4)) * KYBER_
+ 151:Core/Src/polyvec.c ****       r->vec[i].coeffs[8*j+5] = ((((a[9*j+ 5] >> 5) | (((uint32_t)a[9*j+ 6] & 0x3f) << 3)) * KYBER_
+ 152:Core/Src/polyvec.c ****       r->vec[i].coeffs[8*j+6] = ((((a[9*j+ 6] >> 6) | (((uint32_t)a[9*j+ 7] & 0x7f) << 2)) * KYBER_
+ 153:Core/Src/polyvec.c ****       r->vec[i].coeffs[8*j+7] = ((((a[9*j+ 7] >> 7) | (((uint32_t)a[9*j+ 8] & 0xff) << 1)) * KYBER_
+ 154:Core/Src/polyvec.c ****     }
+ 155:Core/Src/polyvec.c ****     a += 288;
+ 156:Core/Src/polyvec.c ****   }
+ 157:Core/Src/polyvec.c **** }
+ 158:Core/Src/polyvec.c **** 
+ 159:Core/Src/polyvec.c **** 
+ 160:Core/Src/polyvec.c **** #elif (KYBER_POLYVECCOMPRESSEDBYTES == (KYBER_K * 256))
+ 161:Core/Src/polyvec.c **** 
+ 162:Core/Src/polyvec.c **** void polyvec_compress(unsigned char *r, const polyvec *a)
+ 163:Core/Src/polyvec.c **** {
+ 164:Core/Src/polyvec.c ****   int i,j,k;
+ 165:Core/Src/polyvec.c ****   uint16_t t;
+ 166:Core/Src/polyvec.c ****   for(i=0;i<KYBER_K;i++)
+ 167:Core/Src/polyvec.c ****   {
+ 168:Core/Src/polyvec.c ****     for(j=0;j<KYBER_N;j++)
+ 169:Core/Src/polyvec.c ****     {
+ARM GAS  C:\Users\11410\AppData\Local\Temp\cc67E3Sn.s 			page 15
+
+
+ 170:Core/Src/polyvec.c ****       r[j] = ((((uint32_t)freeze(a->vec[i].coeffs[j]) << 8) + KYBER_Q/2)/ KYBER_Q) & 0xff;
+ 171:Core/Src/polyvec.c ****     }
+ 172:Core/Src/polyvec.c ****     r += 256;
+ 173:Core/Src/polyvec.c ****   }
+ 174:Core/Src/polyvec.c **** }
+ 175:Core/Src/polyvec.c **** 
+ 176:Core/Src/polyvec.c **** void polyvec_decompress(polyvec *r, const unsigned char *a)
+ 177:Core/Src/polyvec.c **** {
+ 178:Core/Src/polyvec.c ****   int i,j;
+ 179:Core/Src/polyvec.c ****   for(i=0;i<KYBER_K;i++)
+ 180:Core/Src/polyvec.c ****   {
+ 181:Core/Src/polyvec.c ****     for(j=0;j<KYBER_N;j++)
+ 182:Core/Src/polyvec.c ****     {
+ 183:Core/Src/polyvec.c ****       r->vec[i].coeffs[j] = ((a[j] * KYBER_Q) + 128) >> 8;
+ 184:Core/Src/polyvec.c ****     }
+ 185:Core/Src/polyvec.c ****     a += 256;
+ 186:Core/Src/polyvec.c ****   }
+ 187:Core/Src/polyvec.c **** }
+ 188:Core/Src/polyvec.c **** 
+ 189:Core/Src/polyvec.c **** #else 
+ 190:Core/Src/polyvec.c ****   #error "Unsupported compression of polyvec"
+ 191:Core/Src/polyvec.c **** #endif
+ 192:Core/Src/polyvec.c **** 
+ 193:Core/Src/polyvec.c **** /*************************************************
+ 194:Core/Src/polyvec.c **** * Name:        polyvec_tobytes
+ 195:Core/Src/polyvec.c **** * 
+ 196:Core/Src/polyvec.c **** * Description: Serialize vector of polynomials
+ 197:Core/Src/polyvec.c **** *
+ 198:Core/Src/polyvec.c **** * Arguments:   - unsigned char *r: pointer to output byte array 
+ 199:Core/Src/polyvec.c **** *              - const polyvec *a: pointer to input vector of polynomials
+ 200:Core/Src/polyvec.c **** **************************************************/
+ 201:Core/Src/polyvec.c **** void polyvec_tobytes(unsigned char *r, const polyvec *a)
+ 202:Core/Src/polyvec.c **** {
+ 523              		.loc 1 202 1 is_stmt 1 view -0
+ 524              		.cfi_startproc
+ 525              		@ args = 0, pretend = 0, frame = 0
+ 526              		@ frame_needed = 0, uses_anonymous_args = 0
+ 527              		.loc 1 202 1 is_stmt 0 view .LVU190
+ 528 0000 70B5     		push	{r4, r5, r6, lr}
+ 529              	.LCFI5:
+ 530              		.cfi_def_cfa_offset 16
+ 531              		.cfi_offset 4, -16
+ 532              		.cfi_offset 5, -12
+ 533              		.cfi_offset 6, -8
+ 534              		.cfi_offset 14, -4
+ 535 0002 0646     		mov	r6, r0
+ 536 0004 0D46     		mov	r5, r1
+ 203:Core/Src/polyvec.c ****   int i;
+ 537              		.loc 1 203 3 is_stmt 1 view .LVU191
+ 204:Core/Src/polyvec.c ****   for(i=0;i<KYBER_K;i++)
+ 538              		.loc 1 204 3 view .LVU192
+ 539              	.LVL19:
+ 540              		.loc 1 204 8 is_stmt 0 view .LVU193
+ 541 0006 0024     		movs	r4, #0
+ 542              		.loc 1 204 3 view .LVU194
+ 543 0008 08E0     		b	.L25
+ 544              	.LVL20:
+ARM GAS  C:\Users\11410\AppData\Local\Temp\cc67E3Sn.s 			page 16
+
+
+ 545              	.L26:
+ 205:Core/Src/polyvec.c ****     poly_tobytes(r+i*KYBER_POLYBYTES, &a->vec[i]);
+ 546              		.loc 1 205 5 is_stmt 1 discriminator 3 view .LVU195
+ 547 000a 05EB4421 		add	r1, r5, r4, lsl #9
+ 548 000e 4FF4D070 		mov	r0, #416
+ 549 0012 00FB0460 		mla	r0, r0, r4, r6
+ 550 0016 FFF7FEFF 		bl	poly_tobytes
+ 551              	.LVL21:
+ 204:Core/Src/polyvec.c ****   for(i=0;i<KYBER_K;i++)
+ 552              		.loc 1 204 21 discriminator 3 view .LVU196
+ 204:Core/Src/polyvec.c ****   for(i=0;i<KYBER_K;i++)
+ 553              		.loc 1 204 22 is_stmt 0 discriminator 3 view .LVU197
+ 554 001a 0134     		adds	r4, r4, #1
+ 555              	.LVL22:
+ 556              	.L25:
+ 204:Core/Src/polyvec.c ****   for(i=0;i<KYBER_K;i++)
+ 557              		.loc 1 204 11 is_stmt 1 discriminator 1 view .LVU198
+ 204:Core/Src/polyvec.c ****   for(i=0;i<KYBER_K;i++)
+ 558              		.loc 1 204 3 is_stmt 0 discriminator 1 view .LVU199
+ 559 001c 022C     		cmp	r4, #2
+ 560 001e F4DD     		ble	.L26
+ 206:Core/Src/polyvec.c **** }
+ 561              		.loc 1 206 1 view .LVU200
+ 562 0020 70BD     		pop	{r4, r5, r6, pc}
+ 563              		.loc 1 206 1 view .LVU201
+ 564              		.cfi_endproc
+ 565              	.LFE5:
+ 567              		.section	.text.polyvec_frombytes,"ax",%progbits
+ 568              		.align	1
+ 569              		.global	polyvec_frombytes
+ 570              		.syntax unified
+ 571              		.thumb
+ 572              		.thumb_func
+ 573              		.fpu fpv4-sp-d16
+ 575              	polyvec_frombytes:
+ 576              	.LVL23:
+ 577              	.LFB6:
+ 207:Core/Src/polyvec.c **** 
+ 208:Core/Src/polyvec.c **** /*************************************************
+ 209:Core/Src/polyvec.c **** * Name:        polyvec_frombytes
+ 210:Core/Src/polyvec.c **** * 
+ 211:Core/Src/polyvec.c **** * Description: De-serialize vector of polynomials;
+ 212:Core/Src/polyvec.c **** *              inverse of polyvec_tobytes 
+ 213:Core/Src/polyvec.c **** *
+ 214:Core/Src/polyvec.c **** * Arguments:   - unsigned char *r: pointer to output byte array 
+ 215:Core/Src/polyvec.c **** *              - const polyvec *a: pointer to input vector of polynomials
+ 216:Core/Src/polyvec.c **** **************************************************/
+ 217:Core/Src/polyvec.c **** void polyvec_frombytes(polyvec *r, const unsigned char *a)
+ 218:Core/Src/polyvec.c **** {
+ 578              		.loc 1 218 1 is_stmt 1 view -0
+ 579              		.cfi_startproc
+ 580              		@ args = 0, pretend = 0, frame = 0
+ 581              		@ frame_needed = 0, uses_anonymous_args = 0
+ 582              		.loc 1 218 1 is_stmt 0 view .LVU203
+ 583 0000 70B5     		push	{r4, r5, r6, lr}
+ 584              	.LCFI6:
+ 585              		.cfi_def_cfa_offset 16
+ARM GAS  C:\Users\11410\AppData\Local\Temp\cc67E3Sn.s 			page 17
+
+
+ 586              		.cfi_offset 4, -16
+ 587              		.cfi_offset 5, -12
+ 588              		.cfi_offset 6, -8
+ 589              		.cfi_offset 14, -4
+ 590 0002 0646     		mov	r6, r0
+ 591 0004 0D46     		mov	r5, r1
+ 219:Core/Src/polyvec.c ****   int i;
+ 592              		.loc 1 219 3 is_stmt 1 view .LVU204
+ 220:Core/Src/polyvec.c ****   for(i=0;i<KYBER_K;i++)
+ 593              		.loc 1 220 3 view .LVU205
+ 594              	.LVL24:
+ 595              		.loc 1 220 8 is_stmt 0 view .LVU206
+ 596 0006 0024     		movs	r4, #0
+ 597              		.loc 1 220 3 view .LVU207
+ 598 0008 08E0     		b	.L29
+ 599              	.LVL25:
+ 600              	.L30:
+ 221:Core/Src/polyvec.c ****     poly_frombytes(&r->vec[i], a+i*KYBER_POLYBYTES);
+ 601              		.loc 1 221 5 is_stmt 1 discriminator 3 view .LVU208
+ 602 000a 4FF4D071 		mov	r1, #416
+ 603 000e 01FB0451 		mla	r1, r1, r4, r5
+ 604 0012 06EB4420 		add	r0, r6, r4, lsl #9
+ 605 0016 FFF7FEFF 		bl	poly_frombytes
+ 606              	.LVL26:
+ 220:Core/Src/polyvec.c ****   for(i=0;i<KYBER_K;i++)
+ 607              		.loc 1 220 21 discriminator 3 view .LVU209
+ 220:Core/Src/polyvec.c ****   for(i=0;i<KYBER_K;i++)
+ 608              		.loc 1 220 22 is_stmt 0 discriminator 3 view .LVU210
+ 609 001a 0134     		adds	r4, r4, #1
+ 610              	.LVL27:
+ 611              	.L29:
+ 220:Core/Src/polyvec.c ****   for(i=0;i<KYBER_K;i++)
+ 612              		.loc 1 220 11 is_stmt 1 discriminator 1 view .LVU211
+ 220:Core/Src/polyvec.c ****   for(i=0;i<KYBER_K;i++)
+ 613              		.loc 1 220 3 is_stmt 0 discriminator 1 view .LVU212
+ 614 001c 022C     		cmp	r4, #2
+ 615 001e F4DD     		ble	.L30
+ 222:Core/Src/polyvec.c **** }
+ 616              		.loc 1 222 1 view .LVU213
+ 617 0020 70BD     		pop	{r4, r5, r6, pc}
+ 618              		.loc 1 222 1 view .LVU214
+ 619              		.cfi_endproc
+ 620              	.LFE6:
+ 622              		.section	.text.polyvec_ntt,"ax",%progbits
+ 623              		.align	1
+ 624              		.global	polyvec_ntt
+ 625              		.syntax unified
+ 626              		.thumb
+ 627              		.thumb_func
+ 628              		.fpu fpv4-sp-d16
+ 630              	polyvec_ntt:
+ 631              	.LVL28:
+ 632              	.LFB7:
+ 223:Core/Src/polyvec.c **** 
+ 224:Core/Src/polyvec.c **** /*************************************************
+ 225:Core/Src/polyvec.c **** * Name:        polyvec_ntt
+ 226:Core/Src/polyvec.c **** * 
+ARM GAS  C:\Users\11410\AppData\Local\Temp\cc67E3Sn.s 			page 18
+
+
+ 227:Core/Src/polyvec.c **** * Description: Apply forward NTT to all elements of a vector of polynomials
+ 228:Core/Src/polyvec.c **** *
+ 229:Core/Src/polyvec.c **** * Arguments:   - polyvec *r: pointer to in/output vector of polynomials
+ 230:Core/Src/polyvec.c **** **************************************************/
+ 231:Core/Src/polyvec.c **** void polyvec_ntt(polyvec *r)
+ 232:Core/Src/polyvec.c **** {
+ 633              		.loc 1 232 1 is_stmt 1 view -0
+ 634              		.cfi_startproc
+ 635              		@ args = 0, pretend = 0, frame = 0
+ 636              		@ frame_needed = 0, uses_anonymous_args = 0
+ 637              		.loc 1 232 1 is_stmt 0 view .LVU216
+ 638 0000 38B5     		push	{r3, r4, r5, lr}
+ 639              	.LCFI7:
+ 640              		.cfi_def_cfa_offset 16
+ 641              		.cfi_offset 3, -16
+ 642              		.cfi_offset 4, -12
+ 643              		.cfi_offset 5, -8
+ 644              		.cfi_offset 14, -4
+ 645 0002 0546     		mov	r5, r0
+ 233:Core/Src/polyvec.c ****   int i;
+ 646              		.loc 1 233 3 is_stmt 1 view .LVU217
+ 234:Core/Src/polyvec.c ****   for(i=0;i<KYBER_K;i++)
+ 647              		.loc 1 234 3 view .LVU218
+ 648              	.LVL29:
+ 649              		.loc 1 234 8 is_stmt 0 view .LVU219
+ 650 0004 0024     		movs	r4, #0
+ 651              		.loc 1 234 3 view .LVU220
+ 652 0006 04E0     		b	.L33
+ 653              	.LVL30:
+ 654              	.L34:
+ 235:Core/Src/polyvec.c ****     poly_ntt(&r->vec[i]);
+ 655              		.loc 1 235 5 is_stmt 1 discriminator 3 view .LVU221
+ 656 0008 05EB4420 		add	r0, r5, r4, lsl #9
+ 657 000c FFF7FEFF 		bl	poly_ntt
+ 658              	.LVL31:
+ 234:Core/Src/polyvec.c ****   for(i=0;i<KYBER_K;i++)
+ 659              		.loc 1 234 21 discriminator 3 view .LVU222
+ 234:Core/Src/polyvec.c ****   for(i=0;i<KYBER_K;i++)
+ 660              		.loc 1 234 22 is_stmt 0 discriminator 3 view .LVU223
+ 661 0010 0134     		adds	r4, r4, #1
+ 662              	.LVL32:
+ 663              	.L33:
+ 234:Core/Src/polyvec.c ****   for(i=0;i<KYBER_K;i++)
+ 664              		.loc 1 234 11 is_stmt 1 discriminator 1 view .LVU224
+ 234:Core/Src/polyvec.c ****   for(i=0;i<KYBER_K;i++)
+ 665              		.loc 1 234 3 is_stmt 0 discriminator 1 view .LVU225
+ 666 0012 022C     		cmp	r4, #2
+ 667 0014 F8DD     		ble	.L34
+ 236:Core/Src/polyvec.c **** }
+ 668              		.loc 1 236 1 view .LVU226
+ 669 0016 38BD     		pop	{r3, r4, r5, pc}
+ 670              		.loc 1 236 1 view .LVU227
+ 671              		.cfi_endproc
+ 672              	.LFE7:
+ 674              		.section	.text.polyvec_invntt,"ax",%progbits
+ 675              		.align	1
+ 676              		.global	polyvec_invntt
+ARM GAS  C:\Users\11410\AppData\Local\Temp\cc67E3Sn.s 			page 19
+
+
+ 677              		.syntax unified
+ 678              		.thumb
+ 679              		.thumb_func
+ 680              		.fpu fpv4-sp-d16
+ 682              	polyvec_invntt:
+ 683              	.LVL33:
+ 684              	.LFB8:
+ 237:Core/Src/polyvec.c **** 
+ 238:Core/Src/polyvec.c **** /*************************************************
+ 239:Core/Src/polyvec.c **** * Name:        polyvec_invntt
+ 240:Core/Src/polyvec.c **** * 
+ 241:Core/Src/polyvec.c **** * Description: Apply inverse NTT to all elements of a vector of polynomials
+ 242:Core/Src/polyvec.c **** *
+ 243:Core/Src/polyvec.c **** * Arguments:   - polyvec *r: pointer to in/output vector of polynomials
+ 244:Core/Src/polyvec.c **** **************************************************/
+ 245:Core/Src/polyvec.c **** void polyvec_invntt(polyvec *r)
+ 246:Core/Src/polyvec.c **** {
+ 685              		.loc 1 246 1 is_stmt 1 view -0
+ 686              		.cfi_startproc
+ 687              		@ args = 0, pretend = 0, frame = 0
+ 688              		@ frame_needed = 0, uses_anonymous_args = 0
+ 689              		.loc 1 246 1 is_stmt 0 view .LVU229
+ 690 0000 38B5     		push	{r3, r4, r5, lr}
+ 691              	.LCFI8:
+ 692              		.cfi_def_cfa_offset 16
+ 693              		.cfi_offset 3, -16
+ 694              		.cfi_offset 4, -12
+ 695              		.cfi_offset 5, -8
+ 696              		.cfi_offset 14, -4
+ 697 0002 0546     		mov	r5, r0
+ 247:Core/Src/polyvec.c ****   int i;
+ 698              		.loc 1 247 3 is_stmt 1 view .LVU230
+ 248:Core/Src/polyvec.c ****   for(i=0;i<KYBER_K;i++)
+ 699              		.loc 1 248 3 view .LVU231
+ 700              	.LVL34:
+ 701              		.loc 1 248 8 is_stmt 0 view .LVU232
+ 702 0004 0024     		movs	r4, #0
+ 703              		.loc 1 248 3 view .LVU233
+ 704 0006 04E0     		b	.L37
+ 705              	.LVL35:
+ 706              	.L38:
+ 249:Core/Src/polyvec.c ****     poly_invntt(&r->vec[i]);
+ 707              		.loc 1 249 5 is_stmt 1 discriminator 3 view .LVU234
+ 708 0008 05EB4420 		add	r0, r5, r4, lsl #9
+ 709 000c FFF7FEFF 		bl	poly_invntt
+ 710              	.LVL36:
+ 248:Core/Src/polyvec.c ****   for(i=0;i<KYBER_K;i++)
+ 711              		.loc 1 248 21 discriminator 3 view .LVU235
+ 248:Core/Src/polyvec.c ****   for(i=0;i<KYBER_K;i++)
+ 712              		.loc 1 248 22 is_stmt 0 discriminator 3 view .LVU236
+ 713 0010 0134     		adds	r4, r4, #1
+ 714              	.LVL37:
+ 715              	.L37:
+ 248:Core/Src/polyvec.c ****   for(i=0;i<KYBER_K;i++)
+ 716              		.loc 1 248 11 is_stmt 1 discriminator 1 view .LVU237
+ 248:Core/Src/polyvec.c ****   for(i=0;i<KYBER_K;i++)
+ 717              		.loc 1 248 3 is_stmt 0 discriminator 1 view .LVU238
+ARM GAS  C:\Users\11410\AppData\Local\Temp\cc67E3Sn.s 			page 20
+
+
+ 718 0012 022C     		cmp	r4, #2
+ 719 0014 F8DD     		ble	.L38
+ 250:Core/Src/polyvec.c **** }
+ 720              		.loc 1 250 1 view .LVU239
+ 721 0016 38BD     		pop	{r3, r4, r5, pc}
+ 722              		.loc 1 250 1 view .LVU240
+ 723              		.cfi_endproc
+ 724              	.LFE8:
+ 726              		.section	.text.polyvec_pointwise_acc,"ax",%progbits
+ 727              		.align	1
+ 728              		.global	polyvec_pointwise_acc
+ 729              		.syntax unified
+ 730              		.thumb
+ 731              		.thumb_func
+ 732              		.fpu fpv4-sp-d16
+ 734              	polyvec_pointwise_acc:
+ 735              	.LVL38:
+ 736              	.LFB9:
+ 251:Core/Src/polyvec.c ****  
+ 252:Core/Src/polyvec.c **** /*************************************************
+ 253:Core/Src/polyvec.c **** * Name:        polyvec_pointwise_acc
+ 254:Core/Src/polyvec.c **** * 
+ 255:Core/Src/polyvec.c **** * Description: Pointwise multiply elements of a and b and accumulate into r
+ 256:Core/Src/polyvec.c **** *
+ 257:Core/Src/polyvec.c **** * Arguments: - poly *r:          pointer to output polynomial
+ 258:Core/Src/polyvec.c **** *            - const polyvec *a: pointer to first input vector of polynomials
+ 259:Core/Src/polyvec.c **** *            - const polyvec *b: pointer to second input vector of polynomials
+ 260:Core/Src/polyvec.c **** **************************************************/ 
+ 261:Core/Src/polyvec.c **** void polyvec_pointwise_acc(poly *r, const polyvec *a, const polyvec *b)
+ 262:Core/Src/polyvec.c **** {
+ 737              		.loc 1 262 1 is_stmt 1 view -0
+ 738              		.cfi_startproc
+ 739              		@ args = 0, pretend = 0, frame = 0
+ 740              		@ frame_needed = 0, uses_anonymous_args = 0
+ 741              		.loc 1 262 1 is_stmt 0 view .LVU242
+ 742 0000 2DE9F843 		push	{r3, r4, r5, r6, r7, r8, r9, lr}
+ 743              	.LCFI9:
+ 744              		.cfi_def_cfa_offset 32
+ 745              		.cfi_offset 3, -32
+ 746              		.cfi_offset 4, -28
+ 747              		.cfi_offset 5, -24
+ 748              		.cfi_offset 6, -20
+ 749              		.cfi_offset 7, -16
+ 750              		.cfi_offset 8, -12
+ 751              		.cfi_offset 9, -8
+ 752              		.cfi_offset 14, -4
+ 753 0004 0646     		mov	r6, r0
+ 754 0006 8946     		mov	r9, r1
+ 755 0008 9046     		mov	r8, r2
+ 263:Core/Src/polyvec.c ****   int i,j;
+ 756              		.loc 1 263 3 is_stmt 1 view .LVU243
+ 264:Core/Src/polyvec.c ****   uint16_t t;
+ 757              		.loc 1 264 3 view .LVU244
+ 265:Core/Src/polyvec.c ****   for(j=0;j<KYBER_N;j++)
+ 758              		.loc 1 265 3 view .LVU245
+ 759              	.LVL39:
+ 760              		.loc 1 265 8 is_stmt 0 view .LVU246
+ARM GAS  C:\Users\11410\AppData\Local\Temp\cc67E3Sn.s 			page 21
+
+
+ 761 000a 0024     		movs	r4, #0
+ 762              		.loc 1 265 3 view .LVU247
+ 763 000c 1EE0     		b	.L41
+ 764              	.LVL40:
+ 765              	.L43:
+ 266:Core/Src/polyvec.c ****   {
+ 267:Core/Src/polyvec.c ****     t = montgomery_reduce(4613* (uint32_t)b->vec[0].coeffs[j]); // 4613 = 2^{2*18} % q
+ 268:Core/Src/polyvec.c ****     r->coeffs[j] = montgomery_reduce(a->vec[0].coeffs[j] * t);
+ 269:Core/Src/polyvec.c ****     for(i=1;i<KYBER_K;i++)
+ 270:Core/Src/polyvec.c ****     {
+ 271:Core/Src/polyvec.c ****       t = montgomery_reduce(4613* (uint32_t)b->vec[i].coeffs[j]);
+ 766              		.loc 1 271 7 is_stmt 1 discriminator 3 view .LVU248
+ 767              		.loc 1 271 61 is_stmt 0 discriminator 3 view .LVU249
+ 768 000e 04EB0527 		add	r7, r4, r5, lsl #8
+ 769 0012 38F81730 		ldrh	r3, [r8, r7, lsl #1]
+ 770              		.loc 1 271 11 discriminator 3 view .LVU250
+ 771 0016 41F20520 		movw	r0, #4613
+ 772 001a 00FB03F0 		mul	r0, r0, r3
+ 773 001e FFF7FEFF 		bl	montgomery_reduce
+ 774              	.LVL41:
+ 272:Core/Src/polyvec.c ****       r->coeffs[j] += montgomery_reduce(a->vec[i].coeffs[j] * t);
+ 775              		.loc 1 272 7 is_stmt 1 discriminator 3 view .LVU251
+ 776              		.loc 1 272 57 is_stmt 0 discriminator 3 view .LVU252
+ 777 0022 39F81730 		ldrh	r3, [r9, r7, lsl #1]
+ 778              		.loc 1 272 23 discriminator 3 view .LVU253
+ 779 0026 03FB00F0 		mul	r0, r3, r0
+ 780              	.LVL42:
+ 781              		.loc 1 272 23 discriminator 3 view .LVU254
+ 782 002a FFF7FEFF 		bl	montgomery_reduce
+ 783              	.LVL43:
+ 784              		.loc 1 272 20 discriminator 3 view .LVU255
+ 785 002e 36F81430 		ldrh	r3, [r6, r4, lsl #1]
+ 786 0032 1844     		add	r0, r0, r3
+ 787 0034 26F81400 		strh	r0, [r6, r4, lsl #1]	@ movhi
+ 269:Core/Src/polyvec.c ****     {
+ 788              		.loc 1 269 23 is_stmt 1 discriminator 3 view .LVU256
+ 269:Core/Src/polyvec.c ****     {
+ 789              		.loc 1 269 24 is_stmt 0 discriminator 3 view .LVU257
+ 790 0038 0135     		adds	r5, r5, #1
+ 791              	.LVL44:
+ 792              	.L42:
+ 269:Core/Src/polyvec.c ****     {
+ 793              		.loc 1 269 13 is_stmt 1 discriminator 1 view .LVU258
+ 269:Core/Src/polyvec.c ****     {
+ 794              		.loc 1 269 5 is_stmt 0 discriminator 1 view .LVU259
+ 795 003a 022D     		cmp	r5, #2
+ 796 003c E7DD     		ble	.L43
+ 273:Core/Src/polyvec.c ****     }
+ 274:Core/Src/polyvec.c ****     r->coeffs[j] = barrett_reduce(r->coeffs[j]);
+ 797              		.loc 1 274 5 is_stmt 1 discriminator 2 view .LVU260
+ 798              		.loc 1 274 20 is_stmt 0 discriminator 2 view .LVU261
+ 799 003e 36F81400 		ldrh	r0, [r6, r4, lsl #1]
+ 800 0042 FFF7FEFF 		bl	barrett_reduce
+ 801              	.LVL45:
+ 802              		.loc 1 274 18 discriminator 2 view .LVU262
+ 803 0046 26F81400 		strh	r0, [r6, r4, lsl #1]	@ movhi
+ 265:Core/Src/polyvec.c ****   {
+ARM GAS  C:\Users\11410\AppData\Local\Temp\cc67E3Sn.s 			page 22
+
+
+ 804              		.loc 1 265 21 is_stmt 1 discriminator 2 view .LVU263
+ 265:Core/Src/polyvec.c ****   {
+ 805              		.loc 1 265 22 is_stmt 0 discriminator 2 view .LVU264
+ 806 004a 0134     		adds	r4, r4, #1
+ 807              	.LVL46:
+ 808              	.L41:
+ 265:Core/Src/polyvec.c ****   {
+ 809              		.loc 1 265 11 is_stmt 1 discriminator 1 view .LVU265
+ 265:Core/Src/polyvec.c ****   {
+ 810              		.loc 1 265 3 is_stmt 0 discriminator 1 view .LVU266
+ 811 004c FF2C     		cmp	r4, #255
+ 812 004e 11DC     		bgt	.L46
+ 267:Core/Src/polyvec.c ****     r->coeffs[j] = montgomery_reduce(a->vec[0].coeffs[j] * t);
+ 813              		.loc 1 267 5 is_stmt 1 view .LVU267
+ 267:Core/Src/polyvec.c ****     r->coeffs[j] = montgomery_reduce(a->vec[0].coeffs[j] * t);
+ 814              		.loc 1 267 59 is_stmt 0 view .LVU268
+ 815 0050 38F81430 		ldrh	r3, [r8, r4, lsl #1]
+ 267:Core/Src/polyvec.c ****     r->coeffs[j] = montgomery_reduce(a->vec[0].coeffs[j] * t);
+ 816              		.loc 1 267 9 view .LVU269
+ 817 0054 41F20520 		movw	r0, #4613
+ 818 0058 00FB03F0 		mul	r0, r0, r3
+ 819 005c FFF7FEFF 		bl	montgomery_reduce
+ 820              	.LVL47:
+ 268:Core/Src/polyvec.c ****     for(i=1;i<KYBER_K;i++)
+ 821              		.loc 1 268 5 is_stmt 1 view .LVU270
+ 268:Core/Src/polyvec.c ****     for(i=1;i<KYBER_K;i++)
+ 822              		.loc 1 268 54 is_stmt 0 view .LVU271
+ 823 0060 39F81430 		ldrh	r3, [r9, r4, lsl #1]
+ 268:Core/Src/polyvec.c ****     for(i=1;i<KYBER_K;i++)
+ 824              		.loc 1 268 20 view .LVU272
+ 825 0064 03FB00F0 		mul	r0, r3, r0
+ 826              	.LVL48:
+ 268:Core/Src/polyvec.c ****     for(i=1;i<KYBER_K;i++)
+ 827              		.loc 1 268 20 view .LVU273
+ 828 0068 FFF7FEFF 		bl	montgomery_reduce
+ 829              	.LVL49:
+ 268:Core/Src/polyvec.c ****     for(i=1;i<KYBER_K;i++)
+ 830              		.loc 1 268 18 view .LVU274
+ 831 006c 26F81400 		strh	r0, [r6, r4, lsl #1]	@ movhi
+ 269:Core/Src/polyvec.c ****     {
+ 832              		.loc 1 269 5 is_stmt 1 view .LVU275
+ 833              	.LVL50:
+ 269:Core/Src/polyvec.c ****     {
+ 834              		.loc 1 269 10 is_stmt 0 view .LVU276
+ 835 0070 0125     		movs	r5, #1
+ 269:Core/Src/polyvec.c ****     {
+ 836              		.loc 1 269 5 view .LVU277
+ 837 0072 E2E7     		b	.L42
+ 838              	.LVL51:
+ 839              	.L46:
+ 275:Core/Src/polyvec.c ****   }
+ 276:Core/Src/polyvec.c **** }
+ 840              		.loc 1 276 1 view .LVU278
+ 841 0074 BDE8F883 		pop	{r3, r4, r5, r6, r7, r8, r9, pc}
+ 842              		.loc 1 276 1 view .LVU279
+ 843              		.cfi_endproc
+ 844              	.LFE9:
+ARM GAS  C:\Users\11410\AppData\Local\Temp\cc67E3Sn.s 			page 23
+
+
+ 846              		.section	.text.polyvec_add,"ax",%progbits
+ 847              		.align	1
+ 848              		.global	polyvec_add
+ 849              		.syntax unified
+ 850              		.thumb
+ 851              		.thumb_func
+ 852              		.fpu fpv4-sp-d16
+ 854              	polyvec_add:
+ 855              	.LVL52:
+ 856              	.LFB10:
+ 277:Core/Src/polyvec.c **** 
+ 278:Core/Src/polyvec.c **** /*************************************************
+ 279:Core/Src/polyvec.c **** * Name:        polyvec_add
+ 280:Core/Src/polyvec.c **** * 
+ 281:Core/Src/polyvec.c **** * Description: Add vectors of polynomials
+ 282:Core/Src/polyvec.c **** *
+ 283:Core/Src/polyvec.c **** * Arguments: - polyvec *r:       pointer to output vector of polynomials
+ 284:Core/Src/polyvec.c **** *            - const polyvec *a: pointer to first input vector of polynomials
+ 285:Core/Src/polyvec.c **** *            - const polyvec *b: pointer to second input vector of polynomials
+ 286:Core/Src/polyvec.c **** **************************************************/ 
+ 287:Core/Src/polyvec.c **** void polyvec_add(polyvec *r, const polyvec *a, const polyvec *b)
+ 288:Core/Src/polyvec.c **** {
+ 857              		.loc 1 288 1 is_stmt 1 view -0
+ 858              		.cfi_startproc
+ 859              		@ args = 0, pretend = 0, frame = 0
+ 860              		@ frame_needed = 0, uses_anonymous_args = 0
+ 861              		.loc 1 288 1 is_stmt 0 view .LVU281
+ 862 0000 F8B5     		push	{r3, r4, r5, r6, r7, lr}
+ 863              	.LCFI10:
+ 864              		.cfi_def_cfa_offset 24
+ 865              		.cfi_offset 3, -24
+ 866              		.cfi_offset 4, -20
+ 867              		.cfi_offset 5, -16
+ 868              		.cfi_offset 6, -12
+ 869              		.cfi_offset 7, -8
+ 870              		.cfi_offset 14, -4
+ 871 0002 0746     		mov	r7, r0
+ 872 0004 0E46     		mov	r6, r1
+ 873 0006 1546     		mov	r5, r2
+ 289:Core/Src/polyvec.c ****   int i;
+ 874              		.loc 1 289 3 is_stmt 1 view .LVU282
+ 290:Core/Src/polyvec.c ****   for(i=0;i<KYBER_K;i++)
+ 875              		.loc 1 290 3 view .LVU283
+ 876              	.LVL53:
+ 877              		.loc 1 290 8 is_stmt 0 view .LVU284
+ 878 0008 0024     		movs	r4, #0
+ 879              		.loc 1 290 3 view .LVU285
+ 880 000a 08E0     		b	.L48
+ 881              	.LVL54:
+ 882              	.L49:
+ 291:Core/Src/polyvec.c ****     poly_add(&r->vec[i], &a->vec[i], &b->vec[i]);
+ 883              		.loc 1 291 5 is_stmt 1 discriminator 3 view .LVU286
+ 884 000c 05EB4422 		add	r2, r5, r4, lsl #9
+ 885 0010 06EB4421 		add	r1, r6, r4, lsl #9
+ 886 0014 07EB4420 		add	r0, r7, r4, lsl #9
+ 887 0018 FFF7FEFF 		bl	poly_add
+ 888              	.LVL55:
+ARM GAS  C:\Users\11410\AppData\Local\Temp\cc67E3Sn.s 			page 24
+
+
+ 290:Core/Src/polyvec.c ****   for(i=0;i<KYBER_K;i++)
+ 889              		.loc 1 290 21 discriminator 3 view .LVU287
+ 290:Core/Src/polyvec.c ****   for(i=0;i<KYBER_K;i++)
+ 890              		.loc 1 290 22 is_stmt 0 discriminator 3 view .LVU288
+ 891 001c 0134     		adds	r4, r4, #1
+ 892              	.LVL56:
+ 893              	.L48:
+ 290:Core/Src/polyvec.c ****   for(i=0;i<KYBER_K;i++)
+ 894              		.loc 1 290 11 is_stmt 1 discriminator 1 view .LVU289
+ 290:Core/Src/polyvec.c ****   for(i=0;i<KYBER_K;i++)
+ 895              		.loc 1 290 3 is_stmt 0 discriminator 1 view .LVU290
+ 896 001e 022C     		cmp	r4, #2
+ 897 0020 F4DD     		ble	.L49
+ 292:Core/Src/polyvec.c **** 
+ 293:Core/Src/polyvec.c **** }
+ 898              		.loc 1 293 1 view .LVU291
+ 899 0022 F8BD     		pop	{r3, r4, r5, r6, r7, pc}
+ 900              		.loc 1 293 1 view .LVU292
+ 901              		.cfi_endproc
+ 902              	.LFE10:
+ 904              		.text
+ 905              	.Letext0:
+ 906              		.file 2 "c:\\program files (x86)\\gnu tools arm embedded\\9 2019-q4-major\\arm-none-eabi\\include\
+ 907              		.file 3 "c:\\program files (x86)\\gnu tools arm embedded\\9 2019-q4-major\\arm-none-eabi\\include\
+ 908              		.file 4 "c:\\program files (x86)\\gnu tools arm embedded\\9 2019-q4-major\\arm-none-eabi\\include\
+ 909              		.file 5 "c:\\program files (x86)\\gnu tools arm embedded\\9 2019-q4-major\\lib\\gcc\\arm-none-eabi
+ 910              		.file 6 "c:\\program files (x86)\\gnu tools arm embedded\\9 2019-q4-major\\arm-none-eabi\\include\
+ 911              		.file 7 "c:\\program files (x86)\\gnu tools arm embedded\\9 2019-q4-major\\arm-none-eabi\\include\
+ 912              		.file 8 "Core/Inc/poly.h"
+ 913              		.file 9 "Core/Inc/polyvec.h"
+ 914              		.file 10 "Core/Inc/reduce.h"
+ARM GAS  C:\Users\11410\AppData\Local\Temp\cc67E3Sn.s 			page 25
+
+
+DEFINED SYMBOLS
+                            *ABS*:00000000 polyvec.c
+C:\Users\11410\AppData\Local\Temp\cc67E3Sn.s:18     .text.polyvec_compress:00000000 $t
+C:\Users\11410\AppData\Local\Temp\cc67E3Sn.s:26     .text.polyvec_compress:00000000 polyvec_compress
+C:\Users\11410\AppData\Local\Temp\cc67E3Sn.s:226    .text.polyvec_compress:000000e4 $d
+C:\Users\11410\AppData\Local\Temp\cc67E3Sn.s:231    .text.polyvec_decompress:00000000 $t
+C:\Users\11410\AppData\Local\Temp\cc67E3Sn.s:238    .text.polyvec_decompress:00000000 polyvec_decompress
+C:\Users\11410\AppData\Local\Temp\cc67E3Sn.s:513    .text.polyvec_tobytes:00000000 $t
+C:\Users\11410\AppData\Local\Temp\cc67E3Sn.s:520    .text.polyvec_tobytes:00000000 polyvec_tobytes
+C:\Users\11410\AppData\Local\Temp\cc67E3Sn.s:568    .text.polyvec_frombytes:00000000 $t
+C:\Users\11410\AppData\Local\Temp\cc67E3Sn.s:575    .text.polyvec_frombytes:00000000 polyvec_frombytes
+C:\Users\11410\AppData\Local\Temp\cc67E3Sn.s:623    .text.polyvec_ntt:00000000 $t
+C:\Users\11410\AppData\Local\Temp\cc67E3Sn.s:630    .text.polyvec_ntt:00000000 polyvec_ntt
+C:\Users\11410\AppData\Local\Temp\cc67E3Sn.s:675    .text.polyvec_invntt:00000000 $t
+C:\Users\11410\AppData\Local\Temp\cc67E3Sn.s:682    .text.polyvec_invntt:00000000 polyvec_invntt
+C:\Users\11410\AppData\Local\Temp\cc67E3Sn.s:727    .text.polyvec_pointwise_acc:00000000 $t
+C:\Users\11410\AppData\Local\Temp\cc67E3Sn.s:734    .text.polyvec_pointwise_acc:00000000 polyvec_pointwise_acc
+C:\Users\11410\AppData\Local\Temp\cc67E3Sn.s:847    .text.polyvec_add:00000000 $t
+C:\Users\11410\AppData\Local\Temp\cc67E3Sn.s:854    .text.polyvec_add:00000000 polyvec_add
+
+UNDEFINED SYMBOLS
+freeze
+poly_tobytes
+poly_frombytes
+poly_ntt
+poly_invntt
+montgomery_reduce
+barrett_reduce
+poly_add

@@ -196,21 +196,18 @@ void indcpa_keypair(unsigned char *pk,
   printf("\n");
   printf("noiseseed: ");        
   for (i = 0; i < 32; i++) printf("%02x", noiseseed[i]);
+
   randombytes(buf, KYBER_SYMBYTES+KYBER_SYMBYTES);
-   printf("\n");
-    printf("\n");
+
+  printf("\n");
+  printf("\n");
   for (i = 0; i < 64.; i++) {
-    if(i<32)buf[i]=0;
+    if(i>31)buf[i]=0;
     printf("%02x", buf[i]);
   }
+  printf("\n");
+  printf("\n");
 
-   printf("\n");
-  printf("\n");
-  printf("publicseed: ");        
-  for (i = 0; i < 32; i++) printf("%02x", publicseed[i]);
-  printf("\n");
-  printf("noiseseed: ");        
-  for (i = 0; i < 32; i++) printf("%02x", noiseseed[i]);
   sha3_512(buf, buf, KYBER_SYMBYTES+KYBER_SYMBYTES);
   printf("\n");
   printf("publicseed: ");        

@@ -47,7 +47,7 @@ int crypto_kem_enc(unsigned char *ct, unsigned char *ss, const unsigned char *pk
   unsigned char buf[2*KYBER_SYMBYTES];                          
 
   randombytes(buf, KYBER_SYMBYTES);
-  for (i = 0; i < 32; i++) buf[i] = 0; 
+  //for (i = 0; i < 32; i++) buf[i] = 0; 
   sha3_256(buf,buf,KYBER_SYMBYTES);                                           /* Don't release system RNG output */
 
   sha3_256(buf+KYBER_SYMBYTES, pk, KYBER_PUBLICKEYBYTES);                     /* Multitarget countermeasure for coins + contributory KEM */

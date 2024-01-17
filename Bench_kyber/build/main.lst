@@ -1,4 +1,4 @@
-ARM GAS  C:\Users\11410\AppData\Local\Temp\ccw7uAvF.s 			page 1
+ARM GAS  C:\Users\11410\AppData\Local\Temp\ccYMhkd5.s 			page 1
 
 
    1              		.cpu cortex-m4
@@ -58,7 +58,7 @@ ARM GAS  C:\Users\11410\AppData\Local\Temp\ccw7uAvF.s 			page 1
   27:Core/Src/main.c **** #include "kex.h"
   28:Core/Src/main.c **** #include "ntt.h"
   29:Core/Src/main.c **** #include "randombytes.h" 
-ARM GAS  C:\Users\11410\AppData\Local\Temp\ccw7uAvF.s 			page 2
+ARM GAS  C:\Users\11410\AppData\Local\Temp\ccYMhkd5.s 			page 2
 
 
   30:Core/Src/main.c **** 
@@ -118,7 +118,7 @@ ARM GAS  C:\Users\11410\AppData\Local\Temp\ccw7uAvF.s 			page 1
   71              	.LFE130:
   73              		.section	.text._write,"ax",%progbits
   74              		.align	1
-ARM GAS  C:\Users\11410\AppData\Local\Temp\ccw7uAvF.s 			page 3
+ARM GAS  C:\Users\11410\AppData\Local\Temp\ccYMhkd5.s 			page 3
 
 
   75              		.global	_write
@@ -178,7 +178,7 @@ ARM GAS  C:\Users\11410\AppData\Local\Temp\ccw7uAvF.s 			page 1
  121              		.loc 1 46 37 discriminator 3 view .LVU21
  122 0016 F7E7     		b	.L6
  123              	.L9:
-ARM GAS  C:\Users\11410\AppData\Local\Temp\ccw7uAvF.s 			page 4
+ARM GAS  C:\Users\11410\AppData\Local\Temp\ccYMhkd5.s 			page 4
 
 
   49:Core/Src/main.c ****   }
@@ -238,7 +238,7 @@ ARM GAS  C:\Users\11410\AppData\Local\Temp\ccw7uAvF.s 			page 1
   87:Core/Src/main.c ****   while (1)
   88:Core/Src/main.c ****   {
   89:Core/Src/main.c **** 
-ARM GAS  C:\Users\11410\AppData\Local\Temp\ccw7uAvF.s 			page 5
+ARM GAS  C:\Users\11410\AppData\Local\Temp\ccYMhkd5.s 			page 5
 
 
   90:Core/Src/main.c ****      if(USART_RX_STA&0x8000)
@@ -298,7 +298,7 @@ ARM GAS  C:\Users\11410\AppData\Local\Temp\ccw7uAvF.s 			page 1
  144:Core/Src/main.c ****   RCC_OscInitStruct.HSIState = RCC_HSI_ON;
  145:Core/Src/main.c ****   RCC_OscInitStruct.HSICalibrationValue = RCC_HSICALIBRATION_DEFAULT;
  146:Core/Src/main.c ****   RCC_OscInitStruct.PLL.PLLState = RCC_PLL_ON;
-ARM GAS  C:\Users\11410\AppData\Local\Temp\ccw7uAvF.s 			page 6
+ARM GAS  C:\Users\11410\AppData\Local\Temp\ccYMhkd5.s 			page 6
 
 
  147:Core/Src/main.c ****   RCC_OscInitStruct.PLL.PLLSource = RCC_PLLSOURCE_HSI;
@@ -358,7 +358,7 @@ ARM GAS  C:\Users\11410\AppData\Local\Temp\ccw7uAvF.s 			page 1
    8:Drivers/CMSIS/Include/cmsis_gcc.h ****  * Copyright (c) 2009-2018 Arm Limited. All rights reserved.
    9:Drivers/CMSIS/Include/cmsis_gcc.h ****  *
   10:Drivers/CMSIS/Include/cmsis_gcc.h ****  * SPDX-License-Identifier: Apache-2.0
-ARM GAS  C:\Users\11410\AppData\Local\Temp\ccw7uAvF.s 			page 7
+ARM GAS  C:\Users\11410\AppData\Local\Temp\ccYMhkd5.s 			page 7
 
 
   11:Drivers/CMSIS/Include/cmsis_gcc.h ****  *
@@ -418,7 +418,7 @@ ARM GAS  C:\Users\11410\AppData\Local\Temp\ccw7uAvF.s 			page 1
   65:Drivers/CMSIS/Include/cmsis_gcc.h ****   #define __PACKED_STRUCT                        struct __attribute__((packed, aligned(1)))
   66:Drivers/CMSIS/Include/cmsis_gcc.h **** #endif
   67:Drivers/CMSIS/Include/cmsis_gcc.h **** #ifndef   __PACKED_UNION
-ARM GAS  C:\Users\11410\AppData\Local\Temp\ccw7uAvF.s 			page 8
+ARM GAS  C:\Users\11410\AppData\Local\Temp\ccYMhkd5.s 			page 8
 
 
   68:Drivers/CMSIS/Include/cmsis_gcc.h ****   #define __PACKED_UNION                         union __attribute__((packed, aligned(1)))
@@ -478,7 +478,7 @@ ARM GAS  C:\Users\11410\AppData\Local\Temp\ccw7uAvF.s 			page 1
  122:Drivers/CMSIS/Include/cmsis_gcc.h ****  */
  123:Drivers/CMSIS/Include/cmsis_gcc.h **** 
  124:Drivers/CMSIS/Include/cmsis_gcc.h **** /**
-ARM GAS  C:\Users\11410\AppData\Local\Temp\ccw7uAvF.s 			page 9
+ARM GAS  C:\Users\11410\AppData\Local\Temp\ccYMhkd5.s 			page 9
 
 
  125:Drivers/CMSIS/Include/cmsis_gcc.h ****   \brief   Enable IRQ Interrupts
@@ -538,7 +538,7 @@ ARM GAS  C:\Users\11410\AppData\Local\Temp\ccw7uAvF.s 			page 1
  185 0000 00B5     		push	{lr}
  186              	.LCFI4:
  187              		.cfi_def_cfa_offset 4
-ARM GAS  C:\Users\11410\AppData\Local\Temp\ccw7uAvF.s 			page 10
+ARM GAS  C:\Users\11410\AppData\Local\Temp\ccYMhkd5.s 			page 10
 
 
  188              		.cfi_offset 14, -4
@@ -598,7 +598,7 @@ ARM GAS  C:\Users\11410\AppData\Local\Temp\ccw7uAvF.s 			page 1
  229 0032 1A4A     		ldr	r2, .L18+4
  230 0034 1168     		ldr	r1, [r2]
  231 0036 41F48041 		orr	r1, r1, #16384
-ARM GAS  C:\Users\11410\AppData\Local\Temp\ccw7uAvF.s 			page 11
+ARM GAS  C:\Users\11410\AppData\Local\Temp\ccYMhkd5.s 			page 11
 
 
  232 003a 1160     		str	r1, [r2]
@@ -658,7 +658,7 @@ ARM GAS  C:\Users\11410\AppData\Local\Temp\ccw7uAvF.s 			page 1
  267              		.loc 1 150 30 is_stmt 0 view .LVU64
  268 005e 1292     		str	r2, [sp, #72]
  151:Core/Src/main.c ****   if (HAL_RCC_OscConfig(&RCC_OscInitStruct) != HAL_OK)
-ARM GAS  C:\Users\11410\AppData\Local\Temp\ccw7uAvF.s 			page 12
+ARM GAS  C:\Users\11410\AppData\Local\Temp\ccYMhkd5.s 			page 12
 
 
  269              		.loc 1 151 3 is_stmt 1 view .LVU65
@@ -718,7 +718,7 @@ ARM GAS  C:\Users\11410\AppData\Local\Temp\ccw7uAvF.s 			page 1
  306 0088 20B9     		cbnz	r0, .L17
  169:Core/Src/main.c **** 
  307              		.loc 1 169 1 view .LVU83
-ARM GAS  C:\Users\11410\AppData\Local\Temp\ccw7uAvF.s 			page 13
+ARM GAS  C:\Users\11410\AppData\Local\Temp\ccYMhkd5.s 			page 13
 
 
  308 008a 15B0     		add	sp, sp, #84
@@ -778,7 +778,7 @@ ARM GAS  C:\Users\11410\AppData\Local\Temp\ccw7uAvF.s 			page 1
  354              		.fpu fpv4-sp-d16
  356              	main:
  357              	.LFB132:
-ARM GAS  C:\Users\11410\AppData\Local\Temp\ccw7uAvF.s 			page 14
+ARM GAS  C:\Users\11410\AppData\Local\Temp\ccYMhkd5.s 			page 14
 
 
   66:Core/Src/main.c ****   int i;
@@ -838,7 +838,7 @@ ARM GAS  C:\Users\11410\AppData\Local\Temp\ccw7uAvF.s 			page 1
  399              	.LVL21:
   81:Core/Src/main.c ****   /* Initialize all configured peripherals */
  400              		.loc 1 81 3 view .LVU99
-ARM GAS  C:\Users\11410\AppData\Local\Temp\ccw7uAvF.s 			page 15
+ARM GAS  C:\Users\11410\AppData\Local\Temp\ccYMhkd5.s 			page 15
 
 
  401 0022 FFF7FEFF 		bl	SystemClock_Config
@@ -898,7 +898,7 @@ ARM GAS  C:\Users\11410\AppData\Local\Temp\ccw7uAvF.s 			page 1
  443              	.LVL29:
   97:Core/Src/main.c **** 	  }else{
  444              		.loc 1 97 7 view .LVU112
-ARM GAS  C:\Users\11410\AppData\Local\Temp\ccw7uAvF.s 			page 16
+ARM GAS  C:\Users\11410\AppData\Local\Temp\ccYMhkd5.s 			page 16
 
 
   97:Core/Src/main.c **** 	  }else{
@@ -958,7 +958,7 @@ ARM GAS  C:\Users\11410\AppData\Local\Temp\ccw7uAvF.s 			page 1
  485              		.loc 1 105 9 view .LVU126
  105:Core/Src/main.c ****         printf("\n");
  486              		.loc 1 105 16 is_stmt 0 view .LVU127
-ARM GAS  C:\Users\11410\AppData\Local\Temp\ccw7uAvF.s 			page 17
+ARM GAS  C:\Users\11410\AppData\Local\Temp\ccYMhkd5.s 			page 17
 
 
  487 008a 2546     		mov	r5, r4
@@ -1018,7 +1018,7 @@ ARM GAS  C:\Users\11410\AppData\Local\Temp\ccw7uAvF.s 			page 1
  527              		.loc 1 108 30 is_stmt 0 discriminator 3 view .LVU141
  528 00b6 0134     		adds	r4, r4, #1
  529              	.LVL41:
-ARM GAS  C:\Users\11410\AppData\Local\Temp\ccw7uAvF.s 			page 18
+ARM GAS  C:\Users\11410\AppData\Local\Temp\ccYMhkd5.s 			page 18
 
 
  108:Core/Src/main.c **** 
@@ -1078,7 +1078,7 @@ ARM GAS  C:\Users\11410\AppData\Local\Temp\ccw7uAvF.s 			page 1
  577              	.LFE132:
  579              		.text
  580              	.Letext0:
-ARM GAS  C:\Users\11410\AppData\Local\Temp\ccw7uAvF.s 			page 19
+ARM GAS  C:\Users\11410\AppData\Local\Temp\ccYMhkd5.s 			page 19
 
 
  581              		.file 3 "c:\\program files (x86)\\gnu tools arm embedded\\9 2019-q4-major\\arm-none-eabi\\include\
@@ -1105,25 +1105,25 @@ ARM GAS  C:\Users\11410\AppData\Local\Temp\ccw7uAvF.s 			page 1
  602              		.file 24 "Core/Inc/api.h"
  603              		.file 25 "Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_gpio.h"
  604              		.file 26 "Core/Inc/gpio.h"
-ARM GAS  C:\Users\11410\AppData\Local\Temp\ccw7uAvF.s 			page 20
+ARM GAS  C:\Users\11410\AppData\Local\Temp\ccYMhkd5.s 			page 20
 
 
 DEFINED SYMBOLS
                             *ABS*:00000000 main.c
-C:\Users\11410\AppData\Local\Temp\ccw7uAvF.s:18     .text.__io_putchar:00000000 $t
-C:\Users\11410\AppData\Local\Temp\ccw7uAvF.s:26     .text.__io_putchar:00000000 __io_putchar
-C:\Users\11410\AppData\Local\Temp\ccw7uAvF.s:69     .text.__io_putchar:00000020 $d
-C:\Users\11410\AppData\Local\Temp\ccw7uAvF.s:74     .text._write:00000000 $t
-C:\Users\11410\AppData\Local\Temp\ccw7uAvF.s:81     .text._write:00000000 _write
-C:\Users\11410\AppData\Local\Temp\ccw7uAvF.s:133    .text.Error_Handler:00000000 $t
-C:\Users\11410\AppData\Local\Temp\ccw7uAvF.s:140    .text.Error_Handler:00000000 Error_Handler
-C:\Users\11410\AppData\Local\Temp\ccw7uAvF.s:172    .text.SystemClock_Config:00000000 $t
-C:\Users\11410\AppData\Local\Temp\ccw7uAvF.s:179    .text.SystemClock_Config:00000000 SystemClock_Config
-C:\Users\11410\AppData\Local\Temp\ccw7uAvF.s:327    .text.SystemClock_Config:00000098 $d
-C:\Users\11410\AppData\Local\Temp\ccw7uAvF.s:333    .rodata.main.str1.4:00000000 $d
-C:\Users\11410\AppData\Local\Temp\ccw7uAvF.s:349    .text.main:00000000 $t
-C:\Users\11410\AppData\Local\Temp\ccw7uAvF.s:356    .text.main:00000000 main
-C:\Users\11410\AppData\Local\Temp\ccw7uAvF.s:566    .text.main:000000ec $d
+C:\Users\11410\AppData\Local\Temp\ccYMhkd5.s:18     .text.__io_putchar:00000000 $t
+C:\Users\11410\AppData\Local\Temp\ccYMhkd5.s:26     .text.__io_putchar:00000000 __io_putchar
+C:\Users\11410\AppData\Local\Temp\ccYMhkd5.s:69     .text.__io_putchar:00000020 $d
+C:\Users\11410\AppData\Local\Temp\ccYMhkd5.s:74     .text._write:00000000 $t
+C:\Users\11410\AppData\Local\Temp\ccYMhkd5.s:81     .text._write:00000000 _write
+C:\Users\11410\AppData\Local\Temp\ccYMhkd5.s:133    .text.Error_Handler:00000000 $t
+C:\Users\11410\AppData\Local\Temp\ccYMhkd5.s:140    .text.Error_Handler:00000000 Error_Handler
+C:\Users\11410\AppData\Local\Temp\ccYMhkd5.s:172    .text.SystemClock_Config:00000000 $t
+C:\Users\11410\AppData\Local\Temp\ccYMhkd5.s:179    .text.SystemClock_Config:00000000 SystemClock_Config
+C:\Users\11410\AppData\Local\Temp\ccYMhkd5.s:327    .text.SystemClock_Config:00000098 $d
+C:\Users\11410\AppData\Local\Temp\ccYMhkd5.s:333    .rodata.main.str1.4:00000000 $d
+C:\Users\11410\AppData\Local\Temp\ccYMhkd5.s:349    .text.main:00000000 $t
+C:\Users\11410\AppData\Local\Temp\ccYMhkd5.s:356    .text.main:00000000 main
+C:\Users\11410\AppData\Local\Temp\ccYMhkd5.s:566    .text.main:000000ec $d
 
 UNDEFINED SYMBOLS
 HAL_UART_Transmit

@@ -190,15 +190,10 @@ void indcpa_keypair(unsigned char *pk,
   unsigned char *noiseseed = buf+KYBER_SYMBYTES;
   int i;
   unsigned char nonce=0;
-  printf("\n");
-  printf("publicseed: ");        
-  for (i = 0; i < 32; i++) printf("%02x", publicseed[i]);
-  printf("\n");
-  printf("noiseseed: ");        
-  for (i = 0; i < 32; i++) printf("%02x", noiseseed[i]);
 
+/*********************************************************/
   randombytes(buf, KYBER_SYMBYTES+KYBER_SYMBYTES);
-
+/*********************************************************/
   printf("\n");
   printf("\n");
   for (i = 0; i < 64.; i++) {
@@ -207,29 +202,29 @@ void indcpa_keypair(unsigned char *pk,
   }
   printf("\n");
   printf("\n");
-
+/*********************************************************/
   sha3_512(buf, buf, KYBER_SYMBYTES+KYBER_SYMBYTES);
+/*********************************************************/  
   printf("\n");
   printf("publicseed: ");        
   for (i = 0; i < 32; i++) printf("%02x", publicseed[i]);
   printf("\n");
   printf("noiseseed: ");        
   for (i = 0; i < 32; i++) printf("%02x", noiseseed[i]);
+/*********************************************************/
   gen_a(a, publicseed);
-
+/*********************************************************/
   for(i=0;i<KYBER_K;i++)
     poly_getnoise(skpv.vec+i,noiseseed,nonce++);
   polyvec_ntt(&skpv);
-
+/*********************************************************/
   for(i=0;i<KYBER_K;i++)
     poly_getnoise(e.vec+i,noiseseed,nonce++);
-
-  // matrix-vector multiplication
   for(i=0;i<KYBER_K;i++)
     polyvec_pointwise_acc(&pkpv.vec[i],&skpv,a+i);
   polyvec_invntt(&pkpv);
   polyvec_add(&pkpv,&pkpv,&e);
-
+/*********************************************************/
   pack_sk(sk, &skpv);
   pack_pk(pk, &pkpv, publicseed);
 }
@@ -262,34 +257,29 @@ void indcpa_enc(unsigned char *c,
   unpack_pk(&pkpv, seed, pk);
 
   poly_frommsg(&k, m);
-
+/*********************************************************/
   polyvec_ntt(&pkpv);
-
   gen_at(at, seed);
-
+/*********************************************************/
   for(i=0;i<KYBER_K;i++)
     poly_getnoise(sp.vec+i,coins,nonce++);
-
   polyvec_ntt(&sp);
-
+/*********************************************************/
   for(i=0;i<KYBER_K;i++)
     poly_getnoise(ep.vec+i,coins,nonce++);
-
+/*********************************************************/
   // matrix-vector multiplication
   for(i=0;i<KYBER_K;i++)
     polyvec_pointwise_acc(&bp.vec[i],&sp,at+i);
-
   polyvec_invntt(&bp);
   polyvec_add(&bp, &bp, &ep);
- 
+/*********************************************************/
   polyvec_pointwise_acc(&v, &pkpv, &sp);
   poly_invntt(&v);
-
   poly_getnoise(&epp,coins,nonce++);
-
   poly_add(&v, &v, &epp);
   poly_add(&v, &v, &k);
-
+/*********************************************************/
   pack_ciphertext(c, &bp, &v);
 }
 
@@ -309,16 +299,15 @@ void indcpa_dec(unsigned char *m,
 {
   polyvec bp, skpv;
   poly v, mp;
-
+/*********************************************************/
   unpack_ciphertext(&bp, &v, c);
   unpack_sk(&skpv, sk);
-
+/*********************************************************/
   polyvec_ntt(&bp);
-
   polyvec_pointwise_acc(&mp,&skpv,&bp);
   poly_invntt(&mp);
-
   poly_sub(&mp, &mp, &v);
 
   poly_tomsg(m, &mp);
+
 }

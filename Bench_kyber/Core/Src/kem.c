@@ -47,22 +47,25 @@ int crypto_kem_enc(unsigned char *ct, unsigned char *ss, const unsigned char *pk
   unsigned char buf[2*KYBER_SYMBYTES];                          
 
   randombytes(buf, KYBER_SYMBYTES);
-  //for (i = 0; i < 32; i++) buf[i] = 0; 
+
   sha3_256(buf,buf,KYBER_SYMBYTES);                                           /* Don't release system RNG output */
 
   sha3_256(buf+KYBER_SYMBYTES, pk, KYBER_PUBLICKEYBYTES);                     /* Multitarget countermeasure for coins + contributory KEM */
   sha3_512(kr, buf, 2*KYBER_SYMBYTES);
-
+/*********************************************************/
   printf("\n");
-  printf("pt: ");        
+  printf("pt: "); 
   for (i = 0; i < 32; i++) printf("%02x", buf[i]);
+/*********************************************************/
   indcpa_enc(ct, buf, pk, kr+KYBER_SYMBYTES);                                 /* coins are in kr+KYBER_SYMBYTES */
+/*********************************************************/  
   printf("\n");
   printf("ct: ");        
   for (i = 0; i < 32; i++) printf("%02x", ct[i]);
+/*********************************************************/
   sha3_256(kr+KYBER_SYMBYTES, ct, KYBER_CIPHERTEXTBYTES);                     /* overwrite coins in kr with H(c) */
-  for (i = 0; i < 32; i++) printf("%02x", ct[i]);
   sha3_256(ss, kr, 2*KYBER_SYMBYTES);                                         /* hash concatenation of pre-k and H(c) to k */
+  
   return 0;
 }
 
@@ -88,14 +91,13 @@ int crypto_kem_dec(unsigned char *ss, const unsigned char *ct, const unsigned ch
   unsigned char buf[2*KYBER_SYMBYTES];
   unsigned char kr[2*KYBER_SYMBYTES];                                         /* Will contain key, coins, qrom-hash */
   const unsigned char *pk = sk+KYBER_INDCPA_SECRETKEYBYTES;
-  printf("\n");
-  printf("ct: ");   
-  for (i = 0; i < 32; i++) printf("%02x", ct[i]);
+/*********************************************************/
   indcpa_dec(buf, ct, sk);
+/*********************************************************/
   printf("\n");
   printf("pt: "); 
   for (i = 0; i < 32; i++) printf("%02x", buf[i]);     
-
+/*********************************************************/
   for(i=0;i<KYBER_SYMBYTES;i++)                                               /* Multitarget countermeasure for coins + contributory KEM */
     buf[KYBER_SYMBYTES+i] = sk[KYBER_SECRETKEYBYTES-2*KYBER_SYMBYTES+i];      /* Save hash by storing H(pk) in sk */
 
@@ -104,6 +106,9 @@ int crypto_kem_dec(unsigned char *ss, const unsigned char *ct, const unsigned ch
   indcpa_enc(cmp, buf, pk, kr+KYBER_SYMBYTES);                                /* coins are in kr+KYBER_SYMBYTES */
 
   fail = verify(ct, cmp, KYBER_CIPHERTEXTBYTES);
+  
+  printf("\n");
+  printf("fail: %02x\r\n",fail); 
 
   sha3_256(kr+KYBER_SYMBYTES, ct, KYBER_CIPHERTEXTBYTES);                     /* overwrite coins in kr with H(c)  */
 

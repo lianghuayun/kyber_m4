@@ -5,6 +5,7 @@
 #include "verify.h"
 #include "indcpa.h"
 
+#include "gpio.h"
 /*************************************************
 * Name:        crypto_kem_keypair
 *
@@ -56,24 +57,24 @@ int crypto_kem_enc(unsigned char *ct, unsigned char *ss, const unsigned char *pk
   sha3_256(buf+KYBER_SYMBYTES, pk, KYBER_PUBLICKEYBYTES);                     /* Multitarget countermeasure for coins + contributory KEM */
   sha3_512(kr, buf, 2*KYBER_SYMBYTES);
 /*********************************************************/
-  printf("\n");
-  printf("pt: "); 
-  for (i = 0; i < 32; i++) {
-      //buf[i]=0;
-      printf("%02x", buf[i]);
-  }
-  printf("\n");
-  printf("pp: "); 
-  for (i = 32; i < 64; i++){
-    //kr[i]=0;
-    printf("%02x", kr[i]);
-  } 
+  // printf("\n");
+  // printf("pt: "); 
+  // for (i = 0; i < 32; i++) {
+  //     //buf[i]=0;
+  //     printf("%02x", buf[i]);
+  // }
+  // printf("\n");
+  // printf("pp: "); 
+  // for (i = 32; i < 64; i++){
+  //   //kr[i]=0;
+  //   printf("%02x", kr[i]);
+  // } 
 /*********************************************************/
   indcpa_enc(ct, buf, pk, kr+KYBER_SYMBYTES);                                 /* coins are in kr+KYBER_SYMBYTES */
 /*********************************************************/  
-  printf("\n");
-  printf("ct: ");        
-  for (i = 0; i < 32; i++) printf("%02x", ct[i]);
+  // printf("\n");
+  // printf("ct: ");        
+  // for (i = 0; i < 32; i++) printf("%02x", ct[i]);
 /*********************************************************/
   sha3_256(kr+KYBER_SYMBYTES, ct, KYBER_CIPHERTEXTBYTES);                     /* overwrite coins in kr with H(c) */
   sha3_256(ss, kr, 2*KYBER_SYMBYTES);                                         /* hash concatenation of pre-k and H(c) to k */
@@ -104,24 +105,26 @@ int crypto_kem_dec(unsigned char *ss, const unsigned char *ct, const unsigned ch
   unsigned char kr[2*KYBER_SYMBYTES];                                         /* Will contain key, coins, qrom-hash */
   const unsigned char *pk = sk+KYBER_INDCPA_SECRETKEYBYTES;
 /*********************************************************/
+  HAL_GPIO_WritePin(LED1_GPIO_Port,LED1_Pin,GPIO_PIN_RESET);
   indcpa_dec(buf, ct, sk);
+  HAL_GPIO_WritePin(LED1_GPIO_Port,LED1_Pin,GPIO_PIN_SET);
 /*********************************************************/
-  printf("\n");
-  printf("pt: "); 
-  for (i = 0; i < 32; i++) printf("%02x", buf[i]);     
+  // printf("\n");
+  // printf("pt: "); 
+  // for (i = 0; i < 32; i++) printf("%02x", buf[i]);     
 /*********************************************************/
   for(i=0;i<KYBER_SYMBYTES;i++)                                                                                                                                        /* Multitarget countermeasure for coins + contributory KEM */
     buf[KYBER_SYMBYTES+i] = sk[KYBER_SECRETKEYBYTES-2*KYBER_SYMBYTES+i];      /* Save hash by storing H(pk) in sk */
   sha3_512(kr, buf, 2*KYBER_SYMBYTES);
-  printf("\n");
-  printf("kr: "); 
-  for (i = 32; i < 64; i++) printf("%02x", kr[i]);    
+  // printf("\n");
+  // printf("kr: "); 
+  // for (i = 32; i < 64; i++) printf("%02x", kr[i]);    
 /*********************************************************/ 
   indcpa_enc(cmp, buf, pk, kr+KYBER_SYMBYTES);                                /* coins are in kr+KYBER_SYMBYTES */
 /*********************************************************/
   fail = verify(ct, cmp, KYBER_CIPHERTEXTBYTES);
-  printf("\n");
-  printf("fail: %02x\r\n",fail); 
+  // printf("\n");
+  // printf("fail: %02x\r\n",fail); 
 
   sha3_256(kr+KYBER_SYMBYTES, ct, KYBER_CIPHERTEXTBYTES);                     /* overwrite coins in kr with H(c)  */
 

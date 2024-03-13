@@ -27,8 +27,28 @@
 #include "kex.h"
 #include "ntt.h"
 #include "randombytes.h" 
+/* Private includes ----------------------------------------------------------*/
+/* USER CODE BEGIN Includes */
 
+/* USER CODE END Includes */
 
+/* Private typedef -----------------------------------------------------------*/
+/* USER CODE BEGIN PTD */
+
+/* USER CODE END PTD */
+
+/* Private define ------------------------------------------------------------*/
+/* USER CODE BEGIN PD */
+/* USER CODE END PD */
+
+/* Private macro -------------------------------------------------------------*/
+/* USER CODE BEGIN PM */
+
+/* USER CODE END PM */
+
+/* Private variables ---------------------------------------------------------*/
+
+/* USER CODE BEGIN PV */
 #ifdef __GNUC__
 	#define PUTCHAR_PROTOTYPE int __io_putchar(int ch)
 #else
@@ -49,14 +69,18 @@ int _write(int file, char *ptr, int len)
   }
   return len;
 }
+/* USER CODE END PV */
+
 /* Private function prototypes -----------------------------------------------*/
 void SystemClock_Config(void);
+/* USER CODE BEGIN PFP */
+
+/* USER CODE END PFP */
 
 /* Private user code ---------------------------------------------------------*/
+/* USER CODE BEGIN 0 */
 #define NTESTS 100
-
-
-
+/* USER CODE END 0 */
 
 /**
   * @brief  The application entry point.
@@ -64,6 +88,7 @@ void SystemClock_Config(void);
   */
 int main(void)
 {
+  /* USER CODE BEGIN 1 */
   int i;
 
   unsigned int
@@ -75,55 +100,49 @@ int main(void)
 
 	uint8_t len;	  //串口数据长度
   uint8_t times;  //测试时间相关
+  /* USER CODE END 1 */
+
+  /* MCU Configuration--------------------------------------------------------*/
+
   /* Reset of all peripherals, Initializes the Flash interface and the Systick. */
   HAL_Init();
   /* Configure the system clock */
   SystemClock_Config();
   /* Initialize all configured peripherals */
   MX_GPIO_Init();
-  //MX_TIM1_Init();
+
   MX_USART1_UART_Init();
   /* Infinite loop */
+  /* USER CODE BEGIN WHILE */
   while (1)
   {
-
-     if(USART_RX_STA&0x8000)
+    /* USER CODE END WHILE */
+ if(USART_RX_STA&0x8000)
 		{		   
 			len=USART_RX_STA&0x3fff;//数据长度
-			printf("\r\nYou are sending a message as:%d\r\n",len);               
-      HAL_UART_Transmit(&huart1,(uint8_t*)USART_RX_BUF,len,1000);    
-      while(__HAL_UART_GET_FLAG(&huart1,UART_FLAG_TC)!=SET);
-      printf("\r\n");  
+			// printf("\r\nYou are sending a message as:%d\r\n",len);               
+      // HAL_UART_Transmit(&huart1,(uint8_t*)USART_RX_BUF,len,1000);    
+      // while(__HAL_UART_GET_FLAG(&huart1,UART_FLAG_TC)!=SET);
+      // printf("\r\n");  
+      crypto_kem_keypair(senda, sk_a);       
+      for (i = 0; i < 32; i++) printf("%02x", sk_a[i]);
+      crypto_kem_enc(sendb, key_b, senda);
+      crypto_kem_dec(key_a, sendb, sk_a);
+
+      free(senda);
+      free(sendb);
       USART_RX_STA=0; 
 	  }else{
 			times++;
 			if(times%1000==0)
 			{     
-        crypto_kem_keypair(senda, sk_a);
-        printf("\n");
-        printf("senda: ");
-        for (i = 0; i < 32; i++) printf("%02x", senda[i]);
-        printf("\n");
-        printf("sk_a: ");        
-        for (i = 0; i < 32; i++) printf("%02x", sk_a[i]);
-
-        //HAL_GPIO_WritePin(LED0_GPIO_Port,LED0_Pin,GPIO_PIN_RESET);
-        crypto_kem_enc(sendb, key_b, senda);
-        //HAL_GPIO_WritePin(LED0_GPIO_Port,LED0_Pin,GPIO_PIN_SET);
-        //HAL_GPIO_WritePin(LED1_GPIO_Port,LED1_Pin,GPIO_PIN_RESET);
-        crypto_kem_dec(key_a, sendb, sk_a);
-        //HAL_GPIO_WritePin(LED1_GPIO_Port,LED1_Pin,GPIO_PIN_SET);
-        printf("\n");
-
-
-        free(senda);
-        free(sendb);
 
 			}
     } 
-	}
+    /* USER CODE BEGIN 3 */
+  }
 
-
+  /* USER CODE END 3 */
 }
 
 /**
@@ -147,8 +166,8 @@ void SystemClock_Config(void)
   RCC_OscInitStruct.HSICalibrationValue = RCC_HSICALIBRATION_DEFAULT;
   RCC_OscInitStruct.PLL.PLLState = RCC_PLL_ON;
   RCC_OscInitStruct.PLL.PLLSource = RCC_PLLSOURCE_HSI;
-  RCC_OscInitStruct.PLL.PLLM = 16;
-  RCC_OscInitStruct.PLL.PLLN = 288;
+  RCC_OscInitStruct.PLL.PLLM = 8;
+  RCC_OscInitStruct.PLL.PLLN = 50;
   RCC_OscInitStruct.PLL.PLLP = RCC_PLLP_DIV2;
   RCC_OscInitStruct.PLL.PLLQ = 4;
   if (HAL_RCC_OscConfig(&RCC_OscInitStruct) != HAL_OK)
@@ -160,11 +179,11 @@ void SystemClock_Config(void)
   RCC_ClkInitStruct.ClockType = RCC_CLOCKTYPE_HCLK|RCC_CLOCKTYPE_SYSCLK
                               |RCC_CLOCKTYPE_PCLK1|RCC_CLOCKTYPE_PCLK2;
   RCC_ClkInitStruct.SYSCLKSource = RCC_SYSCLKSOURCE_PLLCLK;
-  RCC_ClkInitStruct.AHBCLKDivider = RCC_SYSCLK_DIV1;
+  RCC_ClkInitStruct.AHBCLKDivider = RCC_SYSCLK_DIV2;
   RCC_ClkInitStruct.APB1CLKDivider = RCC_HCLK_DIV4;
   RCC_ClkInitStruct.APB2CLKDivider = RCC_HCLK_DIV4;
 
-  if (HAL_RCC_ClockConfig(&RCC_ClkInitStruct, FLASH_LATENCY_4) != HAL_OK)
+  if (HAL_RCC_ClockConfig(&RCC_ClkInitStruct, FLASH_LATENCY_0) != HAL_OK)
   {
     Error_Handler();
   }

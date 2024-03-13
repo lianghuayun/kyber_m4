@@ -1,4 +1,4 @@
-ARM GAS  C:\Users\11410\AppData\Local\Temp\ccjf4LnK.s 			page 1
+ARM GAS  C:\Users\11410\AppData\Local\Temp\ccJ8PrVS.s 			page 1
 
 
    1              		.cpu cortex-m4
@@ -58,7 +58,7 @@ ARM GAS  C:\Users\11410\AppData\Local\Temp\ccjf4LnK.s 			page 1
   49 000a FFF7FEFF 		bl	crypto_kem_keypair
   50              	.LVL2:
    8:Core/Src/kex.c ****   crypto_kem_enc(send+KYBER_PUBLICKEYBYTES, tk, pkb);
-ARM GAS  C:\Users\11410\AppData\Local\Temp\ccjf4LnK.s 			page 2
+ARM GAS  C:\Users\11410\AppData\Local\Temp\ccJ8PrVS.s 			page 2
 
 
   51              		.loc 1 8 3 is_stmt 1 view .LVU4
@@ -118,7 +118,7 @@ ARM GAS  C:\Users\11410\AppData\Local\Temp\ccjf4LnK.s 			page 1
   15:Core/Src/kex.c ****   crypto_kem_dec(buf+KYBER_SYMBYTES, recv+KYBER_PUBLICKEYBYTES, skb);
  101              		.loc 1 15 3 is_stmt 1 view .LVU12
  102 0012 3246     		mov	r2, r6
-ARM GAS  C:\Users\11410\AppData\Local\Temp\ccjf4LnK.s 			page 3
+ARM GAS  C:\Users\11410\AppData\Local\Temp\ccJ8PrVS.s 			page 3
 
 
  103 0014 05F58861 		add	r1, r5, #1088
@@ -178,7 +178,7 @@ ARM GAS  C:\Users\11410\AppData\Local\Temp\ccjf4LnK.s 			page 1
  154 0006 1546     		mov	r5, r2
   21:Core/Src/kex.c ****   unsigned char buf[2*KYBER_SYMBYTES];
  155              		.loc 1 21 3 is_stmt 1 view .LVU18
-ARM GAS  C:\Users\11410\AppData\Local\Temp\ccjf4LnK.s 			page 4
+ARM GAS  C:\Users\11410\AppData\Local\Temp\ccJ8PrVS.s 			page 4
 
 
   22:Core/Src/kex.c ****   int i;
@@ -238,7 +238,7 @@ ARM GAS  C:\Users\11410\AppData\Local\Temp\ccjf4LnK.s 			page 1
  202 003a FFF7FEFF 		bl	shake256
  203              	.LVL16:
   27:Core/Src/kex.c **** }
-ARM GAS  C:\Users\11410\AppData\Local\Temp\ccjf4LnK.s 			page 5
+ARM GAS  C:\Users\11410\AppData\Local\Temp\ccJ8PrVS.s 			page 5
 
 
  204              		.loc 1 27 1 view .LVU36
@@ -298,7 +298,7 @@ ARM GAS  C:\Users\11410\AppData\Local\Temp\ccjf4LnK.s 			page 1
  252              		.loc 1 35 1 is_stmt 0 view .LVU43
  253 001a 70BD     		pop	{r4, r5, r6, pc}
  254              		.loc 1 35 1 view .LVU44
-ARM GAS  C:\Users\11410\AppData\Local\Temp\ccjf4LnK.s 			page 6
+ARM GAS  C:\Users\11410\AppData\Local\Temp\ccJ8PrVS.s 			page 6
 
 
  255              		.cfi_endproc
@@ -358,7 +358,7 @@ ARM GAS  C:\Users\11410\AppData\Local\Temp\ccjf4LnK.s 			page 1
  304              		.loc 1 42 3 view .LVU51
  305 0024 3246     		mov	r2, r6
  306 0026 05F58861 		add	r1, r5, #1088
-ARM GAS  C:\Users\11410\AppData\Local\Temp\ccjf4LnK.s 			page 7
+ARM GAS  C:\Users\11410\AppData\Local\Temp\ccJ8PrVS.s 			page 7
 
 
  307 002a 14A8     		add	r0, sp, #80
@@ -418,7 +418,7 @@ ARM GAS  C:\Users\11410\AppData\Local\Temp\ccjf4LnK.s 			page 1
  358 0008 1546     		mov	r5, r2
   48:Core/Src/kex.c ****   unsigned char buf[3*KYBER_SYMBYTES];
  359              		.loc 1 48 3 is_stmt 1 view .LVU57
-ARM GAS  C:\Users\11410\AppData\Local\Temp\ccjf4LnK.s 			page 8
+ARM GAS  C:\Users\11410\AppData\Local\Temp\ccJ8PrVS.s 			page 8
 
 
   49:Core/Src/kex.c ****   int i;
@@ -478,7 +478,7 @@ ARM GAS  C:\Users\11410\AppData\Local\Temp\ccjf4LnK.s 			page 1
  405              		.loc 1 54 3 is_stmt 0 view .LVU75
  406 003a CDE90223 		strd	r2, [sp, #8]
  407 003e 04AB     		add	r3, sp, #16
-ARM GAS  C:\Users\11410\AppData\Local\Temp\ccjf4LnK.s 			page 9
+ARM GAS  C:\Users\11410\AppData\Local\Temp\ccJ8PrVS.s 			page 9
 
 
  408 0040 0093     		str	r3, [sp]
@@ -506,23 +506,23 @@ ARM GAS  C:\Users\11410\AppData\Local\Temp\ccjf4LnK.s 			page 1
  430              		.file 6 "Core/Inc/api.h"
  431              		.file 7 "Core/Inc/fips202.h"
  432              		.file 8 "Core/Inc/kex.h"
-ARM GAS  C:\Users\11410\AppData\Local\Temp\ccjf4LnK.s 			page 10
+ARM GAS  C:\Users\11410\AppData\Local\Temp\ccJ8PrVS.s 			page 10
 
 
 DEFINED SYMBOLS
                             *ABS*:00000000 kex.c
-C:\Users\11410\AppData\Local\Temp\ccjf4LnK.s:18     .text.kyber_uake_initA:00000000 $t
-C:\Users\11410\AppData\Local\Temp\ccjf4LnK.s:26     .text.kyber_uake_initA:00000000 kyber_uake_initA
-C:\Users\11410\AppData\Local\Temp\ccjf4LnK.s:64     .text.kyber_uake_sharedB:00000000 $t
-C:\Users\11410\AppData\Local\Temp\ccjf4LnK.s:71     .text.kyber_uake_sharedB:00000000 kyber_uake_sharedB
-C:\Users\11410\AppData\Local\Temp\ccjf4LnK.s:128    .text.kyber_uake_sharedA:00000000 $t
-C:\Users\11410\AppData\Local\Temp\ccjf4LnK.s:135    .text.kyber_uake_sharedA:00000000 kyber_uake_sharedA
-C:\Users\11410\AppData\Local\Temp\ccjf4LnK.s:215    .text.kyber_ake_initA:00000000 $t
-C:\Users\11410\AppData\Local\Temp\ccjf4LnK.s:222    .text.kyber_ake_initA:00000000 kyber_ake_initA
-C:\Users\11410\AppData\Local\Temp\ccjf4LnK.s:259    .text.kyber_ake_sharedB:00000000 $t
-C:\Users\11410\AppData\Local\Temp\ccjf4LnK.s:266    .text.kyber_ake_sharedB:00000000 kyber_ake_sharedB
-C:\Users\11410\AppData\Local\Temp\ccjf4LnK.s:331    .text.kyber_ake_sharedA:00000000 $t
-C:\Users\11410\AppData\Local\Temp\ccjf4LnK.s:338    .text.kyber_ake_sharedA:00000000 kyber_ake_sharedA
+C:\Users\11410\AppData\Local\Temp\ccJ8PrVS.s:18     .text.kyber_uake_initA:00000000 $t
+C:\Users\11410\AppData\Local\Temp\ccJ8PrVS.s:26     .text.kyber_uake_initA:00000000 kyber_uake_initA
+C:\Users\11410\AppData\Local\Temp\ccJ8PrVS.s:64     .text.kyber_uake_sharedB:00000000 $t
+C:\Users\11410\AppData\Local\Temp\ccJ8PrVS.s:71     .text.kyber_uake_sharedB:00000000 kyber_uake_sharedB
+C:\Users\11410\AppData\Local\Temp\ccJ8PrVS.s:128    .text.kyber_uake_sharedA:00000000 $t
+C:\Users\11410\AppData\Local\Temp\ccJ8PrVS.s:135    .text.kyber_uake_sharedA:00000000 kyber_uake_sharedA
+C:\Users\11410\AppData\Local\Temp\ccJ8PrVS.s:215    .text.kyber_ake_initA:00000000 $t
+C:\Users\11410\AppData\Local\Temp\ccJ8PrVS.s:222    .text.kyber_ake_initA:00000000 kyber_ake_initA
+C:\Users\11410\AppData\Local\Temp\ccJ8PrVS.s:259    .text.kyber_ake_sharedB:00000000 $t
+C:\Users\11410\AppData\Local\Temp\ccJ8PrVS.s:266    .text.kyber_ake_sharedB:00000000 kyber_ake_sharedB
+C:\Users\11410\AppData\Local\Temp\ccJ8PrVS.s:331    .text.kyber_ake_sharedA:00000000 $t
+C:\Users\11410\AppData\Local\Temp\ccJ8PrVS.s:338    .text.kyber_ake_sharedA:00000000 kyber_ake_sharedA
 
 UNDEFINED SYMBOLS
 crypto_kem_keypair

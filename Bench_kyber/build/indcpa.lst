@@ -1,4 +1,4 @@
-ARM GAS  C:\Users\11410\AppData\Local\Temp\ccld8sIB.s 			page 1
+ARM GAS  C:\Users\11410\AppData\Local\Temp\ccjfns7X.s 			page 1
 
 
    1              		.cpu cortex-m4
@@ -58,7 +58,7 @@ ARM GAS  C:\Users\11410\AppData\Local\Temp\ccld8sIB.s 			page 1
   28:Core/Src/indcpa.c **** /*************************************************
   29:Core/Src/indcpa.c **** * Name:        unpack_pk
   30:Core/Src/indcpa.c **** * 
-ARM GAS  C:\Users\11410\AppData\Local\Temp\ccld8sIB.s 			page 2
+ARM GAS  C:\Users\11410\AppData\Local\Temp\ccjfns7X.s 			page 2
 
 
   31:Core/Src/indcpa.c **** * Description: De-serialize and decompress public key from a byte array;
@@ -118,7 +118,7 @@ ARM GAS  C:\Users\11410\AppData\Local\Temp\ccld8sIB.s 			page 1
   85:Core/Src/indcpa.c **** * Arguments:   - unsigned char *r:  pointer to output serialized secret key
   86:Core/Src/indcpa.c **** *              - const polyvec *sk: pointer to input vector of polynomials (secret key)
   87:Core/Src/indcpa.c **** **************************************************/
-ARM GAS  C:\Users\11410\AppData\Local\Temp\ccld8sIB.s 			page 3
+ARM GAS  C:\Users\11410\AppData\Local\Temp\ccjfns7X.s 			page 3
 
 
   88:Core/Src/indcpa.c **** static void pack_sk(unsigned char *r, const polyvec *sk)
@@ -178,7 +178,7 @@ ARM GAS  C:\Users\11410\AppData\Local\Temp\ccld8sIB.s 			page 1
   24:Core/Src/indcpa.c ****     r[i+KYBER_POLYVECCOMPRESSEDBYTES] = seed[i];
   76              		.loc 1 24 8 is_stmt 0 view .LVU9
   77 000a 0023     		movs	r3, #0
-ARM GAS  C:\Users\11410\AppData\Local\Temp\ccld8sIB.s 			page 4
+ARM GAS  C:\Users\11410\AppData\Local\Temp\ccjfns7X.s 			page 4
 
 
   78              	.LVL4:
@@ -238,7 +238,7 @@ ARM GAS  C:\Users\11410\AppData\Local\Temp\ccld8sIB.s 			page 1
  121              		.cfi_def_cfa_offset 16
  122              		.cfi_offset 3, -16
  123              		.cfi_offset 4, -12
-ARM GAS  C:\Users\11410\AppData\Local\Temp\ccld8sIB.s 			page 5
+ARM GAS  C:\Users\11410\AppData\Local\Temp\ccjfns7X.s 			page 5
 
 
  124              		.cfi_offset 5, -8
@@ -298,7 +298,7 @@ ARM GAS  C:\Users\11410\AppData\Local\Temp\ccld8sIB.s 			page 1
  164              		.align	1
  165              		.syntax unified
  166              		.thumb
-ARM GAS  C:\Users\11410\AppData\Local\Temp\ccld8sIB.s 			page 6
+ARM GAS  C:\Users\11410\AppData\Local\Temp\ccjfns7X.s 			page 6
 
 
  167              		.thumb_func
@@ -358,7 +358,7 @@ ARM GAS  C:\Users\11410\AppData\Local\Temp\ccld8sIB.s 			page 1
  216 0000 38B5     		push	{r3, r4, r5, lr}
  217              	.LCFI4:
  218              		.cfi_def_cfa_offset 16
-ARM GAS  C:\Users\11410\AppData\Local\Temp\ccld8sIB.s 			page 7
+ARM GAS  C:\Users\11410\AppData\Local\Temp\ccjfns7X.s 			page 7
 
 
  219              		.cfi_offset 3, -16
@@ -418,7 +418,7 @@ ARM GAS  C:\Users\11410\AppData\Local\Temp\ccld8sIB.s 			page 1
  258              	.LCFI5:
  259              		.cfi_def_cfa_offset 8
  260              		.cfi_offset 3, -8
-ARM GAS  C:\Users\11410\AppData\Local\Temp\ccld8sIB.s 			page 8
+ARM GAS  C:\Users\11410\AppData\Local\Temp\ccjfns7X.s 			page 8
 
 
  261              		.cfi_offset 14, -4
@@ -478,7 +478,7 @@ ARM GAS  C:\Users\11410\AppData\Local\Temp\ccld8sIB.s 			page 1
  297              		.cfi_offset 14, -4
  298 0004 C1B0     		sub	sp, sp, #260
  299              	.LCFI7:
-ARM GAS  C:\Users\11410\AppData\Local\Temp\ccld8sIB.s 			page 9
+ARM GAS  C:\Users\11410\AppData\Local\Temp\ccjfns7X.s 			page 9
 
 
  300              		.cfi_def_cfa_offset 296
@@ -538,7 +538,7 @@ ARM GAS  C:\Users\11410\AppData\Local\Temp\ccld8sIB.s 			page 1
  132:Core/Src/indcpa.c ****     extseed[i] = seed[i];
  342              		.loc 1 132 29 discriminator 3 view .LVU76
  343 0026 F5E7     		b	.L20
-ARM GAS  C:\Users\11410\AppData\Local\Temp\ccld8sIB.s 			page 10
+ARM GAS  C:\Users\11410\AppData\Local\Temp\ccjfns7X.s 			page 10
 
 
  344              	.L33:
@@ -598,7 +598,7 @@ ARM GAS  C:\Users\11410\AppData\Local\Temp\ccld8sIB.s 			page 1
  367 003e A823     		movs	r3, #168
  368              	.LVL30:
  369              		.loc 1 163 31 view .LVU87
-ARM GAS  C:\Users\11410\AppData\Local\Temp\ccld8sIB.s 			page 11
+ARM GAS  C:\Users\11410\AppData\Local\Temp\ccjfns7X.s 			page 11
 
 
  370 0040 03FB08F3 		mul	r3, r3, r8
@@ -658,7 +658,7 @@ ARM GAS  C:\Users\11410\AppData\Local\Temp\ccld8sIB.s 			page 1
  410              	.LVL35:
  411              	.L34:
  164:Core/Src/indcpa.c ****         {
-ARM GAS  C:\Users\11410\AppData\Local\Temp\ccld8sIB.s 			page 12
+ARM GAS  C:\Users\11410\AppData\Local\Temp\ccjfns7X.s 			page 12
 
 
  165:Core/Src/indcpa.c ****           nblocks = 1;
@@ -718,7 +718,7 @@ ARM GAS  C:\Users\11410\AppData\Local\Temp\ccld8sIB.s 			page 1
  451              	.L24:
  151:Core/Src/indcpa.c ****       shake128_squeezeblocks(buf,nblocks,state);
  452              		.loc 1 151 7 is_stmt 1 view .LVU120
-ARM GAS  C:\Users\11410\AppData\Local\Temp\ccld8sIB.s 			page 13
+ARM GAS  C:\Users\11410\AppData\Local\Temp\ccjfns7X.s 			page 13
 
 
  453 00a6 07F13005 		add	r5, r7, #48
@@ -778,7 +778,7 @@ ARM GAS  C:\Users\11410\AppData\Local\Temp\ccld8sIB.s 			page 1
  493 00da BD46     		mov	sp, r7
  494              	.LCFI10:
  495              		.cfi_def_cfa_register 13
-ARM GAS  C:\Users\11410\AppData\Local\Temp\ccld8sIB.s 			page 14
+ARM GAS  C:\Users\11410\AppData\Local\Temp\ccjfns7X.s 			page 14
 
 
  496              		@ sp needed
@@ -838,7 +838,7 @@ ARM GAS  C:\Users\11410\AppData\Local\Temp\ccld8sIB.s 			page 1
  188:Core/Src/indcpa.c ****   unsigned char buf[KYBER_SYMBYTES+KYBER_SYMBYTES];
  537              		.loc 1 188 3 view .LVU136
  189:Core/Src/indcpa.c ****   unsigned char *publicseed = buf;
-ARM GAS  C:\Users\11410\AppData\Local\Temp\ccld8sIB.s 			page 15
+ARM GAS  C:\Users\11410\AppData\Local\Temp\ccjfns7X.s 			page 15
 
 
  538              		.loc 1 189 3 view .LVU137
@@ -898,7 +898,7 @@ ARM GAS  C:\Users\11410\AppData\Local\Temp\ccld8sIB.s 			page 1
  192:Core/Src/indcpa.c **** 
  565              		.loc 1 192 17 is_stmt 0 view .LVU146
  566 0030 4FF00009 		mov	r9, #0
-ARM GAS  C:\Users\11410\AppData\Local\Temp\ccld8sIB.s 			page 16
+ARM GAS  C:\Users\11410\AppData\Local\Temp\ccjfns7X.s 			page 16
 
 
  567              		.loc 1 216 8 view .LVU147
@@ -958,14 +958,14 @@ ARM GAS  C:\Users\11410\AppData\Local\Temp\ccld8sIB.s 			page 1
  613 0062 002E     		cmp	r6, #0
  614 0064 01DD     		ble	.L48
  221:Core/Src/indcpa.c ****   {
-ARM GAS  C:\Users\11410\AppData\Local\Temp\ccld8sIB.s 			page 17
+ARM GAS  C:\Users\11410\AppData\Local\Temp\ccjfns7X.s 			page 17
 
 
  222:Core/Src/indcpa.c ****     //printf("%02x\r\n", skpv.vec[i]);
  223:Core/Src/indcpa.c ****     for (j = 0; j < 256; j++) 
  224:Core/Src/indcpa.c ****     {
  225:Core/Src/indcpa.c ****       //printf("%d\r\n", skpv.vec[i].coeffs[j]);
- 226:Core/Src/indcpa.c ****       skpv.vec[i].coeffs[j]=40;
+ 226:Core/Src/indcpa.c ****       skpv.vec[i].coeffs[j]=0;
  227:Core/Src/indcpa.c ****     }
  228:Core/Src/indcpa.c ****   }
  229:Core/Src/indcpa.c **** 
@@ -992,7 +992,7 @@ ARM GAS  C:\Users\11410\AppData\Local\Temp\ccld8sIB.s 			page 1
  628              		.loc 1 226 28 is_stmt 0 discriminator 3 view .LVU168
  629 0070 03EB0624 		add	r4, r3, r6, lsl #8
  630 0074 10AA     		add	r2, sp, #64
- 631 0076 2825     		movs	r5, #40
+ 631 0076 0025     		movs	r5, #0
  632 0078 22F81450 		strh	r5, [r2, r4, lsl #1]	@ movhi
  223:Core/Src/indcpa.c ****     {
  633              		.loc 1 223 26 is_stmt 1 discriminator 3 view .LVU169
@@ -1018,7 +1018,7 @@ ARM GAS  C:\Users\11410\AppData\Local\Temp\ccld8sIB.s 			page 1
  232:Core/Src/indcpa.c ****     poly_getnoise(e.vec+i,noiseseed,nonce++);
  648              		.loc 1 232 5 is_stmt 1 discriminator 3 view .LVU175
  649 0084 09F10105 		add	r5, r9, #1
-ARM GAS  C:\Users\11410\AppData\Local\Temp\ccld8sIB.s 			page 18
+ARM GAS  C:\Users\11410\AppData\Local\Temp\ccjfns7X.s 			page 18
 
 
  650 0088 EDB2     		uxtb	r5, r5
@@ -1078,7 +1078,7 @@ ARM GAS  C:\Users\11410\AppData\Local\Temp\ccld8sIB.s 			page 1
  233:Core/Src/indcpa.c ****   for(i=0;i<KYBER_K;i++)
  696              		.loc 1 233 11 is_stmt 1 discriminator 1 view .LVU190
  233:Core/Src/indcpa.c ****   for(i=0;i<KYBER_K;i++)
-ARM GAS  C:\Users\11410\AppData\Local\Temp\ccld8sIB.s 			page 19
+ARM GAS  C:\Users\11410\AppData\Local\Temp\ccjfns7X.s 			page 19
 
 
  697              		.loc 1 233 3 is_stmt 0 discriminator 1 view .LVU191
@@ -1138,7 +1138,7 @@ ARM GAS  C:\Users\11410\AppData\Local\Temp\ccld8sIB.s 			page 1
  243:Core/Src/indcpa.c **** 
  244:Core/Src/indcpa.c **** /*************************************************
  245:Core/Src/indcpa.c **** * Name:        indcpa_enc
-ARM GAS  C:\Users\11410\AppData\Local\Temp\ccld8sIB.s 			page 20
+ARM GAS  C:\Users\11410\AppData\Local\Temp\ccjfns7X.s 			page 20
 
 
  246:Core/Src/indcpa.c **** * 
@@ -1198,7 +1198,7 @@ ARM GAS  C:\Users\11410\AppData\Local\Temp\ccld8sIB.s 			page 1
  776              	.LVL80:
  777              		.loc 1 268 3 is_stmt 0 view .LVU207
  778 0012 0DF51050 		add	r0, sp, #9216
-ARM GAS  C:\Users\11410\AppData\Local\Temp\ccld8sIB.s 			page 21
+ARM GAS  C:\Users\11410\AppData\Local\Temp\ccjfns7X.s 			page 21
 
 
  779              	.LVL81:
@@ -1258,7 +1258,7 @@ ARM GAS  C:\Users\11410\AppData\Local\Temp\ccld8sIB.s 			page 1
  275:Core/Src/indcpa.c ****     poly_getnoise(sp.vec+i,coins,nonce++);
  823              		.loc 1 275 22 is_stmt 0 discriminator 3 view .LVU219
  824 0056 0135     		adds	r5, r5, #1
-ARM GAS  C:\Users\11410\AppData\Local\Temp\ccld8sIB.s 			page 22
+ARM GAS  C:\Users\11410\AppData\Local\Temp\ccjfns7X.s 			page 22
 
 
  825              	.LVL90:
@@ -1318,7 +1318,7 @@ ARM GAS  C:\Users\11410\AppData\Local\Temp\ccld8sIB.s 			page 1
  281:Core/Src/indcpa.c **** /*********************************************************/
  282:Core/Src/indcpa.c ****   // matrix-vector multiplication
  283:Core/Src/indcpa.c ****   for(i=0;i<KYBER_K;i++)
-ARM GAS  C:\Users\11410\AppData\Local\Temp\ccld8sIB.s 			page 23
+ARM GAS  C:\Users\11410\AppData\Local\Temp\ccjfns7X.s 			page 23
 
 
  869              		.loc 1 283 8 view .LVU234
@@ -1378,7 +1378,7 @@ ARM GAS  C:\Users\11410\AppData\Local\Temp\ccld8sIB.s 			page 1
  914              	.LVL104:
  289:Core/Src/indcpa.c ****   poly_invntt(&v);
  915              		.loc 1 289 3 view .LVU246
-ARM GAS  C:\Users\11410\AppData\Local\Temp\ccld8sIB.s 			page 24
+ARM GAS  C:\Users\11410\AppData\Local\Temp\ccjfns7X.s 			page 24
 
 
  916 00da 0DF58460 		add	r0, sp, #1056
@@ -1438,7 +1438,7 @@ ARM GAS  C:\Users\11410\AppData\Local\Temp\ccld8sIB.s 			page 1
  296:Core/Src/indcpa.c **** 
  297:Core/Src/indcpa.c **** /*************************************************
  298:Core/Src/indcpa.c **** * Name:        indcpa_dec
-ARM GAS  C:\Users\11410\AppData\Local\Temp\ccld8sIB.s 			page 25
+ARM GAS  C:\Users\11410\AppData\Local\Temp\ccjfns7X.s 			page 25
 
 
  299:Core/Src/indcpa.c **** * 
@@ -1498,7 +1498,7 @@ ARM GAS  C:\Users\11410\AppData\Local\Temp\ccld8sIB.s 			page 1
  1003              	.LVL115:
  316:Core/Src/indcpa.c **** /*********************************************************/
  317:Core/Src/indcpa.c ****   polyvec_ntt(&bp);
-ARM GAS  C:\Users\11410\AppData\Local\Temp\ccld8sIB.s 			page 26
+ARM GAS  C:\Users\11410\AppData\Local\Temp\ccjfns7X.s 			page 26
 
 
  1004              		.loc 1 317 3 view .LVU263
@@ -1556,31 +1556,31 @@ ARM GAS  C:\Users\11410\AppData\Local\Temp\ccld8sIB.s 			page 1
  1050              		.file 10 "Core/Inc/randombytes.h"
  1051              		.file 11 "Core/Inc/fips202.h"
  1052              		.file 12 "<built-in>"
-ARM GAS  C:\Users\11410\AppData\Local\Temp\ccld8sIB.s 			page 27
+ARM GAS  C:\Users\11410\AppData\Local\Temp\ccjfns7X.s 			page 27
 
 
 DEFINED SYMBOLS
                             *ABS*:00000000 indcpa.c
-C:\Users\11410\AppData\Local\Temp\ccld8sIB.s:18     .text.pack_sk:00000000 $t
-C:\Users\11410\AppData\Local\Temp\ccld8sIB.s:25     .text.pack_sk:00000000 pack_sk
-C:\Users\11410\AppData\Local\Temp\ccld8sIB.s:48     .text.pack_pk:00000000 $t
-C:\Users\11410\AppData\Local\Temp\ccld8sIB.s:54     .text.pack_pk:00000000 pack_pk
-C:\Users\11410\AppData\Local\Temp\ccld8sIB.s:105    .text.unpack_pk:00000000 $t
-C:\Users\11410\AppData\Local\Temp\ccld8sIB.s:111    .text.unpack_pk:00000000 unpack_pk
-C:\Users\11410\AppData\Local\Temp\ccld8sIB.s:164    .text.pack_ciphertext:00000000 $t
-C:\Users\11410\AppData\Local\Temp\ccld8sIB.s:170    .text.pack_ciphertext:00000000 pack_ciphertext
-C:\Users\11410\AppData\Local\Temp\ccld8sIB.s:202    .text.unpack_ciphertext:00000000 $t
-C:\Users\11410\AppData\Local\Temp\ccld8sIB.s:208    .text.unpack_ciphertext:00000000 unpack_ciphertext
-C:\Users\11410\AppData\Local\Temp\ccld8sIB.s:243    .text.unpack_sk:00000000 $t
-C:\Users\11410\AppData\Local\Temp\ccld8sIB.s:249    .text.unpack_sk:00000000 unpack_sk
-C:\Users\11410\AppData\Local\Temp\ccld8sIB.s:271    .text.gen_matrix:00000000 $t
-C:\Users\11410\AppData\Local\Temp\ccld8sIB.s:278    .text.gen_matrix:00000000 gen_matrix
-C:\Users\11410\AppData\Local\Temp\ccld8sIB.s:503    .text.indcpa_keypair:00000000 $t
-C:\Users\11410\AppData\Local\Temp\ccld8sIB.s:510    .text.indcpa_keypair:00000000 indcpa_keypair
-C:\Users\11410\AppData\Local\Temp\ccld8sIB.s:735    .text.indcpa_enc:00000000 $t
-C:\Users\11410\AppData\Local\Temp\ccld8sIB.s:742    .text.indcpa_enc:00000000 indcpa_enc
-C:\Users\11410\AppData\Local\Temp\ccld8sIB.s:956    .text.indcpa_dec:00000000 $t
-C:\Users\11410\AppData\Local\Temp\ccld8sIB.s:963    .text.indcpa_dec:00000000 indcpa_dec
+C:\Users\11410\AppData\Local\Temp\ccjfns7X.s:18     .text.pack_sk:00000000 $t
+C:\Users\11410\AppData\Local\Temp\ccjfns7X.s:25     .text.pack_sk:00000000 pack_sk
+C:\Users\11410\AppData\Local\Temp\ccjfns7X.s:48     .text.pack_pk:00000000 $t
+C:\Users\11410\AppData\Local\Temp\ccjfns7X.s:54     .text.pack_pk:00000000 pack_pk
+C:\Users\11410\AppData\Local\Temp\ccjfns7X.s:105    .text.unpack_pk:00000000 $t
+C:\Users\11410\AppData\Local\Temp\ccjfns7X.s:111    .text.unpack_pk:00000000 unpack_pk
+C:\Users\11410\AppData\Local\Temp\ccjfns7X.s:164    .text.pack_ciphertext:00000000 $t
+C:\Users\11410\AppData\Local\Temp\ccjfns7X.s:170    .text.pack_ciphertext:00000000 pack_ciphertext
+C:\Users\11410\AppData\Local\Temp\ccjfns7X.s:202    .text.unpack_ciphertext:00000000 $t
+C:\Users\11410\AppData\Local\Temp\ccjfns7X.s:208    .text.unpack_ciphertext:00000000 unpack_ciphertext
+C:\Users\11410\AppData\Local\Temp\ccjfns7X.s:243    .text.unpack_sk:00000000 $t
+C:\Users\11410\AppData\Local\Temp\ccjfns7X.s:249    .text.unpack_sk:00000000 unpack_sk
+C:\Users\11410\AppData\Local\Temp\ccjfns7X.s:271    .text.gen_matrix:00000000 $t
+C:\Users\11410\AppData\Local\Temp\ccjfns7X.s:278    .text.gen_matrix:00000000 gen_matrix
+C:\Users\11410\AppData\Local\Temp\ccjfns7X.s:503    .text.indcpa_keypair:00000000 $t
+C:\Users\11410\AppData\Local\Temp\ccjfns7X.s:510    .text.indcpa_keypair:00000000 indcpa_keypair
+C:\Users\11410\AppData\Local\Temp\ccjfns7X.s:735    .text.indcpa_enc:00000000 $t
+C:\Users\11410\AppData\Local\Temp\ccjfns7X.s:742    .text.indcpa_enc:00000000 indcpa_enc
+C:\Users\11410\AppData\Local\Temp\ccjfns7X.s:956    .text.indcpa_dec:00000000 $t
+C:\Users\11410\AppData\Local\Temp\ccjfns7X.s:963    .text.indcpa_dec:00000000 indcpa_dec
 
 UNDEFINED SYMBOLS
 polyvec_tobytes

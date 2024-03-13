@@ -1,4 +1,4 @@
-ARM GAS  C:\Users\11410\AppData\Local\Temp\ccemZjld.s 			page 1
+ARM GAS  C:\Users\11410\AppData\Local\Temp\ccEN7EhN.s 			page 1
 
 
    1              		.cpu cortex-m4
@@ -27,7 +27,7 @@ ARM GAS  C:\Users\11410\AppData\Local\Temp\ccemZjld.s 			page 1
   24              		.fpu fpv4-sp-d16
   26              	crypto_kem_keypair:
   27              	.LVL0:
-  28              	.LFB3:
+  28              	.LFB133:
   29              		.file 1 "Core/Src/kem.c"
    1:Core/Src/kem.c **** #include "api.h"
    2:Core/Src/kem.c **** #include "randombytes.h"
@@ -36,707 +36,515 @@ ARM GAS  C:\Users\11410\AppData\Local\Temp\ccemZjld.s 			page 1
    5:Core/Src/kem.c **** #include "verify.h"
    6:Core/Src/kem.c **** #include "indcpa.h"
    7:Core/Src/kem.c **** 
-   8:Core/Src/kem.c **** /*************************************************
-   9:Core/Src/kem.c **** * Name:        crypto_kem_keypair
-  10:Core/Src/kem.c **** *
-  11:Core/Src/kem.c **** * Description: Generates public and private key
-  12:Core/Src/kem.c **** *              for CCA-secure Kyber key encapsulation mechanism
-  13:Core/Src/kem.c **** *
-  14:Core/Src/kem.c **** * Arguments:   - unsigned char *pk: pointer to output public key (an already allocated array of CRY
-  15:Core/Src/kem.c **** *              - unsigned char *sk: pointer to output private key (an already allocated array of CR
-  16:Core/Src/kem.c **** *
-  17:Core/Src/kem.c **** * Returns 0 (success)
-  18:Core/Src/kem.c **** **************************************************/
-  19:Core/Src/kem.c **** int crypto_kem_keypair(unsigned char *pk, unsigned char *sk)
-  20:Core/Src/kem.c **** {
-  30              		.loc 1 20 1 view -0
+   8:Core/Src/kem.c **** #include "gpio.h"
+   9:Core/Src/kem.c **** /*************************************************
+  10:Core/Src/kem.c **** * Name:        crypto_kem_keypair
+  11:Core/Src/kem.c **** *
+  12:Core/Src/kem.c **** * Description: Generates public and private key
+  13:Core/Src/kem.c **** *              for CCA-secure Kyber key encapsulation mechanism
+  14:Core/Src/kem.c **** *
+  15:Core/Src/kem.c **** * Arguments:   - unsigned char *pk: pointer to output public key (an already allocated array of CRY
+  16:Core/Src/kem.c **** *              - unsigned char *sk: pointer to output private key (an already allocated array of CR
+  17:Core/Src/kem.c **** *
+  18:Core/Src/kem.c **** * Returns 0 (success)
+  19:Core/Src/kem.c **** **************************************************/
+  20:Core/Src/kem.c **** int crypto_kem_keypair(unsigned char *pk, unsigned char *sk)
+  21:Core/Src/kem.c **** {
+  30              		.loc 1 21 1 view -0
   31              		.cfi_startproc
   32              		@ args = 0, pretend = 0, frame = 0
   33              		@ frame_needed = 0, uses_anonymous_args = 0
-  34              		.loc 1 20 1 is_stmt 0 view .LVU1
+  34              		.loc 1 21 1 is_stmt 0 view .LVU1
   35 0000 70B5     		push	{r4, r5, r6, lr}
   36              	.LCFI0:
   37              		.cfi_def_cfa_offset 16
+ARM GAS  C:\Users\11410\AppData\Local\Temp\ccEN7EhN.s 			page 2
+
+
   38              		.cfi_offset 4, -16
-ARM GAS  C:\Users\11410\AppData\Local\Temp\ccemZjld.s 			page 2
-
-
   39              		.cfi_offset 5, -12
   40              		.cfi_offset 6, -8
   41              		.cfi_offset 14, -4
   42 0002 0646     		mov	r6, r0
   43 0004 0D46     		mov	r5, r1
-  21:Core/Src/kem.c ****   size_t i;
-  44              		.loc 1 21 3 is_stmt 1 view .LVU2
-  22:Core/Src/kem.c **** /*********************************************************/
-  23:Core/Src/kem.c ****   indcpa_keypair(pk, sk);
-  45              		.loc 1 23 3 view .LVU3
+  22:Core/Src/kem.c ****   size_t i;
+  44              		.loc 1 22 3 is_stmt 1 view .LVU2
+  23:Core/Src/kem.c **** /*********************************************************/
+  24:Core/Src/kem.c ****   indcpa_keypair(pk, sk);
+  45              		.loc 1 24 3 view .LVU3
   46 0006 FFF7FEFF 		bl	indcpa_keypair
   47              	.LVL1:
-  24:Core/Src/kem.c **** /*********************************************************/
-  25:Core/Src/kem.c ****   for(i=0;i<KYBER_INDCPA_PUBLICKEYBYTES;i++)
-  48              		.loc 1 25 3 view .LVU4
-  49              		.loc 1 25 8 is_stmt 0 view .LVU5
+  25:Core/Src/kem.c **** /*********************************************************/
+  26:Core/Src/kem.c ****   for(i=0;i<KYBER_INDCPA_PUBLICKEYBYTES;i++)
+  48              		.loc 1 26 3 view .LVU4
+  49              		.loc 1 26 8 is_stmt 0 view .LVU5
   50 000a 0023     		movs	r3, #0
   51              	.LVL2:
   52              	.L2:
-  53              		.loc 1 25 11 is_stmt 1 discriminator 1 view .LVU6
-  54              		.loc 1 25 3 is_stmt 0 discriminator 1 view .LVU7
+  53              		.loc 1 26 11 is_stmt 1 discriminator 1 view .LVU6
+  54              		.loc 1 26 3 is_stmt 0 discriminator 1 view .LVU7
   55 000c B3F5886F 		cmp	r3, #1088
   56 0010 05D2     		bcs	.L5
-  26:Core/Src/kem.c ****     sk[i+KYBER_INDCPA_SECRETKEYBYTES] = pk[i];
-  57              		.loc 1 26 5 is_stmt 1 discriminator 3 view .LVU8
-  58              		.loc 1 26 7 is_stmt 0 discriminator 3 view .LVU9
+  27:Core/Src/kem.c ****     sk[i+KYBER_INDCPA_SECRETKEYBYTES] = pk[i];
+  57              		.loc 1 27 5 is_stmt 1 discriminator 3 view .LVU8
+  58              		.loc 1 27 7 is_stmt 0 discriminator 3 view .LVU9
   59 0012 03F59C62 		add	r2, r3, #1248
-  60              		.loc 1 26 43 discriminator 3 view .LVU10
+  60              		.loc 1 27 43 discriminator 3 view .LVU10
   61 0016 F45C     		ldrb	r4, [r6, r3]	@ zero_extendqisi2
-  62              		.loc 1 26 39 discriminator 3 view .LVU11
+  62              		.loc 1 27 39 discriminator 3 view .LVU11
   63 0018 AC54     		strb	r4, [r5, r2]
-  25:Core/Src/kem.c ****     sk[i+KYBER_INDCPA_SECRETKEYBYTES] = pk[i];
-  64              		.loc 1 25 41 is_stmt 1 discriminator 3 view .LVU12
-  25:Core/Src/kem.c ****     sk[i+KYBER_INDCPA_SECRETKEYBYTES] = pk[i];
-  65              		.loc 1 25 42 is_stmt 0 discriminator 3 view .LVU13
+  26:Core/Src/kem.c ****     sk[i+KYBER_INDCPA_SECRETKEYBYTES] = pk[i];
+  64              		.loc 1 26 41 is_stmt 1 discriminator 3 view .LVU12
+  26:Core/Src/kem.c ****     sk[i+KYBER_INDCPA_SECRETKEYBYTES] = pk[i];
+  65              		.loc 1 26 42 is_stmt 0 discriminator 3 view .LVU13
   66 001a 0133     		adds	r3, r3, #1
   67              	.LVL3:
-  25:Core/Src/kem.c ****     sk[i+KYBER_INDCPA_SECRETKEYBYTES] = pk[i];
-  68              		.loc 1 25 42 discriminator 3 view .LVU14
+  26:Core/Src/kem.c ****     sk[i+KYBER_INDCPA_SECRETKEYBYTES] = pk[i];
+  68              		.loc 1 26 42 discriminator 3 view .LVU14
   69 001c F6E7     		b	.L2
   70              	.L5:
-  27:Core/Src/kem.c ****   sha3_256(sk+KYBER_SECRETKEYBYTES-2*KYBER_SYMBYTES,pk,KYBER_PUBLICKEYBYTES);
-  71              		.loc 1 27 3 is_stmt 1 view .LVU15
+  28:Core/Src/kem.c ****   sha3_256(sk+KYBER_SECRETKEYBYTES-2*KYBER_SYMBYTES,pk,KYBER_PUBLICKEYBYTES);
+  71              		.loc 1 28 3 is_stmt 1 view .LVU15
   72 001e 4FF48862 		mov	r2, #1088
   73 0022 0023     		movs	r3, #0
   74              	.LVL4:
-  75              		.loc 1 27 3 is_stmt 0 view .LVU16
+  75              		.loc 1 28 3 is_stmt 0 view .LVU16
   76 0024 3146     		mov	r1, r6
   77 0026 05F51260 		add	r0, r5, #2336
   78 002a FFF7FEFF 		bl	sha3_256
   79              	.LVL5:
-  28:Core/Src/kem.c ****   randombytes(sk+KYBER_SECRETKEYBYTES-KYBER_SYMBYTES,KYBER_SYMBYTES);         /* Value z for pseudo
-  80              		.loc 1 28 3 is_stmt 1 view .LVU17
+  29:Core/Src/kem.c ****   randombytes(sk+KYBER_SECRETKEYBYTES-KYBER_SYMBYTES,KYBER_SYMBYTES);         /* Value z for pseudo
+  80              		.loc 1 29 3 is_stmt 1 view .LVU17
   81 002e 2022     		movs	r2, #32
   82 0030 0023     		movs	r3, #0
   83 0032 05F51460 		add	r0, r5, #2368
+ARM GAS  C:\Users\11410\AppData\Local\Temp\ccEN7EhN.s 			page 3
+
+
   84 0036 FFF7FEFF 		bl	randombytes
-ARM GAS  C:\Users\11410\AppData\Local\Temp\ccemZjld.s 			page 3
-
-
   85              	.LVL6:
-  29:Core/Src/kem.c **** /*********************************************************/
-  30:Core/Src/kem.c ****   return 0;
-  86              		.loc 1 30 3 view .LVU18
-  31:Core/Src/kem.c **** }
-  87              		.loc 1 31 1 is_stmt 0 view .LVU19
+  30:Core/Src/kem.c **** /*********************************************************/
+  31:Core/Src/kem.c ****   return 0;
+  86              		.loc 1 31 3 view .LVU18
+  32:Core/Src/kem.c **** }
+  87              		.loc 1 32 1 is_stmt 0 view .LVU19
   88 003a 0020     		movs	r0, #0
   89 003c 70BD     		pop	{r4, r5, r6, pc}
-  90              		.loc 1 31 1 view .LVU20
+  90              		.loc 1 32 1 view .LVU20
   91              		.cfi_endproc
-  92              	.LFE3:
-  94              		.section	.rodata.crypto_kem_enc.str1.4,"aMS",%progbits,1
-  95              		.align	2
-  96              	.LC0:
-  97 0000 70743A20 		.ascii	"pt: \000"
-  97      00
-  98 0005 000000   		.align	2
-  99              	.LC1:
- 100 0008 25303278 		.ascii	"%02x\000"
- 100      00
- 101 000d 000000   		.align	2
- 102              	.LC2:
- 103 0010 70703A20 		.ascii	"pp: \000"
- 103      00
- 104 0015 000000   		.align	2
- 105              	.LC3:
- 106 0018 63743A20 		.ascii	"ct: \000"
- 106      00
- 107              		.section	.text.crypto_kem_enc,"ax",%progbits
- 108              		.align	1
- 109              		.global	crypto_kem_enc
- 110              		.syntax unified
- 111              		.thumb
- 112              		.thumb_func
- 113              		.fpu fpv4-sp-d16
- 115              	crypto_kem_enc:
- 116              	.LVL7:
- 117              	.LFB4:
-  32:Core/Src/kem.c **** 
-  33:Core/Src/kem.c **** /*************************************************
-  34:Core/Src/kem.c **** * Name:        crypto_kem_enc
-  35:Core/Src/kem.c **** *
-  36:Core/Src/kem.c **** * Description: Generates cipher text and shared
-  37:Core/Src/kem.c **** *              secret for given public key
-  38:Core/Src/kem.c **** *
-  39:Core/Src/kem.c **** * Arguments:   - unsigned char *ct:       pointer to output cipher text (an already allocated array
-  40:Core/Src/kem.c **** *              - unsigned char *ss:       pointer to output shared secret (an already allocated arr
-  41:Core/Src/kem.c **** *              - const unsigned char *pk: pointer to input public key (an already allocated array o
-  42:Core/Src/kem.c **** *
-  43:Core/Src/kem.c **** * Returns 0 (success)
-  44:Core/Src/kem.c **** **************************************************/
-  45:Core/Src/kem.c **** int crypto_kem_enc(unsigned char *ct, unsigned char *ss, const unsigned char *pk)
-  46:Core/Src/kem.c **** {
- 118              		.loc 1 46 1 is_stmt 1 view -0
- 119              		.cfi_startproc
- 120              		@ args = 0, pretend = 0, frame = 128
- 121              		@ frame_needed = 0, uses_anonymous_args = 0
-ARM GAS  C:\Users\11410\AppData\Local\Temp\ccemZjld.s 			page 4
+  92              	.LFE133:
+  94              		.section	.text.crypto_kem_enc,"ax",%progbits
+  95              		.align	1
+  96              		.global	crypto_kem_enc
+  97              		.syntax unified
+  98              		.thumb
+  99              		.thumb_func
+ 100              		.fpu fpv4-sp-d16
+ 102              	crypto_kem_enc:
+ 103              	.LVL7:
+ 104              	.LFB134:
+  33:Core/Src/kem.c **** 
+  34:Core/Src/kem.c **** /*************************************************
+  35:Core/Src/kem.c **** * Name:        crypto_kem_enc
+  36:Core/Src/kem.c **** *
+  37:Core/Src/kem.c **** * Description: Generates cipher text and shared
+  38:Core/Src/kem.c **** *              secret for given public key
+  39:Core/Src/kem.c **** *
+  40:Core/Src/kem.c **** * Arguments:   - unsigned char *ct:       pointer to output cipher text (an already allocated array
+  41:Core/Src/kem.c **** *              - unsigned char *ss:       pointer to output shared secret (an already allocated arr
+  42:Core/Src/kem.c **** *              - const unsigned char *pk: pointer to input public key (an already allocated array o
+  43:Core/Src/kem.c **** *
+  44:Core/Src/kem.c **** * Returns 0 (success)
+  45:Core/Src/kem.c **** **************************************************/
+  46:Core/Src/kem.c **** int crypto_kem_enc(unsigned char *ct, unsigned char *ss, const unsigned char *pk)
+  47:Core/Src/kem.c **** {
+ 105              		.loc 1 47 1 is_stmt 1 view -0
+ 106              		.cfi_startproc
+ 107              		@ args = 0, pretend = 0, frame = 128
+ 108              		@ frame_needed = 0, uses_anonymous_args = 0
+ 109              		.loc 1 47 1 is_stmt 0 view .LVU22
+ 110 0000 70B5     		push	{r4, r5, r6, lr}
+ 111              	.LCFI1:
+ 112              		.cfi_def_cfa_offset 16
+ 113              		.cfi_offset 4, -16
+ 114              		.cfi_offset 5, -12
+ 115              		.cfi_offset 6, -8
+ 116              		.cfi_offset 14, -4
+ 117 0002 A0B0     		sub	sp, sp, #128
+ 118              	.LCFI2:
+ 119              		.cfi_def_cfa_offset 144
+ 120 0004 0446     		mov	r4, r0
+ 121 0006 0E46     		mov	r6, r1
+ 122 0008 1546     		mov	r5, r2
+  48:Core/Src/kem.c ****   int i;
+ 123              		.loc 1 48 3 is_stmt 1 view .LVU23
+ARM GAS  C:\Users\11410\AppData\Local\Temp\ccEN7EhN.s 			page 4
 
 
- 122              		.loc 1 46 1 is_stmt 0 view .LVU22
- 123 0000 F0B5     		push	{r4, r5, r6, r7, lr}
- 124              	.LCFI1:
- 125              		.cfi_def_cfa_offset 20
- 126              		.cfi_offset 4, -20
- 127              		.cfi_offset 5, -16
- 128              		.cfi_offset 6, -12
- 129              		.cfi_offset 7, -8
- 130              		.cfi_offset 14, -4
- 131 0002 A1B0     		sub	sp, sp, #132
- 132              	.LCFI2:
- 133              		.cfi_def_cfa_offset 152
- 134 0004 0546     		mov	r5, r0
- 135 0006 0F46     		mov	r7, r1
- 136 0008 1646     		mov	r6, r2
-  47:Core/Src/kem.c ****   int i;
- 137              		.loc 1 47 3 is_stmt 1 view .LVU23
-  48:Core/Src/kem.c **** 
-  49:Core/Src/kem.c ****   unsigned char  kr[2*KYBER_SYMBYTES];                                        /* Will contain key, 
- 138              		.loc 1 49 3 view .LVU24
-  50:Core/Src/kem.c ****   unsigned char buf[2*KYBER_SYMBYTES];                          
- 139              		.loc 1 50 3 view .LVU25
-  51:Core/Src/kem.c **** 
-  52:Core/Src/kem.c ****   randombytes(buf, KYBER_SYMBYTES);
- 140              		.loc 1 52 3 view .LVU26
- 141 000a 2022     		movs	r2, #32
- 142              	.LVL8:
- 143              		.loc 1 52 3 is_stmt 0 view .LVU27
- 144 000c 0023     		movs	r3, #0
- 145 000e 6846     		mov	r0, sp
- 146              	.LVL9:
- 147              		.loc 1 52 3 view .LVU28
- 148 0010 FFF7FEFF 		bl	randombytes
- 149              	.LVL10:
-  53:Core/Src/kem.c **** 
-  54:Core/Src/kem.c ****   sha3_256(buf,buf,KYBER_SYMBYTES);                                           /* Don't release syst
- 150              		.loc 1 54 3 is_stmt 1 view .LVU29
- 151 0014 2022     		movs	r2, #32
- 152 0016 0023     		movs	r3, #0
- 153 0018 6946     		mov	r1, sp
- 154 001a 6846     		mov	r0, sp
- 155 001c FFF7FEFF 		bl	sha3_256
- 156              	.LVL11:
-  55:Core/Src/kem.c **** 
-  56:Core/Src/kem.c ****   sha3_256(buf+KYBER_SYMBYTES, pk, KYBER_PUBLICKEYBYTES);                     /* Multitarget counte
- 157              		.loc 1 56 3 view .LVU30
- 158 0020 4FF48862 		mov	r2, #1088
- 159 0024 0023     		movs	r3, #0
- 160 0026 3146     		mov	r1, r6
- 161 0028 08A8     		add	r0, sp, #32
- 162 002a FFF7FEFF 		bl	sha3_256
- 163              	.LVL12:
-  57:Core/Src/kem.c ****   sha3_512(kr, buf, 2*KYBER_SYMBYTES);
- 164              		.loc 1 57 3 view .LVU31
- 165 002e 4022     		movs	r2, #64
- 166 0030 0023     		movs	r3, #0
- 167 0032 6946     		mov	r1, sp
-ARM GAS  C:\Users\11410\AppData\Local\Temp\ccemZjld.s 			page 5
+  49:Core/Src/kem.c **** 
+  50:Core/Src/kem.c ****   unsigned char  kr[2*KYBER_SYMBYTES];                                        /* Will contain key, 
+ 124              		.loc 1 50 3 view .LVU24
+  51:Core/Src/kem.c ****   unsigned char buf[2*KYBER_SYMBYTES];                          
+ 125              		.loc 1 51 3 view .LVU25
+  52:Core/Src/kem.c **** 
+  53:Core/Src/kem.c ****   randombytes(buf, KYBER_SYMBYTES);
+ 126              		.loc 1 53 3 view .LVU26
+ 127 000a 2022     		movs	r2, #32
+ 128              	.LVL8:
+ 129              		.loc 1 53 3 is_stmt 0 view .LVU27
+ 130 000c 0023     		movs	r3, #0
+ 131 000e 6846     		mov	r0, sp
+ 132              	.LVL9:
+ 133              		.loc 1 53 3 view .LVU28
+ 134 0010 FFF7FEFF 		bl	randombytes
+ 135              	.LVL10:
+  54:Core/Src/kem.c **** 
+  55:Core/Src/kem.c ****   sha3_256(buf,buf,KYBER_SYMBYTES);                                           /* Don't release syst
+ 136              		.loc 1 55 3 is_stmt 1 view .LVU29
+ 137 0014 2022     		movs	r2, #32
+ 138 0016 0023     		movs	r3, #0
+ 139 0018 6946     		mov	r1, sp
+ 140 001a 6846     		mov	r0, sp
+ 141 001c FFF7FEFF 		bl	sha3_256
+ 142              	.LVL11:
+  56:Core/Src/kem.c **** 
+  57:Core/Src/kem.c ****   sha3_256(buf+KYBER_SYMBYTES, pk, KYBER_PUBLICKEYBYTES);                     /* Multitarget counte
+ 143              		.loc 1 57 3 view .LVU30
+ 144 0020 4FF48862 		mov	r2, #1088
+ 145 0024 0023     		movs	r3, #0
+ 146 0026 2946     		mov	r1, r5
+ 147 0028 08A8     		add	r0, sp, #32
+ 148 002a FFF7FEFF 		bl	sha3_256
+ 149              	.LVL12:
+  58:Core/Src/kem.c ****   sha3_512(kr, buf, 2*KYBER_SYMBYTES);
+ 150              		.loc 1 58 3 view .LVU31
+ 151 002e 4022     		movs	r2, #64
+ 152 0030 0023     		movs	r3, #0
+ 153 0032 6946     		mov	r1, sp
+ 154 0034 10A8     		add	r0, sp, #64
+ 155 0036 FFF7FEFF 		bl	sha3_512
+ 156              	.LVL13:
+  59:Core/Src/kem.c **** /*********************************************************/
+  60:Core/Src/kem.c ****   // printf("\n");
+  61:Core/Src/kem.c ****   // printf("pt: "); 
+  62:Core/Src/kem.c ****   // for (i = 0; i < 32; i++) {
+  63:Core/Src/kem.c ****   //     //buf[i]=0;
+  64:Core/Src/kem.c ****   //     printf("%02x", buf[i]);
+  65:Core/Src/kem.c ****   // }
+  66:Core/Src/kem.c ****   // printf("\n");
+  67:Core/Src/kem.c ****   // printf("pp: "); 
+  68:Core/Src/kem.c ****   // for (i = 32; i < 64; i++){
+  69:Core/Src/kem.c ****   //   //kr[i]=0;
+  70:Core/Src/kem.c ****   //   printf("%02x", kr[i]);
+  71:Core/Src/kem.c ****   // } 
+  72:Core/Src/kem.c **** /*********************************************************/
+ARM GAS  C:\Users\11410\AppData\Local\Temp\ccEN7EhN.s 			page 5
 
 
- 168 0034 10A8     		add	r0, sp, #64
- 169 0036 FFF7FEFF 		bl	sha3_512
- 170              	.LVL13:
-  58:Core/Src/kem.c **** /*********************************************************/
-  59:Core/Src/kem.c ****   printf("\n");
- 171              		.loc 1 59 3 view .LVU32
- 172 003a 0A20     		movs	r0, #10
- 173 003c FFF7FEFF 		bl	putchar
- 174              	.LVL14:
-  60:Core/Src/kem.c ****   printf("pt: "); 
- 175              		.loc 1 60 3 view .LVU33
- 176 0040 2248     		ldr	r0, .L17
- 177 0042 FFF7FEFF 		bl	printf
- 178              	.LVL15:
-  61:Core/Src/kem.c ****   for (i = 0; i < 32; i++) {
- 179              		.loc 1 61 3 view .LVU34
- 180              		.loc 1 61 10 is_stmt 0 view .LVU35
- 181 0046 0024     		movs	r4, #0
- 182              	.LVL16:
- 183              	.L7:
- 184              		.loc 1 61 15 is_stmt 1 discriminator 1 view .LVU36
- 185              		.loc 1 61 3 is_stmt 0 discriminator 1 view .LVU37
- 186 0048 1F2C     		cmp	r4, #31
- 187 004a 08DC     		bgt	.L14
-  62:Core/Src/kem.c ****       //buf[i]=0;
-  63:Core/Src/kem.c ****       printf("%02x", buf[i]);
- 188              		.loc 1 63 7 is_stmt 1 discriminator 3 view .LVU38
- 189              		.loc 1 63 25 is_stmt 0 discriminator 3 view .LVU39
- 190 004c 20AB     		add	r3, sp, #128
- 191 004e 2344     		add	r3, r3, r4
- 192              		.loc 1 63 7 discriminator 3 view .LVU40
- 193 0050 13F8801C 		ldrb	r1, [r3, #-128]	@ zero_extendqisi2
- 194 0054 1E48     		ldr	r0, .L17+4
- 195 0056 FFF7FEFF 		bl	printf
- 196              	.LVL17:
-  61:Core/Src/kem.c ****   for (i = 0; i < 32; i++) {
- 197              		.loc 1 61 23 is_stmt 1 discriminator 3 view .LVU41
-  61:Core/Src/kem.c ****   for (i = 0; i < 32; i++) {
- 198              		.loc 1 61 24 is_stmt 0 discriminator 3 view .LVU42
- 199 005a 0134     		adds	r4, r4, #1
- 200              	.LVL18:
-  61:Core/Src/kem.c ****   for (i = 0; i < 32; i++) {
- 201              		.loc 1 61 24 discriminator 3 view .LVU43
- 202 005c F4E7     		b	.L7
- 203              	.L14:
-  64:Core/Src/kem.c ****   }
-  65:Core/Src/kem.c ****   printf("\n");
- 204              		.loc 1 65 3 is_stmt 1 view .LVU44
- 205 005e 0A20     		movs	r0, #10
- 206 0060 FFF7FEFF 		bl	putchar
- 207              	.LVL19:
-  66:Core/Src/kem.c ****   printf("pp: "); 
- 208              		.loc 1 66 3 view .LVU45
- 209 0064 1B48     		ldr	r0, .L17+8
- 210 0066 FFF7FEFF 		bl	printf
- 211              	.LVL20:
-  67:Core/Src/kem.c ****   for (i = 32; i < 64; i++){
-ARM GAS  C:\Users\11410\AppData\Local\Temp\ccemZjld.s 			page 6
+  73:Core/Src/kem.c ****   indcpa_enc(ct, buf, pk, kr+KYBER_SYMBYTES);                                 /* coins are in kr+KY
+ 157              		.loc 1 73 3 view .LVU32
+ 158 003a 18AB     		add	r3, sp, #96
+ 159 003c 2A46     		mov	r2, r5
+ 160 003e 6946     		mov	r1, sp
+ 161 0040 2046     		mov	r0, r4
+ 162 0042 FFF7FEFF 		bl	indcpa_enc
+ 163              	.LVL14:
+  74:Core/Src/kem.c **** /*********************************************************/  
+  75:Core/Src/kem.c ****   // printf("\n");
+  76:Core/Src/kem.c ****   // printf("ct: ");        
+  77:Core/Src/kem.c ****   // for (i = 0; i < 32; i++) printf("%02x", ct[i]);
+  78:Core/Src/kem.c **** /*********************************************************/
+  79:Core/Src/kem.c ****   sha3_256(kr+KYBER_SYMBYTES, ct, KYBER_CIPHERTEXTBYTES);                     /* overwrite coins in
+ 164              		.loc 1 79 3 view .LVU33
+ 165 0046 4FF49062 		mov	r2, #1152
+ 166 004a 0023     		movs	r3, #0
+ 167 004c 2146     		mov	r1, r4
+ 168 004e 18A8     		add	r0, sp, #96
+ 169 0050 FFF7FEFF 		bl	sha3_256
+ 170              	.LVL15:
+  80:Core/Src/kem.c ****   sha3_256(ss, kr, 2*KYBER_SYMBYTES);                                         /* hash concatenation
+ 171              		.loc 1 80 3 view .LVU34
+ 172 0054 4022     		movs	r2, #64
+ 173 0056 0023     		movs	r3, #0
+ 174 0058 10A9     		add	r1, sp, #64
+ 175 005a 3046     		mov	r0, r6
+ 176 005c FFF7FEFF 		bl	sha3_256
+ 177              	.LVL16:
+  81:Core/Src/kem.c ****   
+  82:Core/Src/kem.c ****   return 0;
+ 178              		.loc 1 82 3 view .LVU35
+  83:Core/Src/kem.c **** }
+ 179              		.loc 1 83 1 is_stmt 0 view .LVU36
+ 180 0060 0020     		movs	r0, #0
+ 181 0062 20B0     		add	sp, sp, #128
+ 182              	.LCFI3:
+ 183              		.cfi_def_cfa_offset 16
+ 184              		@ sp needed
+ 185 0064 70BD     		pop	{r4, r5, r6, pc}
+ 186              		.loc 1 83 1 view .LVU37
+ 187              		.cfi_endproc
+ 188              	.LFE134:
+ 190              		.section	.text.crypto_kem_dec,"ax",%progbits
+ 191              		.align	1
+ 192              		.global	crypto_kem_dec
+ 193              		.syntax unified
+ 194              		.thumb
+ 195              		.thumb_func
+ 196              		.fpu fpv4-sp-d16
+ 198              	crypto_kem_dec:
+ 199              	.LVL17:
+ 200              	.LFB135:
+  84:Core/Src/kem.c **** 
+  85:Core/Src/kem.c **** /*************************************************
+  86:Core/Src/kem.c **** * Name:        crypto_kem_dec
+  87:Core/Src/kem.c **** *
+ARM GAS  C:\Users\11410\AppData\Local\Temp\ccEN7EhN.s 			page 6
 
 
- 212              		.loc 1 67 3 view .LVU46
- 213              		.loc 1 67 10 is_stmt 0 view .LVU47
- 214 006a 2024     		movs	r4, #32
- 215              	.LVL21:
- 216              	.L9:
- 217              		.loc 1 67 16 is_stmt 1 discriminator 1 view .LVU48
- 218              		.loc 1 67 3 is_stmt 0 discriminator 1 view .LVU49
- 219 006c 3F2C     		cmp	r4, #63
- 220 006e 08DC     		bgt	.L15
-  68:Core/Src/kem.c ****     //kr[i]=0;
-  69:Core/Src/kem.c ****     printf("%02x", kr[i]);
- 221              		.loc 1 69 5 is_stmt 1 discriminator 3 view .LVU50
- 222              		.loc 1 69 22 is_stmt 0 discriminator 3 view .LVU51
- 223 0070 20AB     		add	r3, sp, #128
- 224 0072 2344     		add	r3, r3, r4
- 225              		.loc 1 69 5 discriminator 3 view .LVU52
- 226 0074 13F8401C 		ldrb	r1, [r3, #-64]	@ zero_extendqisi2
- 227 0078 1548     		ldr	r0, .L17+4
- 228 007a FFF7FEFF 		bl	printf
- 229              	.LVL22:
-  67:Core/Src/kem.c ****   for (i = 32; i < 64; i++){
- 230              		.loc 1 67 24 is_stmt 1 discriminator 3 view .LVU53
-  67:Core/Src/kem.c ****   for (i = 32; i < 64; i++){
- 231              		.loc 1 67 25 is_stmt 0 discriminator 3 view .LVU54
- 232 007e 0134     		adds	r4, r4, #1
- 233              	.LVL23:
-  67:Core/Src/kem.c ****   for (i = 32; i < 64; i++){
- 234              		.loc 1 67 25 discriminator 3 view .LVU55
- 235 0080 F4E7     		b	.L9
- 236              	.L15:
-  70:Core/Src/kem.c ****   } 
-  71:Core/Src/kem.c **** /*********************************************************/
-  72:Core/Src/kem.c ****   indcpa_enc(ct, buf, pk, kr+KYBER_SYMBYTES);                                 /* coins are in kr+KY
- 237              		.loc 1 72 3 is_stmt 1 view .LVU56
- 238 0082 18AB     		add	r3, sp, #96
- 239 0084 3246     		mov	r2, r6
- 240 0086 6946     		mov	r1, sp
- 241 0088 2846     		mov	r0, r5
- 242 008a FFF7FEFF 		bl	indcpa_enc
- 243              	.LVL24:
-  73:Core/Src/kem.c **** /*********************************************************/  
-  74:Core/Src/kem.c ****   printf("\n");
- 244              		.loc 1 74 3 view .LVU57
- 245 008e 0A20     		movs	r0, #10
- 246 0090 FFF7FEFF 		bl	putchar
- 247              	.LVL25:
-  75:Core/Src/kem.c ****   printf("ct: ");        
- 248              		.loc 1 75 3 view .LVU58
- 249 0094 1048     		ldr	r0, .L17+12
- 250 0096 FFF7FEFF 		bl	printf
- 251              	.LVL26:
-  76:Core/Src/kem.c ****   for (i = 0; i < 32; i++) printf("%02x", ct[i]);
- 252              		.loc 1 76 3 view .LVU59
- 253              		.loc 1 76 10 is_stmt 0 view .LVU60
- 254 009a 0024     		movs	r4, #0
- 255              	.LVL27:
- 256              	.L11:
-ARM GAS  C:\Users\11410\AppData\Local\Temp\ccemZjld.s 			page 7
+  88:Core/Src/kem.c **** * Description: Generates shared secret for given
+  89:Core/Src/kem.c **** *              cipher text and private key
+  90:Core/Src/kem.c **** *
+  91:Core/Src/kem.c **** * Arguments:   - unsigned char *ss:       pointer to output shared secret (an already allocated arr
+  92:Core/Src/kem.c **** *              - const unsigned char *ct: pointer to input cipher text (an already allocated array 
+  93:Core/Src/kem.c **** *              - const unsigned char *sk: pointer to input private key (an already allocated array 
+  94:Core/Src/kem.c **** *
+  95:Core/Src/kem.c **** * Returns 0 for sucess or -1 for failure
+  96:Core/Src/kem.c **** *
+  97:Core/Src/kem.c **** * On failure, ss will contain a randomized value.
+  98:Core/Src/kem.c **** **************************************************/
+  99:Core/Src/kem.c **** int crypto_kem_dec(unsigned char *ss, const unsigned char *ct, const unsigned char *sk)
+ 100:Core/Src/kem.c **** {
+ 201              		.loc 1 100 1 is_stmt 1 view -0
+ 202              		.cfi_startproc
+ 203              		@ args = 0, pretend = 0, frame = 1280
+ 204              		@ frame_needed = 0, uses_anonymous_args = 0
+ 205              		.loc 1 100 1 is_stmt 0 view .LVU39
+ 206 0000 2DE9F047 		push	{r4, r5, r6, r7, r8, r9, r10, lr}
+ 207              	.LCFI4:
+ 208              		.cfi_def_cfa_offset 32
+ 209              		.cfi_offset 4, -32
+ 210              		.cfi_offset 5, -28
+ 211              		.cfi_offset 6, -24
+ 212              		.cfi_offset 7, -20
+ 213              		.cfi_offset 8, -16
+ 214              		.cfi_offset 9, -12
+ 215              		.cfi_offset 10, -8
+ 216              		.cfi_offset 14, -4
+ 217 0004 ADF5A06D 		sub	sp, sp, #1280
+ 218              	.LCFI5:
+ 219              		.cfi_def_cfa_offset 1312
+ 220 0008 8146     		mov	r9, r0
+ 221 000a 8846     		mov	r8, r1
+ 222 000c 1746     		mov	r7, r2
+ 101:Core/Src/kem.c ****   size_t i; 
+ 223              		.loc 1 101 3 is_stmt 1 view .LVU40
+ 102:Core/Src/kem.c ****   int fail;
+ 224              		.loc 1 102 3 view .LVU41
+ 103:Core/Src/kem.c ****   unsigned char cmp[KYBER_CIPHERTEXTBYTES];
+ 225              		.loc 1 103 3 view .LVU42
+ 104:Core/Src/kem.c ****   unsigned char buf[2*KYBER_SYMBYTES];
+ 226              		.loc 1 104 3 view .LVU43
+ 105:Core/Src/kem.c ****   unsigned char kr[2*KYBER_SYMBYTES];                                         /* Will contain key, 
+ 227              		.loc 1 105 3 view .LVU44
+ 106:Core/Src/kem.c ****   const unsigned char *pk = sk+KYBER_INDCPA_SECRETKEYBYTES;
+ 228              		.loc 1 106 3 view .LVU45
+ 229              		.loc 1 106 24 is_stmt 0 view .LVU46
+ 230 000e 02F59C6A 		add	r10, r2, #1248
+ 231              	.LVL18:
+ 107:Core/Src/kem.c **** /*********************************************************/
+ 108:Core/Src/kem.c ****   HAL_GPIO_WritePin(LED1_GPIO_Port,LED1_Pin,GPIO_PIN_RESET);
+ 232              		.loc 1 108 3 is_stmt 1 view .LVU47
+ 233 0012 244C     		ldr	r4, .L13
+ 234 0014 0022     		movs	r2, #0
+ 235              	.LVL19:
+ 236              		.loc 1 108 3 is_stmt 0 view .LVU48
+ARM GAS  C:\Users\11410\AppData\Local\Temp\ccEN7EhN.s 			page 7
 
 
- 257              		.loc 1 76 15 is_stmt 1 discriminator 1 view .LVU61
- 258              		.loc 1 76 3 is_stmt 0 discriminator 1 view .LVU62
- 259 009c 1F2C     		cmp	r4, #31
- 260 009e 05DC     		bgt	.L16
- 261              		.loc 1 76 28 is_stmt 1 discriminator 3 view .LVU63
- 262 00a0 295D     		ldrb	r1, [r5, r4]	@ zero_extendqisi2
- 263 00a2 0B48     		ldr	r0, .L17+4
- 264 00a4 FFF7FEFF 		bl	printf
- 265              	.LVL28:
- 266              		.loc 1 76 23 discriminator 3 view .LVU64
- 267              		.loc 1 76 24 is_stmt 0 discriminator 3 view .LVU65
- 268 00a8 0134     		adds	r4, r4, #1
- 269              	.LVL29:
- 270              		.loc 1 76 24 discriminator 3 view .LVU66
- 271 00aa F7E7     		b	.L11
- 272              	.L16:
-  77:Core/Src/kem.c **** /*********************************************************/
-  78:Core/Src/kem.c ****   sha3_256(kr+KYBER_SYMBYTES, ct, KYBER_CIPHERTEXTBYTES);                     /* overwrite coins in
- 273              		.loc 1 78 3 is_stmt 1 view .LVU67
- 274 00ac 4FF49062 		mov	r2, #1152
- 275 00b0 0023     		movs	r3, #0
- 276 00b2 2946     		mov	r1, r5
- 277 00b4 18A8     		add	r0, sp, #96
- 278 00b6 FFF7FEFF 		bl	sha3_256
- 279              	.LVL30:
-  79:Core/Src/kem.c ****   sha3_256(ss, kr, 2*KYBER_SYMBYTES);                                         /* hash concatenation
- 280              		.loc 1 79 3 view .LVU68
- 281 00ba 4022     		movs	r2, #64
- 282 00bc 0023     		movs	r3, #0
- 283 00be 10A9     		add	r1, sp, #64
- 284 00c0 3846     		mov	r0, r7
- 285 00c2 FFF7FEFF 		bl	sha3_256
- 286              	.LVL31:
-  80:Core/Src/kem.c ****   
-  81:Core/Src/kem.c ****   return 0;
- 287              		.loc 1 81 3 view .LVU69
-  82:Core/Src/kem.c **** }
- 288              		.loc 1 82 1 is_stmt 0 view .LVU70
- 289 00c6 0020     		movs	r0, #0
- 290 00c8 21B0     		add	sp, sp, #132
- 291              	.LCFI3:
- 292              		.cfi_def_cfa_offset 20
- 293              		@ sp needed
- 294 00ca F0BD     		pop	{r4, r5, r6, r7, pc}
- 295              	.LVL32:
- 296              	.L18:
- 297              		.loc 1 82 1 view .LVU71
- 298              		.align	2
- 299              	.L17:
- 300 00cc 00000000 		.word	.LC0
- 301 00d0 08000000 		.word	.LC1
- 302 00d4 10000000 		.word	.LC2
- 303 00d8 18000000 		.word	.LC3
- 304              		.cfi_endproc
- 305              	.LFE4:
- 307              		.section	.rodata.crypto_kem_dec.str1.4,"aMS",%progbits,1
- 308              		.align	2
-ARM GAS  C:\Users\11410\AppData\Local\Temp\ccemZjld.s 			page 8
+ 237 0016 4021     		movs	r1, #64
+ 238              	.LVL20:
+ 239              		.loc 1 108 3 view .LVU49
+ 240 0018 2046     		mov	r0, r4
+ 241              	.LVL21:
+ 242              		.loc 1 108 3 view .LVU50
+ 243 001a FFF7FEFF 		bl	HAL_GPIO_WritePin
+ 244              	.LVL22:
+ 109:Core/Src/kem.c ****   indcpa_dec(buf, ct, sk);
+ 245              		.loc 1 109 3 is_stmt 1 view .LVU51
+ 246 001e 3A46     		mov	r2, r7
+ 247 0020 4146     		mov	r1, r8
+ 248 0022 10A8     		add	r0, sp, #64
+ 249 0024 FFF7FEFF 		bl	indcpa_dec
+ 250              	.LVL23:
+ 110:Core/Src/kem.c ****   HAL_GPIO_WritePin(LED1_GPIO_Port,LED1_Pin,GPIO_PIN_SET);
+ 251              		.loc 1 110 3 view .LVU52
+ 252 0028 0122     		movs	r2, #1
+ 253 002a 4021     		movs	r1, #64
+ 254 002c 2046     		mov	r0, r4
+ 255 002e FFF7FEFF 		bl	HAL_GPIO_WritePin
+ 256              	.LVL24:
+ 111:Core/Src/kem.c **** /*********************************************************/
+ 112:Core/Src/kem.c ****   // printf("\n");
+ 113:Core/Src/kem.c ****   // printf("pt: "); 
+ 114:Core/Src/kem.c ****   // for (i = 0; i < 32; i++) printf("%02x", buf[i]);     
+ 115:Core/Src/kem.c **** /*********************************************************/
+ 116:Core/Src/kem.c ****   for(i=0;i<KYBER_SYMBYTES;i++)                                                                    
+ 257              		.loc 1 116 3 view .LVU53
+ 258              		.loc 1 116 8 is_stmt 0 view .LVU54
+ 259 0032 0023     		movs	r3, #0
+ 260              	.LVL25:
+ 261              	.L9:
+ 262              		.loc 1 116 11 is_stmt 1 discriminator 1 view .LVU55
+ 263              		.loc 1 116 3 is_stmt 0 discriminator 1 view .LVU56
+ 264 0034 1F2B     		cmp	r3, #31
+ 265 0036 08D8     		bhi	.L12
+ 117:Core/Src/kem.c ****     buf[KYBER_SYMBYTES+i] = sk[KYBER_SECRETKEYBYTES-2*KYBER_SYMBYTES+i];      /* Save hash by stori
+ 266              		.loc 1 117 5 is_stmt 1 discriminator 3 view .LVU57
+ 267              		.loc 1 117 69 is_stmt 0 discriminator 3 view .LVU58
+ 268 0038 03F51262 		add	r2, r3, #2336
+ 269              		.loc 1 117 23 discriminator 3 view .LVU59
+ 270 003c 03F12004 		add	r4, r3, #32
+ 271              		.loc 1 117 31 discriminator 3 view .LVU60
+ 272 0040 BE5C     		ldrb	r6, [r7, r2]	@ zero_extendqisi2
+ 273              		.loc 1 117 27 discriminator 3 view .LVU61
+ 274 0042 10AD     		add	r5, sp, #64
+ 275 0044 2E55     		strb	r6, [r5, r4]
+ 116:Core/Src/kem.c ****     buf[KYBER_SYMBYTES+i] = sk[KYBER_SECRETKEYBYTES-2*KYBER_SYMBYTES+i];      /* Save hash by stori
+ 276              		.loc 1 116 28 is_stmt 1 discriminator 3 view .LVU62
+ 116:Core/Src/kem.c ****     buf[KYBER_SYMBYTES+i] = sk[KYBER_SECRETKEYBYTES-2*KYBER_SYMBYTES+i];      /* Save hash by stori
+ 277              		.loc 1 116 29 is_stmt 0 discriminator 3 view .LVU63
+ 278 0046 0133     		adds	r3, r3, #1
+ 279              	.LVL26:
+ 116:Core/Src/kem.c ****     buf[KYBER_SYMBYTES+i] = sk[KYBER_SECRETKEYBYTES-2*KYBER_SYMBYTES+i];      /* Save hash by stori
+ 280              		.loc 1 116 29 discriminator 3 view .LVU64
+ 281 0048 F4E7     		b	.L9
+ARM GAS  C:\Users\11410\AppData\Local\Temp\ccEN7EhN.s 			page 8
 
 
- 309              	.LC4:
- 310 0000 6B723A20 		.ascii	"kr: \000"
- 310      00
- 311 0005 000000   		.align	2
- 312              	.LC5:
- 313 0008 6661696C 		.ascii	"fail: %02x\015\012\000"
- 313      3A202530 
- 313      32780D0A 
- 313      00
- 314              		.section	.text.crypto_kem_dec,"ax",%progbits
- 315              		.align	1
- 316              		.global	crypto_kem_dec
- 317              		.syntax unified
- 318              		.thumb
- 319              		.thumb_func
- 320              		.fpu fpv4-sp-d16
- 322              	crypto_kem_dec:
- 323              	.LVL33:
- 324              	.LFB5:
-  83:Core/Src/kem.c **** 
-  84:Core/Src/kem.c **** /*************************************************
-  85:Core/Src/kem.c **** * Name:        crypto_kem_dec
-  86:Core/Src/kem.c **** *
-  87:Core/Src/kem.c **** * Description: Generates shared secret for given
-  88:Core/Src/kem.c **** *              cipher text and private key
-  89:Core/Src/kem.c **** *
-  90:Core/Src/kem.c **** * Arguments:   - unsigned char *ss:       pointer to output shared secret (an already allocated arr
-  91:Core/Src/kem.c **** *              - const unsigned char *ct: pointer to input cipher text (an already allocated array 
-  92:Core/Src/kem.c **** *              - const unsigned char *sk: pointer to input private key (an already allocated array 
-  93:Core/Src/kem.c **** *
-  94:Core/Src/kem.c **** * Returns 0 for sucess or -1 for failure
-  95:Core/Src/kem.c **** *
-  96:Core/Src/kem.c **** * On failure, ss will contain a randomized value.
-  97:Core/Src/kem.c **** **************************************************/
-  98:Core/Src/kem.c **** int crypto_kem_dec(unsigned char *ss, const unsigned char *ct, const unsigned char *sk)
-  99:Core/Src/kem.c **** {
- 325              		.loc 1 99 1 is_stmt 1 view -0
- 326              		.cfi_startproc
- 327              		@ args = 0, pretend = 0, frame = 1280
- 328              		@ frame_needed = 0, uses_anonymous_args = 0
- 329              		.loc 1 99 1 is_stmt 0 view .LVU73
- 330 0000 2DE9F041 		push	{r4, r5, r6, r7, r8, lr}
- 331              	.LCFI4:
- 332              		.cfi_def_cfa_offset 24
- 333              		.cfi_offset 4, -24
- 334              		.cfi_offset 5, -20
- 335              		.cfi_offset 6, -16
- 336              		.cfi_offset 7, -12
- 337              		.cfi_offset 8, -8
- 338              		.cfi_offset 14, -4
- 339 0004 ADF5A06D 		sub	sp, sp, #1280
- 340              	.LCFI5:
- 341              		.cfi_def_cfa_offset 1304
- 342 0008 0746     		mov	r7, r0
- 343 000a 0E46     		mov	r6, r1
- 344 000c 1546     		mov	r5, r2
- 100:Core/Src/kem.c ****   size_t i; 
-ARM GAS  C:\Users\11410\AppData\Local\Temp\ccemZjld.s 			page 9
+ 282              	.L12:
+ 118:Core/Src/kem.c ****   sha3_512(kr, buf, 2*KYBER_SYMBYTES);
+ 283              		.loc 1 118 3 is_stmt 1 view .LVU65
+ 284 004a 4022     		movs	r2, #64
+ 285 004c 0023     		movs	r3, #0
+ 286              	.LVL27:
+ 287              		.loc 1 118 3 is_stmt 0 view .LVU66
+ 288 004e 10A9     		add	r1, sp, #64
+ 289 0050 6846     		mov	r0, sp
+ 290 0052 FFF7FEFF 		bl	sha3_512
+ 291              	.LVL28:
+ 119:Core/Src/kem.c ****   // printf("\n");
+ 120:Core/Src/kem.c ****   // printf("kr: "); 
+ 121:Core/Src/kem.c ****   // for (i = 32; i < 64; i++) printf("%02x", kr[i]);    
+ 122:Core/Src/kem.c **** /*********************************************************/ 
+ 123:Core/Src/kem.c ****   indcpa_enc(cmp, buf, pk, kr+KYBER_SYMBYTES);                                /* coins are in kr+KY
+ 292              		.loc 1 123 3 is_stmt 1 view .LVU67
+ 293 0056 08AB     		add	r3, sp, #32
+ 294 0058 5246     		mov	r2, r10
+ 295 005a 10A9     		add	r1, sp, #64
+ 296 005c 20A8     		add	r0, sp, #128
+ 297 005e FFF7FEFF 		bl	indcpa_enc
+ 298              	.LVL29:
+ 124:Core/Src/kem.c **** /*********************************************************/
+ 125:Core/Src/kem.c ****   fail = verify(ct, cmp, KYBER_CIPHERTEXTBYTES);
+ 299              		.loc 1 125 3 view .LVU68
+ 300              		.loc 1 125 10 is_stmt 0 view .LVU69
+ 301 0062 4FF49062 		mov	r2, #1152
+ 302 0066 20A9     		add	r1, sp, #128
+ 303 0068 4046     		mov	r0, r8
+ 304 006a FFF7FEFF 		bl	verify
+ 305              	.LVL30:
+ 306 006e 0446     		mov	r4, r0
+ 307              	.LVL31:
+ 126:Core/Src/kem.c ****   // printf("\n");
+ 127:Core/Src/kem.c ****   // printf("fail: %02x\r\n",fail); 
+ 128:Core/Src/kem.c **** 
+ 129:Core/Src/kem.c ****   sha3_256(kr+KYBER_SYMBYTES, ct, KYBER_CIPHERTEXTBYTES);                     /* overwrite coins in
+ 308              		.loc 1 129 3 is_stmt 1 view .LVU70
+ 309 0070 4FF49062 		mov	r2, #1152
+ 310 0074 0023     		movs	r3, #0
+ 311 0076 4146     		mov	r1, r8
+ 312 0078 08A8     		add	r0, sp, #32
+ 313              	.LVL32:
+ 314              		.loc 1 129 3 is_stmt 0 view .LVU71
+ 315 007a FFF7FEFF 		bl	sha3_256
+ 316              	.LVL33:
+ 130:Core/Src/kem.c **** 
+ 131:Core/Src/kem.c ****   cmov(kr, sk+KYBER_SECRETKEYBYTES-KYBER_SYMBYTES, KYBER_SYMBYTES, fail);     /* Overwrite pre-k wi
+ 317              		.loc 1 131 3 is_stmt 1 view .LVU72
+ 318 007e E3B2     		uxtb	r3, r4
+ 319 0080 2022     		movs	r2, #32
+ 320 0082 07F51461 		add	r1, r7, #2368
+ 321 0086 6846     		mov	r0, sp
+ 322 0088 FFF7FEFF 		bl	cmov
+ 323              	.LVL34:
+ 132:Core/Src/kem.c **** 
+ARM GAS  C:\Users\11410\AppData\Local\Temp\ccEN7EhN.s 			page 9
 
 
- 345              		.loc 1 100 3 is_stmt 1 view .LVU74
- 101:Core/Src/kem.c ****   int fail;
- 346              		.loc 1 101 3 view .LVU75
- 102:Core/Src/kem.c ****   unsigned char cmp[KYBER_CIPHERTEXTBYTES];
- 347              		.loc 1 102 3 view .LVU76
- 103:Core/Src/kem.c ****   unsigned char buf[2*KYBER_SYMBYTES];
- 348              		.loc 1 103 3 view .LVU77
- 104:Core/Src/kem.c ****   unsigned char kr[2*KYBER_SYMBYTES];                                         /* Will contain key, 
- 349              		.loc 1 104 3 view .LVU78
- 105:Core/Src/kem.c ****   const unsigned char *pk = sk+KYBER_INDCPA_SECRETKEYBYTES;
- 350              		.loc 1 105 3 view .LVU79
- 351              		.loc 1 105 24 is_stmt 0 view .LVU80
- 352 000e 02F59C68 		add	r8, r2, #1248
- 353              	.LVL34:
- 106:Core/Src/kem.c **** /*********************************************************/
- 107:Core/Src/kem.c ****   indcpa_dec(buf, ct, sk);
- 354              		.loc 1 107 3 is_stmt 1 view .LVU81
- 355 0012 10A8     		add	r0, sp, #64
- 356              	.LVL35:
- 357              		.loc 1 107 3 is_stmt 0 view .LVU82
- 358 0014 FFF7FEFF 		bl	indcpa_dec
- 359              	.LVL36:
- 108:Core/Src/kem.c **** /*********************************************************/
- 109:Core/Src/kem.c ****   printf("\n");
- 360              		.loc 1 109 3 is_stmt 1 view .LVU83
- 361 0018 0A20     		movs	r0, #10
- 362 001a FFF7FEFF 		bl	putchar
- 363              	.LVL37:
- 110:Core/Src/kem.c ****   printf("pt: "); 
- 364              		.loc 1 110 3 view .LVU84
- 365 001e 2E48     		ldr	r0, .L30
- 366 0020 FFF7FEFF 		bl	printf
- 367              	.LVL38:
- 111:Core/Src/kem.c ****   for (i = 0; i < 32; i++) printf("%02x", buf[i]);     
- 368              		.loc 1 111 3 view .LVU85
- 369              		.loc 1 111 10 is_stmt 0 view .LVU86
- 370 0024 0024     		movs	r4, #0
- 371              	.LVL39:
- 372              	.L20:
- 373              		.loc 1 111 15 is_stmt 1 discriminator 1 view .LVU87
- 374              		.loc 1 111 3 is_stmt 0 discriminator 1 view .LVU88
- 375 0026 1F2C     		cmp	r4, #31
- 376 0028 06D8     		bhi	.L27
- 377              		.loc 1 111 28 is_stmt 1 discriminator 3 view .LVU89
- 378 002a 10AB     		add	r3, sp, #64
- 379 002c 195D     		ldrb	r1, [r3, r4]	@ zero_extendqisi2
- 380 002e 2B48     		ldr	r0, .L30+4
- 381 0030 FFF7FEFF 		bl	printf
- 382              	.LVL40:
- 383              		.loc 1 111 23 discriminator 3 view .LVU90
- 384              		.loc 1 111 24 is_stmt 0 discriminator 3 view .LVU91
- 385 0034 0134     		adds	r4, r4, #1
- 386              	.LVL41:
- 387              		.loc 1 111 24 discriminator 3 view .LVU92
- 388 0036 F6E7     		b	.L20
- 389              	.L27:
- 112:Core/Src/kem.c **** /*********************************************************/
-ARM GAS  C:\Users\11410\AppData\Local\Temp\ccemZjld.s 			page 10
-
-
- 113:Core/Src/kem.c ****   for(i=0;i<KYBER_SYMBYTES;i++)                                                                    
- 390              		.loc 1 113 8 view .LVU93
- 391 0038 0023     		movs	r3, #0
- 392              	.LVL42:
- 393              	.L22:
- 394              		.loc 1 113 11 is_stmt 1 discriminator 1 view .LVU94
- 395              		.loc 1 113 3 is_stmt 0 discriminator 1 view .LVU95
- 396 003a 1F2B     		cmp	r3, #31
- 397 003c 08D8     		bhi	.L28
- 114:Core/Src/kem.c ****     buf[KYBER_SYMBYTES+i] = sk[KYBER_SECRETKEYBYTES-2*KYBER_SYMBYTES+i];      /* Save hash by stori
- 398              		.loc 1 114 5 is_stmt 1 discriminator 3 view .LVU96
- 399              		.loc 1 114 69 is_stmt 0 discriminator 3 view .LVU97
- 400 003e 03F51262 		add	r2, r3, #2336
- 401              		.loc 1 114 23 discriminator 3 view .LVU98
- 402 0042 03F12004 		add	r4, r3, #32
- 403              		.loc 1 114 31 discriminator 3 view .LVU99
- 404 0046 A95C     		ldrb	r1, [r5, r2]	@ zero_extendqisi2
- 405              		.loc 1 114 27 discriminator 3 view .LVU100
- 406 0048 10AA     		add	r2, sp, #64
- 407 004a 1155     		strb	r1, [r2, r4]
- 113:Core/Src/kem.c ****     buf[KYBER_SYMBYTES+i] = sk[KYBER_SECRETKEYBYTES-2*KYBER_SYMBYTES+i];      /* Save hash by stori
- 408              		.loc 1 113 28 is_stmt 1 discriminator 3 view .LVU101
- 113:Core/Src/kem.c ****     buf[KYBER_SYMBYTES+i] = sk[KYBER_SECRETKEYBYTES-2*KYBER_SYMBYTES+i];      /* Save hash by stori
- 409              		.loc 1 113 29 is_stmt 0 discriminator 3 view .LVU102
- 410 004c 0133     		adds	r3, r3, #1
- 411              	.LVL43:
- 113:Core/Src/kem.c ****     buf[KYBER_SYMBYTES+i] = sk[KYBER_SECRETKEYBYTES-2*KYBER_SYMBYTES+i];      /* Save hash by stori
- 412              		.loc 1 113 29 discriminator 3 view .LVU103
- 413 004e F4E7     		b	.L22
- 414              	.L28:
- 115:Core/Src/kem.c ****   sha3_512(kr, buf, 2*KYBER_SYMBYTES);
- 415              		.loc 1 115 3 is_stmt 1 view .LVU104
- 416 0050 4022     		movs	r2, #64
- 417 0052 0023     		movs	r3, #0
- 418              	.LVL44:
- 419              		.loc 1 115 3 is_stmt 0 view .LVU105
- 420 0054 10A9     		add	r1, sp, #64
- 421 0056 6846     		mov	r0, sp
- 422 0058 FFF7FEFF 		bl	sha3_512
- 423              	.LVL45:
- 116:Core/Src/kem.c ****   printf("\n");
- 424              		.loc 1 116 3 is_stmt 1 view .LVU106
- 425 005c 0A20     		movs	r0, #10
- 426 005e FFF7FEFF 		bl	putchar
- 427              	.LVL46:
- 117:Core/Src/kem.c ****   printf("kr: "); 
- 428              		.loc 1 117 3 view .LVU107
- 429 0062 1F48     		ldr	r0, .L30+8
- 430 0064 FFF7FEFF 		bl	printf
- 431              	.LVL47:
- 118:Core/Src/kem.c ****   for (i = 32; i < 64; i++) printf("%02x", kr[i]);    
- 432              		.loc 1 118 3 view .LVU108
- 433              		.loc 1 118 10 is_stmt 0 view .LVU109
- 434 0068 2024     		movs	r4, #32
- 435              	.LVL48:
- 436              	.L24:
- 437              		.loc 1 118 16 is_stmt 1 discriminator 1 view .LVU110
-ARM GAS  C:\Users\11410\AppData\Local\Temp\ccemZjld.s 			page 11
-
-
- 438              		.loc 1 118 3 is_stmt 0 discriminator 1 view .LVU111
- 439 006a 3F2C     		cmp	r4, #63
- 440 006c 06D8     		bhi	.L29
- 441              		.loc 1 118 29 is_stmt 1 discriminator 3 view .LVU112
- 442 006e 1DF80410 		ldrb	r1, [sp, r4]	@ zero_extendqisi2
- 443 0072 1A48     		ldr	r0, .L30+4
- 444 0074 FFF7FEFF 		bl	printf
- 445              	.LVL49:
- 446              		.loc 1 118 24 discriminator 3 view .LVU113
- 447              		.loc 1 118 25 is_stmt 0 discriminator 3 view .LVU114
- 448 0078 0134     		adds	r4, r4, #1
- 449              	.LVL50:
- 450              		.loc 1 118 25 discriminator 3 view .LVU115
- 451 007a F6E7     		b	.L24
- 452              	.L29:
- 119:Core/Src/kem.c **** /*********************************************************/ 
- 120:Core/Src/kem.c ****   indcpa_enc(cmp, buf, pk, kr+KYBER_SYMBYTES);                                /* coins are in kr+KY
- 453              		.loc 1 120 3 is_stmt 1 view .LVU116
- 454 007c 08AB     		add	r3, sp, #32
- 455 007e 4246     		mov	r2, r8
- 456 0080 10A9     		add	r1, sp, #64
- 457 0082 20A8     		add	r0, sp, #128
- 458 0084 FFF7FEFF 		bl	indcpa_enc
- 459              	.LVL51:
- 121:Core/Src/kem.c **** /*********************************************************/
- 122:Core/Src/kem.c ****   fail = verify(ct, cmp, KYBER_CIPHERTEXTBYTES);
- 460              		.loc 1 122 3 view .LVU117
- 461              		.loc 1 122 10 is_stmt 0 view .LVU118
- 462 0088 4FF49062 		mov	r2, #1152
- 463 008c 20A9     		add	r1, sp, #128
- 464 008e 3046     		mov	r0, r6
- 465 0090 FFF7FEFF 		bl	verify
- 466              	.LVL52:
- 467 0094 0446     		mov	r4, r0
- 468              	.LVL53:
- 123:Core/Src/kem.c ****   printf("\n");
- 469              		.loc 1 123 3 is_stmt 1 view .LVU119
- 470 0096 0A20     		movs	r0, #10
- 471              	.LVL54:
- 472              		.loc 1 123 3 is_stmt 0 view .LVU120
- 473 0098 FFF7FEFF 		bl	putchar
- 474              	.LVL55:
- 124:Core/Src/kem.c ****   printf("fail: %02x\r\n",fail); 
- 475              		.loc 1 124 3 is_stmt 1 view .LVU121
- 476 009c 2146     		mov	r1, r4
- 477 009e 1148     		ldr	r0, .L30+12
- 478 00a0 FFF7FEFF 		bl	printf
- 479              	.LVL56:
- 125:Core/Src/kem.c **** 
- 126:Core/Src/kem.c ****   sha3_256(kr+KYBER_SYMBYTES, ct, KYBER_CIPHERTEXTBYTES);                     /* overwrite coins in
- 480              		.loc 1 126 3 view .LVU122
- 481 00a4 4FF49062 		mov	r2, #1152
- 482 00a8 0023     		movs	r3, #0
- 483 00aa 3146     		mov	r1, r6
- 484 00ac 08A8     		add	r0, sp, #32
- 485 00ae FFF7FEFF 		bl	sha3_256
- 486              	.LVL57:
-ARM GAS  C:\Users\11410\AppData\Local\Temp\ccemZjld.s 			page 12
-
-
- 127:Core/Src/kem.c **** 
- 128:Core/Src/kem.c ****   cmov(kr, sk+KYBER_SECRETKEYBYTES-KYBER_SYMBYTES, KYBER_SYMBYTES, fail);     /* Overwrite pre-k wi
- 487              		.loc 1 128 3 view .LVU123
- 488 00b2 E3B2     		uxtb	r3, r4
- 489 00b4 2022     		movs	r2, #32
- 490 00b6 05F51461 		add	r1, r5, #2368
- 491 00ba 6846     		mov	r0, sp
- 492 00bc FFF7FEFF 		bl	cmov
- 493              	.LVL58:
- 129:Core/Src/kem.c **** 
- 130:Core/Src/kem.c ****   sha3_256(ss, kr, 2*KYBER_SYMBYTES);                                         /* hash concatenation
- 494              		.loc 1 130 3 view .LVU124
- 495 00c0 4022     		movs	r2, #64
- 496 00c2 0023     		movs	r3, #0
- 497 00c4 6946     		mov	r1, sp
- 498 00c6 3846     		mov	r0, r7
- 499 00c8 FFF7FEFF 		bl	sha3_256
- 500              	.LVL59:
- 131:Core/Src/kem.c **** 
- 132:Core/Src/kem.c ****   return -fail;
- 501              		.loc 1 132 3 view .LVU125
- 133:Core/Src/kem.c **** }
- 502              		.loc 1 133 1 is_stmt 0 view .LVU126
- 503 00cc 6042     		rsbs	r0, r4, #0
- 504 00ce 0DF5A06D 		add	sp, sp, #1280
- 505              	.LCFI6:
- 506              		.cfi_def_cfa_offset 24
- 507              		@ sp needed
- 508 00d2 BDE8F081 		pop	{r4, r5, r6, r7, r8, pc}
- 509              	.LVL60:
- 510              	.L31:
- 511              		.loc 1 133 1 view .LVU127
- 512 00d6 00BF     		.align	2
- 513              	.L30:
- 514 00d8 00000000 		.word	.LC0
- 515 00dc 08000000 		.word	.LC1
- 516 00e0 00000000 		.word	.LC4
- 517 00e4 08000000 		.word	.LC5
- 518              		.cfi_endproc
- 519              	.LFE5:
- 521              		.text
- 522              	.Letext0:
- 523              		.file 2 "c:\\program files (x86)\\gnu tools arm embedded\\9 2019-q4-major\\lib\\gcc\\arm-none-eabi
- 524              		.file 3 "c:\\program files (x86)\\gnu tools arm embedded\\9 2019-q4-major\\arm-none-eabi\\include\
- 525              		.file 4 "c:\\program files (x86)\\gnu tools arm embedded\\9 2019-q4-major\\arm-none-eabi\\include\
- 526              		.file 5 "c:\\program files (x86)\\gnu tools arm embedded\\9 2019-q4-major\\arm-none-eabi\\include\
- 527              		.file 6 "Core/Inc/indcpa.h"
- 528              		.file 7 "c:\\program files (x86)\\gnu tools arm embedded\\9 2019-q4-major\\arm-none-eabi\\include\
- 529              		.file 8 "Core/Inc/fips202.h"
- 530              		.file 9 "Core/Inc/verify.h"
- 531              		.file 10 "Core/Inc/randombytes.h"
- 532              		.file 11 "<built-in>"
-ARM GAS  C:\Users\11410\AppData\Local\Temp\ccemZjld.s 			page 13
+ 133:Core/Src/kem.c ****   sha3_256(ss, kr, 2*KYBER_SYMBYTES);                                         /* hash concatenation
+ 324              		.loc 1 133 3 view .LVU73
+ 325 008c 4022     		movs	r2, #64
+ 326 008e 0023     		movs	r3, #0
+ 327 0090 6946     		mov	r1, sp
+ 328 0092 4846     		mov	r0, r9
+ 329 0094 FFF7FEFF 		bl	sha3_256
+ 330              	.LVL35:
+ 134:Core/Src/kem.c **** 
+ 135:Core/Src/kem.c ****   return -fail;
+ 331              		.loc 1 135 3 view .LVU74
+ 136:Core/Src/kem.c **** }
+ 332              		.loc 1 136 1 is_stmt 0 view .LVU75
+ 333 0098 6042     		rsbs	r0, r4, #0
+ 334 009a 0DF5A06D 		add	sp, sp, #1280
+ 335              	.LCFI6:
+ 336              		.cfi_def_cfa_offset 32
+ 337              		@ sp needed
+ 338 009e BDE8F087 		pop	{r4, r5, r6, r7, r8, r9, r10, pc}
+ 339              	.LVL36:
+ 340              	.L14:
+ 341              		.loc 1 136 1 view .LVU76
+ 342 00a2 00BF     		.align	2
+ 343              	.L13:
+ 344 00a4 00100240 		.word	1073876992
+ 345              		.cfi_endproc
+ 346              	.LFE135:
+ 348              		.text
+ 349              	.Letext0:
+ 350              		.file 2 "c:\\program files (x86)\\gnu tools arm embedded\\9 2019-q4-major\\arm-none-eabi\\include\
+ 351              		.file 3 "c:\\program files (x86)\\gnu tools arm embedded\\9 2019-q4-major\\arm-none-eabi\\include\
+ 352              		.file 4 "c:\\program files (x86)\\gnu tools arm embedded\\9 2019-q4-major\\lib\\gcc\\arm-none-eabi
+ 353              		.file 5 "c:\\program files (x86)\\gnu tools arm embedded\\9 2019-q4-major\\arm-none-eabi\\include\
+ 354              		.file 6 "c:\\program files (x86)\\gnu tools arm embedded\\9 2019-q4-major\\arm-none-eabi\\include\
+ 355              		.file 7 "c:\\program files (x86)\\gnu tools arm embedded\\9 2019-q4-major\\arm-none-eabi\\include\
+ 356              		.file 8 "Drivers/CMSIS/Include/core_cm4.h"
+ 357              		.file 9 "Drivers/CMSIS/Device/ST/STM32F4xx/Include/system_stm32f4xx.h"
+ 358              		.file 10 "Drivers/CMSIS/Device/ST/STM32F4xx/Include/stm32f407xx.h"
+ 359              		.file 11 "Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_gpio.h"
+ 360              		.file 12 "Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal.h"
+ 361              		.file 13 "Core/Inc/indcpa.h"
+ 362              		.file 14 "Core/Inc/fips202.h"
+ 363              		.file 15 "Core/Inc/verify.h"
+ 364              		.file 16 "Core/Inc/randombytes.h"
+ARM GAS  C:\Users\11410\AppData\Local\Temp\ccEN7EhN.s 			page 10
 
 
 DEFINED SYMBOLS
                             *ABS*:00000000 kem.c
-C:\Users\11410\AppData\Local\Temp\ccemZjld.s:18     .text.crypto_kem_keypair:00000000 $t
-C:\Users\11410\AppData\Local\Temp\ccemZjld.s:26     .text.crypto_kem_keypair:00000000 crypto_kem_keypair
-C:\Users\11410\AppData\Local\Temp\ccemZjld.s:95     .rodata.crypto_kem_enc.str1.4:00000000 $d
-C:\Users\11410\AppData\Local\Temp\ccemZjld.s:108    .text.crypto_kem_enc:00000000 $t
-C:\Users\11410\AppData\Local\Temp\ccemZjld.s:115    .text.crypto_kem_enc:00000000 crypto_kem_enc
-C:\Users\11410\AppData\Local\Temp\ccemZjld.s:300    .text.crypto_kem_enc:000000cc $d
-C:\Users\11410\AppData\Local\Temp\ccemZjld.s:308    .rodata.crypto_kem_dec.str1.4:00000000 $d
-C:\Users\11410\AppData\Local\Temp\ccemZjld.s:315    .text.crypto_kem_dec:00000000 $t
-C:\Users\11410\AppData\Local\Temp\ccemZjld.s:322    .text.crypto_kem_dec:00000000 crypto_kem_dec
-C:\Users\11410\AppData\Local\Temp\ccemZjld.s:514    .text.crypto_kem_dec:000000d8 $d
+C:\Users\11410\AppData\Local\Temp\ccEN7EhN.s:18     .text.crypto_kem_keypair:00000000 $t
+C:\Users\11410\AppData\Local\Temp\ccEN7EhN.s:26     .text.crypto_kem_keypair:00000000 crypto_kem_keypair
+C:\Users\11410\AppData\Local\Temp\ccEN7EhN.s:95     .text.crypto_kem_enc:00000000 $t
+C:\Users\11410\AppData\Local\Temp\ccEN7EhN.s:102    .text.crypto_kem_enc:00000000 crypto_kem_enc
+C:\Users\11410\AppData\Local\Temp\ccEN7EhN.s:191    .text.crypto_kem_dec:00000000 $t
+C:\Users\11410\AppData\Local\Temp\ccEN7EhN.s:198    .text.crypto_kem_dec:00000000 crypto_kem_dec
+C:\Users\11410\AppData\Local\Temp\ccEN7EhN.s:344    .text.crypto_kem_dec:000000a4 $d
 
 UNDEFINED SYMBOLS
 indcpa_keypair
 sha3_256
 randombytes
 sha3_512
-putchar
-printf
 indcpa_enc
+HAL_GPIO_WritePin
 indcpa_dec
 verify
 cmov

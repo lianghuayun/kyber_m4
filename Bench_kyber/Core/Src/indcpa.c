@@ -223,7 +223,7 @@ void indcpa_keypair(unsigned char *pk,
     for (j = 0; j < 256; j++) 
     {
       //printf("%d\r\n", skpv.vec[i].coeffs[j]);
-      skpv.vec[i].coeffs[j]=40;
+      skpv.vec[i].coeffs[j]=0;
     }
   }
 

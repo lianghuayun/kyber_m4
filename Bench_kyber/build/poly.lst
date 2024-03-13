@@ -1,4 +1,4 @@
-ARM GAS  C:\Users\11410\AppData\Local\Temp\ccqyw4Mw.s 			page 1
+ARM GAS  C:\Users\11410\AppData\Local\Temp\cc6TCejI.s 			page 1
 
 
    1              		.cpu cortex-m4
@@ -58,7 +58,7 @@ ARM GAS  C:\Users\11410\AppData\Local\Temp\ccqyw4Mw.s 			page 1
   35 0000 2DE9F041 		push	{r4, r5, r6, r7, r8, lr}
   36              	.LCFI0:
   37              		.cfi_def_cfa_offset 24
-ARM GAS  C:\Users\11410\AppData\Local\Temp\ccqyw4Mw.s 			page 2
+ARM GAS  C:\Users\11410\AppData\Local\Temp\cc6TCejI.s 			page 2
 
 
   38              		.cfi_offset 4, -24
@@ -118,7 +118,7 @@ ARM GAS  C:\Users\11410\AppData\Local\Temp\ccqyw4Mw.s 			page 1
   83              		.loc 1 27 17 is_stmt 1 discriminator 3 view .LVU16
   27:Core/Src/poly.c ****       t[j] = (((freeze(a->coeffs[i+j]) << 3) + KYBER_Q/2)/KYBER_Q) & 7;
   84              		.loc 1 27 18 is_stmt 0 discriminator 3 view .LVU17
-ARM GAS  C:\Users\11410\AppData\Local\Temp\ccqyw4Mw.s 			page 3
+ARM GAS  C:\Users\11410\AppData\Local\Temp\cc6TCejI.s 			page 3
 
 
   85 003a 0134     		adds	r4, r4, #1
@@ -178,7 +178,7 @@ ARM GAS  C:\Users\11410\AppData\Local\Temp\ccqyw4Mw.s 			page 1
  134              		.loc 1 31 54 discriminator 2 view .LVU38
  135 0074 1343     		orrs	r3, r3, r2
  136              		.loc 1 31 12 discriminator 2 view .LVU39
-ARM GAS  C:\Users\11410\AppData\Local\Temp\ccqyw4Mw.s 			page 4
+ARM GAS  C:\Users\11410\AppData\Local\Temp\cc6TCejI.s 			page 4
 
 
  137 0076 08F80030 		strb	r3, [r8, r0]
@@ -238,7 +238,7 @@ ARM GAS  C:\Users\11410\AppData\Local\Temp\ccqyw4Mw.s 			page 1
  182              	.L9:
  183              		.loc 1 35 1 view .LVU57
  184 00a6 00BF     		.align	2
-ARM GAS  C:\Users\11410\AppData\Local\Temp\ccqyw4Mw.s 			page 5
+ARM GAS  C:\Users\11410\AppData\Local\Temp\cc6TCejI.s 			page 5
 
 
  185              	.L8:
@@ -298,7 +298,7 @@ ARM GAS  C:\Users\11410\AppData\Local\Temp\ccqyw4Mw.s 			page 1
  224              		.loc 1 51 31 discriminator 3 view .LVU67
  225 000a 03F00703 		and	r3, r3, #7
  226              		.loc 1 51 36 discriminator 3 view .LVU68
-ARM GAS  C:\Users\11410\AppData\Local\Temp\ccqyw4Mw.s 			page 6
+ARM GAS  C:\Users\11410\AppData\Local\Temp\cc6TCejI.s 			page 6
 
 
  227 000e C3EB0314 		rsb	r4, r3, r3, lsl #4
@@ -358,7 +358,7 @@ ARM GAS  C:\Users\11410\AppData\Local\Temp\ccqyw4Mw.s 			page 1
  278              		.loc 1 54 42 discriminator 3 view .LVU94
  279 005c C3EB0314 		rsb	r4, r3, r3, lsl #4
  280 0060 03EB4423 		add	r3, r3, r4, lsl #9
-ARM GAS  C:\Users\11410\AppData\Local\Temp\ccqyw4Mw.s 			page 7
+ARM GAS  C:\Users\11410\AppData\Local\Temp\cc6TCejI.s 			page 7
 
 
  281              		.loc 1 54 53 discriminator 3 view .LVU95
@@ -418,7 +418,7 @@ ARM GAS  C:\Users\11410\AppData\Local\Temp\ccqyw4Mw.s 			page 1
  332 00aa C3F38203 		ubfx	r3, r3, #2, #3
  333              		.loc 1 57 42 discriminator 3 view .LVU121
  334 00ae C3EB0314 		rsb	r4, r3, r3, lsl #4
-ARM GAS  C:\Users\11410\AppData\Local\Temp\ccqyw4Mw.s 			page 8
+ARM GAS  C:\Users\11410\AppData\Local\Temp\cc6TCejI.s 			page 8
 
 
  335 00b2 03EB4423 		add	r3, r3, r4, lsl #9
@@ -478,7 +478,7 @@ ARM GAS  C:\Users\11410\AppData\Local\Temp\ccqyw4Mw.s 			page 1
  381              		.cfi_endproc
  382              	.LFE4:
  384              		.section	.text.poly_tobytes,"ax",%progbits
-ARM GAS  C:\Users\11410\AppData\Local\Temp\ccqyw4Mw.s 			page 9
+ARM GAS  C:\Users\11410\AppData\Local\Temp\cc6TCejI.s 			page 9
 
 
  385              		.align	1
@@ -538,7 +538,7 @@ ARM GAS  C:\Users\11410\AppData\Local\Temp\ccqyw4Mw.s 			page 1
   79:Core/Src/poly.c ****       t[j] = freeze(a->coeffs[8*i+j]);
  423              		.loc 1 79 7 is_stmt 1 discriminator 3 view .LVU149
  424              		.loc 1 79 34 is_stmt 0 discriminator 3 view .LVU150
-ARM GAS  C:\Users\11410\AppData\Local\Temp\ccqyw4Mw.s 			page 10
+ARM GAS  C:\Users\11410\AppData\Local\Temp\cc6TCejI.s 			page 10
 
 
  425 000c 04EBC503 		add	r3, r4, r5, lsl #3
@@ -598,7 +598,7 @@ ARM GAS  C:\Users\11410\AppData\Local\Temp\ccqyw4Mw.s 			page 1
  470              		.loc 1 84 6 discriminator 2 view .LVU171
  471 004e D91C     		adds	r1, r3, #3
  472              		.loc 1 84 31 discriminator 2 view .LVU172
-ARM GAS  C:\Users\11410\AppData\Local\Temp\ccqyw4Mw.s 			page 11
+ARM GAS  C:\Users\11410\AppData\Local\Temp\cc6TCejI.s 			page 11
 
 
  473 0050 D20A     		lsrs	r2, r2, #11
@@ -658,7 +658,7 @@ ARM GAS  C:\Users\11410\AppData\Local\Temp\ccqyw4Mw.s 			page 1
  521 0090 BDF80C20 		ldrh	r2, [sp, #12]
  522              		.loc 1 90 6 discriminator 2 view .LVU197
  523 0094 03F10900 		add	r0, r3, #9
-ARM GAS  C:\Users\11410\AppData\Local\Temp\ccqyw4Mw.s 			page 12
+ARM GAS  C:\Users\11410\AppData\Local\Temp\cc6TCejI.s 			page 12
 
 
  524              		.loc 1 90 31 discriminator 2 view .LVU198
@@ -718,7 +718,7 @@ ARM GAS  C:\Users\11410\AppData\Local\Temp\ccqyw4Mw.s 			page 1
  568              		@ sp needed
  569 00ca F0BD     		pop	{r4, r5, r6, r7, pc}
  570              		.loc 1 95 1 view .LVU217
-ARM GAS  C:\Users\11410\AppData\Local\Temp\ccqyw4Mw.s 			page 13
+ARM GAS  C:\Users\11410\AppData\Local\Temp\cc6TCejI.s 			page 13
 
 
  571              		.cfi_endproc
@@ -778,7 +778,7 @@ ARM GAS  C:\Users\11410\AppData\Local\Temp\ccqyw4Mw.s 			page 1
  611 0008 05EB4503 		add	r3, r5, r5, lsl #1
  612 000c 05EB8303 		add	r3, r5, r3, lsl #2
  613              		.loc 1 111 26 discriminator 3 view .LVU227
-ARM GAS  C:\Users\11410\AppData\Local\Temp\ccqyw4Mw.s 			page 14
+ARM GAS  C:\Users\11410\AppData\Local\Temp\cc6TCejI.s 			page 14
 
 
  614 0010 CE5C     		ldrb	r6, [r1, r3]	@ zero_extendqisi2
@@ -838,7 +838,7 @@ ARM GAS  C:\Users\11410\AppData\Local\Temp\ccqyw4Mw.s 			page 1
  665 0062 CC5D     		ldrb	r4, [r1, r7]	@ zero_extendqisi2
  666              		.loc 1 114 57 discriminator 3 view .LVU251
  667 0064 7779     		ldrb	r7, [r6, #5]	@ zero_extendqisi2
-ARM GAS  C:\Users\11410\AppData\Local\Temp\ccqyw4Mw.s 			page 15
+ARM GAS  C:\Users\11410\AppData\Local\Temp\cc6TCejI.s 			page 15
 
 
  668              		.loc 1 114 42 discriminator 3 view .LVU252
@@ -898,7 +898,7 @@ ARM GAS  C:\Users\11410\AppData\Local\Temp\ccqyw4Mw.s 			page 1
  719              		.loc 1 117 26 is_stmt 0 discriminator 3 view .LVU275
  720 00c4 CC5D     		ldrb	r4, [r1, r7]	@ zero_extendqisi2
  721              		.loc 1 117 57 discriminator 3 view .LVU276
-ARM GAS  C:\Users\11410\AppData\Local\Temp\ccqyw4Mw.s 			page 16
+ARM GAS  C:\Users\11410\AppData\Local\Temp\cc6TCejI.s 			page 16
 
 
  722 00c6 B77A     		ldrb	r7, [r6, #10]	@ zero_extendqisi2
@@ -958,7 +958,7 @@ ARM GAS  C:\Users\11410\AppData\Local\Temp\ccqyw4Mw.s 			page 1
  772              	.LVL22:
  773              	.LFB7:
  121:Core/Src/poly.c **** 
-ARM GAS  C:\Users\11410\AppData\Local\Temp\ccqyw4Mw.s 			page 17
+ARM GAS  C:\Users\11410\AppData\Local\Temp\cc6TCejI.s 			page 17
 
 
  122:Core/Src/poly.c **** /*************************************************
@@ -1018,7 +1018,7 @@ ARM GAS  C:\Users\11410\AppData\Local\Temp\ccqyw4Mw.s 			page 1
  139:Core/Src/poly.c ****     extseed[i] = seed[i];
  809              		.loc 1 139 28 is_stmt 1 discriminator 3 view .LVU306
  139:Core/Src/poly.c ****     extseed[i] = seed[i];
-ARM GAS  C:\Users\11410\AppData\Local\Temp\ccqyw4Mw.s 			page 18
+ARM GAS  C:\Users\11410\AppData\Local\Temp\cc6TCejI.s 			page 18
 
 
  810              		.loc 1 139 29 is_stmt 0 discriminator 3 view .LVU307
@@ -1078,7 +1078,7 @@ ARM GAS  C:\Users\11410\AppData\Local\Temp\ccqyw4Mw.s 			page 1
  858              		.thumb_func
  859              		.fpu fpv4-sp-d16
  861              	poly_ntt:
-ARM GAS  C:\Users\11410\AppData\Local\Temp\ccqyw4Mw.s 			page 19
+ARM GAS  C:\Users\11410\AppData\Local\Temp\cc6TCejI.s 			page 19
 
 
  862              	.LVL32:
@@ -1138,7 +1138,7 @@ ARM GAS  C:\Users\11410\AppData\Local\Temp\ccqyw4Mw.s 			page 1
  172:Core/Src/poly.c **** {
  893              		.loc 1 172 1 is_stmt 1 view -0
  894              		.cfi_startproc
-ARM GAS  C:\Users\11410\AppData\Local\Temp\ccqyw4Mw.s 			page 20
+ARM GAS  C:\Users\11410\AppData\Local\Temp\cc6TCejI.s 			page 20
 
 
  895              		@ args = 0, pretend = 0, frame = 0
@@ -1198,7 +1198,7 @@ ARM GAS  C:\Users\11410\AppData\Local\Temp\ccqyw4Mw.s 			page 1
  935              		.loc 1 188 1 is_stmt 0 view .LVU330
  936 0006 08BD     		pop	{r3, pc}
  937              		.cfi_endproc
-ARM GAS  C:\Users\11410\AppData\Local\Temp\ccqyw4Mw.s 			page 21
+ARM GAS  C:\Users\11410\AppData\Local\Temp\cc6TCejI.s 			page 21
 
 
  938              	.LFE10:
@@ -1258,7 +1258,7 @@ ARM GAS  C:\Users\11410\AppData\Local\Temp\ccqyw4Mw.s 			page 1
  205:Core/Src/poly.c **** * Name:        poly_frommsg
  206:Core/Src/poly.c **** * 
  207:Core/Src/poly.c **** * Description: Convert 32-byte message to polynomial
-ARM GAS  C:\Users\11410\AppData\Local\Temp\ccqyw4Mw.s 			page 22
+ARM GAS  C:\Users\11410\AppData\Local\Temp\cc6TCejI.s 			page 22
 
 
  208:Core/Src/poly.c **** *
@@ -1318,7 +1318,7 @@ ARM GAS  C:\Users\11410\AppData\Local\Temp\ccqyw4Mw.s 			page 1
  218:Core/Src/poly.c ****     {   
  1020              		.loc 1 218 17 is_stmt 1 discriminator 3 view .LVU350
  218:Core/Src/poly.c ****     {   
-ARM GAS  C:\Users\11410\AppData\Local\Temp\ccqyw4Mw.s 			page 23
+ARM GAS  C:\Users\11410\AppData\Local\Temp\cc6TCejI.s 			page 23
 
 
  1021              		.loc 1 218 18 is_stmt 0 discriminator 3 view .LVU351
@@ -1378,7 +1378,7 @@ ARM GAS  C:\Users\11410\AppData\Local\Temp\ccqyw4Mw.s 			page 1
  1064              		.thumb
  1065              		.thumb_func
  1066              		.fpu fpv4-sp-d16
-ARM GAS  C:\Users\11410\AppData\Local\Temp\ccqyw4Mw.s 			page 24
+ARM GAS  C:\Users\11410\AppData\Local\Temp\cc6TCejI.s 			page 24
 
 
  1068              	poly_tomsg:
@@ -1438,7 +1438,7 @@ ARM GAS  C:\Users\11410\AppData\Local\Temp\ccqyw4Mw.s 			page 1
  1102 0014 FFF7FEFF 		bl	freeze
  1103              	.LVL54:
  1104              		.loc 1 244 39 discriminator 3 view .LVU373
-ARM GAS  C:\Users\11410\AppData\Local\Temp\ccqyw4Mw.s 			page 25
+ARM GAS  C:\Users\11410\AppData\Local\Temp\cc6TCejI.s 			page 25
 
 
  1105 0018 4000     		lsls	r0, r0, #1
@@ -1498,7 +1498,7 @@ ARM GAS  C:\Users\11410\AppData\Local\Temp\ccqyw4Mw.s 			page 1
  1147 0046 0024     		movs	r4, #0
  1148 0048 08F80640 		strb	r4, [r8, r6]
  242:Core/Src/poly.c ****     {
-ARM GAS  C:\Users\11410\AppData\Local\Temp\ccqyw4Mw.s 			page 26
+ARM GAS  C:\Users\11410\AppData\Local\Temp\cc6TCejI.s 			page 26
 
 
  1149              		.loc 1 242 5 is_stmt 1 view .LVU392
@@ -1534,35 +1534,35 @@ ARM GAS  C:\Users\11410\AppData\Local\Temp\ccqyw4Mw.s 			page 1
  1176              		.file 10 "Core/Inc/ntt.h"
  1177              		.file 11 "Core/Inc/fips202.h"
  1178              		.file 12 "Core/Inc/cbd.h"
-ARM GAS  C:\Users\11410\AppData\Local\Temp\ccqyw4Mw.s 			page 27
+ARM GAS  C:\Users\11410\AppData\Local\Temp\cc6TCejI.s 			page 27
 
 
 DEFINED SYMBOLS
                             *ABS*:00000000 poly.c
-C:\Users\11410\AppData\Local\Temp\ccqyw4Mw.s:18     .text.poly_compress:00000000 $t
-C:\Users\11410\AppData\Local\Temp\ccqyw4Mw.s:26     .text.poly_compress:00000000 poly_compress
-C:\Users\11410\AppData\Local\Temp\ccqyw4Mw.s:186    .text.poly_compress:000000a8 $d
-C:\Users\11410\AppData\Local\Temp\ccqyw4Mw.s:191    .text.poly_decompress:00000000 $t
-C:\Users\11410\AppData\Local\Temp\ccqyw4Mw.s:198    .text.poly_decompress:00000000 poly_decompress
-C:\Users\11410\AppData\Local\Temp\ccqyw4Mw.s:385    .text.poly_tobytes:00000000 $t
-C:\Users\11410\AppData\Local\Temp\ccqyw4Mw.s:392    .text.poly_tobytes:00000000 poly_tobytes
-C:\Users\11410\AppData\Local\Temp\ccqyw4Mw.s:575    .text.poly_frombytes:00000000 $t
-C:\Users\11410\AppData\Local\Temp\ccqyw4Mw.s:582    .text.poly_frombytes:00000000 poly_frombytes
-C:\Users\11410\AppData\Local\Temp\ccqyw4Mw.s:764    .text.poly_getnoise:00000000 $t
-C:\Users\11410\AppData\Local\Temp\ccqyw4Mw.s:771    .text.poly_getnoise:00000000 poly_getnoise
-C:\Users\11410\AppData\Local\Temp\ccqyw4Mw.s:854    .text.poly_ntt:00000000 $t
-C:\Users\11410\AppData\Local\Temp\ccqyw4Mw.s:861    .text.poly_ntt:00000000 poly_ntt
-C:\Users\11410\AppData\Local\Temp\ccqyw4Mw.s:883    .text.poly_invntt:00000000 $t
-C:\Users\11410\AppData\Local\Temp\ccqyw4Mw.s:890    .text.poly_invntt:00000000 poly_invntt
-C:\Users\11410\AppData\Local\Temp\ccqyw4Mw.s:912    .text.poly_add:00000000 $t
-C:\Users\11410\AppData\Local\Temp\ccqyw4Mw.s:919    .text.poly_add:00000000 poly_add
-C:\Users\11410\AppData\Local\Temp\ccqyw4Mw.s:941    .text.poly_sub:00000000 $t
-C:\Users\11410\AppData\Local\Temp\ccqyw4Mw.s:948    .text.poly_sub:00000000 poly_sub
-C:\Users\11410\AppData\Local\Temp\ccqyw4Mw.s:970    .text.poly_frommsg:00000000 $t
-C:\Users\11410\AppData\Local\Temp\ccqyw4Mw.s:977    .text.poly_frommsg:00000000 poly_frommsg
-C:\Users\11410\AppData\Local\Temp\ccqyw4Mw.s:1061   .text.poly_tomsg:00000000 $t
-C:\Users\11410\AppData\Local\Temp\ccqyw4Mw.s:1068   .text.poly_tomsg:00000000 poly_tomsg
-C:\Users\11410\AppData\Local\Temp\ccqyw4Mw.s:1162   .text.poly_tomsg:00000054 $d
+C:\Users\11410\AppData\Local\Temp\cc6TCejI.s:18     .text.poly_compress:00000000 $t
+C:\Users\11410\AppData\Local\Temp\cc6TCejI.s:26     .text.poly_compress:00000000 poly_compress
+C:\Users\11410\AppData\Local\Temp\cc6TCejI.s:186    .text.poly_compress:000000a8 $d
+C:\Users\11410\AppData\Local\Temp\cc6TCejI.s:191    .text.poly_decompress:00000000 $t
+C:\Users\11410\AppData\Local\Temp\cc6TCejI.s:198    .text.poly_decompress:00000000 poly_decompress
+C:\Users\11410\AppData\Local\Temp\cc6TCejI.s:385    .text.poly_tobytes:00000000 $t
+C:\Users\11410\AppData\Local\Temp\cc6TCejI.s:392    .text.poly_tobytes:00000000 poly_tobytes
+C:\Users\11410\AppData\Local\Temp\cc6TCejI.s:575    .text.poly_frombytes:00000000 $t
+C:\Users\11410\AppData\Local\Temp\cc6TCejI.s:582    .text.poly_frombytes:00000000 poly_frombytes
+C:\Users\11410\AppData\Local\Temp\cc6TCejI.s:764    .text.poly_getnoise:00000000 $t
+C:\Users\11410\AppData\Local\Temp\cc6TCejI.s:771    .text.poly_getnoise:00000000 poly_getnoise
+C:\Users\11410\AppData\Local\Temp\cc6TCejI.s:854    .text.poly_ntt:00000000 $t
+C:\Users\11410\AppData\Local\Temp\cc6TCejI.s:861    .text.poly_ntt:00000000 poly_ntt
+C:\Users\11410\AppData\Local\Temp\cc6TCejI.s:883    .text.poly_invntt:00000000 $t
+C:\Users\11410\AppData\Local\Temp\cc6TCejI.s:890    .text.poly_invntt:00000000 poly_invntt
+C:\Users\11410\AppData\Local\Temp\cc6TCejI.s:912    .text.poly_add:00000000 $t
+C:\Users\11410\AppData\Local\Temp\cc6TCejI.s:919    .text.poly_add:00000000 poly_add
+C:\Users\11410\AppData\Local\Temp\cc6TCejI.s:941    .text.poly_sub:00000000 $t
+C:\Users\11410\AppData\Local\Temp\cc6TCejI.s:948    .text.poly_sub:00000000 poly_sub
+C:\Users\11410\AppData\Local\Temp\cc6TCejI.s:970    .text.poly_frommsg:00000000 $t
+C:\Users\11410\AppData\Local\Temp\cc6TCejI.s:977    .text.poly_frommsg:00000000 poly_frommsg
+C:\Users\11410\AppData\Local\Temp\cc6TCejI.s:1061   .text.poly_tomsg:00000000 $t
+C:\Users\11410\AppData\Local\Temp\cc6TCejI.s:1068   .text.poly_tomsg:00000000 poly_tomsg
+C:\Users\11410\AppData\Local\Temp\cc6TCejI.s:1162   .text.poly_tomsg:00000054 $d
 
 UNDEFINED SYMBOLS
 freeze

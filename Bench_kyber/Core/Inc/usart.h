@@ -6,7 +6,7 @@
   ******************************************************************************
   * @attention
   *
-  * <h2><center>&copy; Copyright (c) 2023 STMicroelectronics.
+  * <h2><center>&copy; Copyright (c) 2024 STMicroelectronics.
   * All rights reserved.</center></h2>
   *
   * This software component is licensed by ST under BSD 3-Clause license,
@@ -28,7 +28,7 @@ extern "C" {
 #include "main.h"
 
 /* USER CODE BEGIN Includes */
-#define USART_REC_LEN  			200  //最大接收字节
+#define USART_REC_LEN  			200  //�?大接收字�?
 #define RXBUFFERSIZE        1    //缓存大小
 
 extern uint8_t  USART_RX_BUF[USART_REC_LEN]; 

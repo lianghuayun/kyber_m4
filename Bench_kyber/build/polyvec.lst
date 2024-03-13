@@ -1,4 +1,4 @@
-ARM GAS  C:\Users\11410\AppData\Local\Temp\cc67E3Sn.s 			page 1
+ARM GAS  C:\Users\11410\AppData\Local\Temp\ccIRHoyv.s 			page 1
 
 
    1              		.cpu cortex-m4
@@ -58,7 +58,7 @@ ARM GAS  C:\Users\11410\AppData\Local\Temp\cc67E3Sn.s 			page 1
   38              		.cfi_offset 4, -24
   39              		.cfi_offset 5, -20
   40              		.cfi_offset 6, -16
-ARM GAS  C:\Users\11410\AppData\Local\Temp\cc67E3Sn.s 			page 2
+ARM GAS  C:\Users\11410\AppData\Local\Temp\ccIRHoyv.s 			page 2
 
 
   41              		.cfi_offset 7, -12
@@ -118,7 +118,7 @@ ARM GAS  C:\Users\11410\AppData\Local\Temp\cc67E3Sn.s 			page 1
   25:Core/Src/polyvec.c ****         t[k] = ((((uint32_t)freeze(a->vec[i].coeffs[8*j+k]) << 11) + KYBER_Q/2)/ KYBER_Q) & 0x7ff;
   85              		.loc 1 25 15 is_stmt 1 discriminator 1 view .LVU17
   25:Core/Src/polyvec.c ****         t[k] = ((((uint32_t)freeze(a->vec[i].coeffs[8*j+k]) << 11) + KYBER_Q/2)/ KYBER_Q) & 0x7ff;
-ARM GAS  C:\Users\11410\AppData\Local\Temp\cc67E3Sn.s 			page 3
+ARM GAS  C:\Users\11410\AppData\Local\Temp\ccIRHoyv.s 			page 3
 
 
   86              		.loc 1 25 7 is_stmt 0 discriminator 1 view .LVU18
@@ -178,7 +178,7 @@ ARM GAS  C:\Users\11410\AppData\Local\Temp\cc67E3Sn.s 			page 1
  133              		.loc 1 33 7 is_stmt 1 discriminator 2 view .LVU41
  134              		.loc 1 33 38 is_stmt 0 discriminator 2 view .LVU42
  135 007c BDF80810 		ldrh	r1, [sp, #8]
-ARM GAS  C:\Users\11410\AppData\Local\Temp\cc67E3Sn.s 			page 4
+ARM GAS  C:\Users\11410\AppData\Local\Temp\ccIRHoyv.s 			page 4
 
 
  136              		.loc 1 33 8 discriminator 2 view .LVU43
@@ -238,7 +238,7 @@ ARM GAS  C:\Users\11410\AppData\Local\Temp\cc67E3Sn.s 			page 1
   23:Core/Src/polyvec.c ****     {
  185              		.loc 1 23 25 is_stmt 1 discriminator 2 view .LVU67
   23:Core/Src/polyvec.c ****     {
-ARM GAS  C:\Users\11410\AppData\Local\Temp\cc67E3Sn.s 			page 5
+ARM GAS  C:\Users\11410\AppData\Local\Temp\ccIRHoyv.s 			page 5
 
 
  186              		.loc 1 23 26 is_stmt 0 discriminator 2 view .LVU68
@@ -298,7 +298,7 @@ ARM GAS  C:\Users\11410\AppData\Local\Temp\cc67E3Sn.s 			page 1
  228              	.LFE3:
  230              		.section	.text.polyvec_decompress,"ax",%progbits
  231              		.align	1
-ARM GAS  C:\Users\11410\AppData\Local\Temp\cc67E3Sn.s 			page 6
+ARM GAS  C:\Users\11410\AppData\Local\Temp\ccIRHoyv.s 			page 6
 
 
  232              		.global	polyvec_decompress
@@ -358,7 +358,7 @@ ARM GAS  C:\Users\11410\AppData\Local\Temp\cc67E3Sn.s 			page 1
   62:Core/Src/polyvec.c ****       r->vec[i].coeffs[8*j+2] = ((((a[11*j+ 2] >> 6) | (((uint32_t)a[11*j+ 3] & 0xff) << 2) |  (((u
   63:Core/Src/polyvec.c ****       r->vec[i].coeffs[8*j+3] = ((((a[11*j+ 4] >> 1) | (((uint32_t)a[11*j+ 5] & 0x0f) << 7)) * KYBE
   64:Core/Src/polyvec.c ****       r->vec[i].coeffs[8*j+4] = ((((a[11*j+ 5] >> 4) | (((uint32_t)a[11*j+ 6] & 0x7f) << 4)) * KYBE
-ARM GAS  C:\Users\11410\AppData\Local\Temp\cc67E3Sn.s 			page 7
+ARM GAS  C:\Users\11410\AppData\Local\Temp\ccIRHoyv.s 			page 7
 
 
   65:Core/Src/polyvec.c ****       r->vec[i].coeffs[8*j+5] = ((((a[11*j+ 6] >> 7) | (((uint32_t)a[11*j+ 7] & 0xff) << 1) |  (((u
@@ -418,7 +418,7 @@ ARM GAS  C:\Users\11410\AppData\Local\Temp\cc67E3Sn.s 			page 1
   60:Core/Src/polyvec.c ****       r->vec[i].coeffs[8*j+1] = ((((a[11*j+ 1] >> 3) | (((uint32_t)a[11*j+ 2] & 0x3f) << 5)) * KYBE
  303              		.loc 1 60 94 discriminator 3 view .LVU103
  304 003e C3EB0314 		rsb	r4, r3, r3, lsl #4
-ARM GAS  C:\Users\11410\AppData\Local\Temp\cc67E3Sn.s 			page 8
+ARM GAS  C:\Users\11410\AppData\Local\Temp\ccIRHoyv.s 			page 8
 
 
  305 0042 03EB4423 		add	r3, r3, r4, lsl #9
@@ -478,7 +478,7 @@ ARM GAS  C:\Users\11410\AppData\Local\Temp\cc67E3Sn.s 			page 1
  342              		.loc 1 62 69 discriminator 3 view .LVU120
  343 0088 8F18     		adds	r7, r1, r2
  344 008a FB78     		ldrb	r3, [r7, #3]	@ zero_extendqisi2
-ARM GAS  C:\Users\11410\AppData\Local\Temp\cc67E3Sn.s 			page 9
+ARM GAS  C:\Users\11410\AppData\Local\Temp\ccIRHoyv.s 			page 9
 
 
   62:Core/Src/polyvec.c ****       r->vec[i].coeffs[8*j+3] = ((((a[11*j+ 4] >> 1) | (((uint32_t)a[11*j+ 5] & 0x0f) << 7)) * KYBE
@@ -538,7 +538,7 @@ ARM GAS  C:\Users\11410\AppData\Local\Temp\cc67E3Sn.s 			page 1
   63:Core/Src/polyvec.c ****       r->vec[i].coeffs[8*j+4] = ((((a[11*j+ 5] >> 4) | (((uint32_t)a[11*j+ 6] & 0x7f) << 4)) * KYBE
  383              		.loc 1 63 105 discriminator 3 view .LVU137
  384 00dc 03F58063 		add	r3, r3, #1024
-ARM GAS  C:\Users\11410\AppData\Local\Temp\cc67E3Sn.s 			page 10
+ARM GAS  C:\Users\11410\AppData\Local\Temp\ccIRHoyv.s 			page 10
 
 
   63:Core/Src/polyvec.c ****       r->vec[i].coeffs[8*j+4] = ((((a[11*j+ 5] >> 4) | (((uint32_t)a[11*j+ 6] & 0x7f) << 4)) * KYBE
@@ -598,7 +598,7 @@ ARM GAS  C:\Users\11410\AppData\Local\Temp\cc67E3Sn.s 			page 1
   65:Core/Src/polyvec.c ****       r->vec[i].coeffs[8*j+6] = ((((a[11*j+ 8] >> 2) | (((uint32_t)a[11*j+ 9] & 0x1f) << 6)) * KYBE
  422              		.loc 1 65 54 discriminator 3 view .LVU155
  423 0122 43EADE13 		orr	r3, r3, lr, lsr #7
-ARM GAS  C:\Users\11410\AppData\Local\Temp\cc67E3Sn.s 			page 11
+ARM GAS  C:\Users\11410\AppData\Local\Temp\ccIRHoyv.s 			page 11
 
 
   65:Core/Src/polyvec.c ****       r->vec[i].coeffs[8*j+6] = ((((a[11*j+ 8] >> 2) | (((uint32_t)a[11*j+ 9] & 0x1f) << 6)) * KYBE
@@ -658,7 +658,7 @@ ARM GAS  C:\Users\11410\AppData\Local\Temp\cc67E3Sn.s 			page 1
   66:Core/Src/polyvec.c ****       r->vec[i].coeffs[8*j+7] = ((((a[11*j+ 9] >> 5) | (((uint32_t)a[11*j+10] & 0xff) << 3)) * KYBE
  462              		.loc 1 66 27 discriminator 3 view .LVU172
  463 0172 05F1060E 		add	lr, r5, #6
-ARM GAS  C:\Users\11410\AppData\Local\Temp\cc67E3Sn.s 			page 12
+ARM GAS  C:\Users\11410\AppData\Local\Temp\ccIRHoyv.s 			page 12
 
 
   66:Core/Src/polyvec.c ****       r->vec[i].coeffs[8*j+7] = ((((a[11*j+ 9] >> 5) | (((uint32_t)a[11*j+10] & 0xff) << 3)) * KYBE
@@ -718,7 +718,7 @@ ARM GAS  C:\Users\11410\AppData\Local\Temp\cc67E3Sn.s 			page 1
  502              		.cfi_restore 5
  503              		.cfi_restore 6
  504              		.cfi_restore 7
-ARM GAS  C:\Users\11410\AppData\Local\Temp\cc67E3Sn.s 			page 13
+ARM GAS  C:\Users\11410\AppData\Local\Temp\ccIRHoyv.s 			page 13
 
 
  505              		.cfi_restore 8
@@ -778,7 +778,7 @@ ARM GAS  C:\Users\11410\AppData\Local\Temp\cc67E3Sn.s 			page 1
  110:Core/Src/polyvec.c **** }
  111:Core/Src/polyvec.c **** 
  112:Core/Src/polyvec.c **** #elif (KYBER_POLYVECCOMPRESSEDBYTES == (KYBER_K * 288))
-ARM GAS  C:\Users\11410\AppData\Local\Temp\cc67E3Sn.s 			page 14
+ARM GAS  C:\Users\11410\AppData\Local\Temp\ccIRHoyv.s 			page 14
 
 
  113:Core/Src/polyvec.c **** 
@@ -838,7 +838,7 @@ ARM GAS  C:\Users\11410\AppData\Local\Temp\cc67E3Sn.s 			page 1
  167:Core/Src/polyvec.c ****   {
  168:Core/Src/polyvec.c ****     for(j=0;j<KYBER_N;j++)
  169:Core/Src/polyvec.c ****     {
-ARM GAS  C:\Users\11410\AppData\Local\Temp\cc67E3Sn.s 			page 15
+ARM GAS  C:\Users\11410\AppData\Local\Temp\ccIRHoyv.s 			page 15
 
 
  170:Core/Src/polyvec.c ****       r[j] = ((((uint32_t)freeze(a->vec[i].coeffs[j]) << 8) + KYBER_Q/2)/ KYBER_Q) & 0xff;
@@ -898,7 +898,7 @@ ARM GAS  C:\Users\11410\AppData\Local\Temp\cc67E3Sn.s 			page 1
  542              		.loc 1 204 3 view .LVU194
  543 0008 08E0     		b	.L25
  544              	.LVL20:
-ARM GAS  C:\Users\11410\AppData\Local\Temp\cc67E3Sn.s 			page 16
+ARM GAS  C:\Users\11410\AppData\Local\Temp\ccIRHoyv.s 			page 16
 
 
  545              	.L26:
@@ -958,7 +958,7 @@ ARM GAS  C:\Users\11410\AppData\Local\Temp\cc67E3Sn.s 			page 1
  583 0000 70B5     		push	{r4, r5, r6, lr}
  584              	.LCFI6:
  585              		.cfi_def_cfa_offset 16
-ARM GAS  C:\Users\11410\AppData\Local\Temp\cc67E3Sn.s 			page 17
+ARM GAS  C:\Users\11410\AppData\Local\Temp\ccIRHoyv.s 			page 17
 
 
  586              		.cfi_offset 4, -16
@@ -1018,7 +1018,7 @@ ARM GAS  C:\Users\11410\AppData\Local\Temp\cc67E3Sn.s 			page 1
  224:Core/Src/polyvec.c **** /*************************************************
  225:Core/Src/polyvec.c **** * Name:        polyvec_ntt
  226:Core/Src/polyvec.c **** * 
-ARM GAS  C:\Users\11410\AppData\Local\Temp\cc67E3Sn.s 			page 18
+ARM GAS  C:\Users\11410\AppData\Local\Temp\ccIRHoyv.s 			page 18
 
 
  227:Core/Src/polyvec.c **** * Description: Apply forward NTT to all elements of a vector of polynomials
@@ -1078,7 +1078,7 @@ ARM GAS  C:\Users\11410\AppData\Local\Temp\cc67E3Sn.s 			page 1
  674              		.section	.text.polyvec_invntt,"ax",%progbits
  675              		.align	1
  676              		.global	polyvec_invntt
-ARM GAS  C:\Users\11410\AppData\Local\Temp\cc67E3Sn.s 			page 19
+ARM GAS  C:\Users\11410\AppData\Local\Temp\ccIRHoyv.s 			page 19
 
 
  677              		.syntax unified
@@ -1138,7 +1138,7 @@ ARM GAS  C:\Users\11410\AppData\Local\Temp\cc67E3Sn.s 			page 1
  716              		.loc 1 248 11 is_stmt 1 discriminator 1 view .LVU237
  248:Core/Src/polyvec.c ****   for(i=0;i<KYBER_K;i++)
  717              		.loc 1 248 3 is_stmt 0 discriminator 1 view .LVU238
-ARM GAS  C:\Users\11410\AppData\Local\Temp\cc67E3Sn.s 			page 20
+ARM GAS  C:\Users\11410\AppData\Local\Temp\ccIRHoyv.s 			page 20
 
 
  718 0012 022C     		cmp	r4, #2
@@ -1198,7 +1198,7 @@ ARM GAS  C:\Users\11410\AppData\Local\Temp\cc67E3Sn.s 			page 1
  758              		.loc 1 265 3 view .LVU245
  759              	.LVL39:
  760              		.loc 1 265 8 is_stmt 0 view .LVU246
-ARM GAS  C:\Users\11410\AppData\Local\Temp\cc67E3Sn.s 			page 21
+ARM GAS  C:\Users\11410\AppData\Local\Temp\ccIRHoyv.s 			page 21
 
 
  761 000a 0024     		movs	r4, #0
@@ -1258,7 +1258,7 @@ ARM GAS  C:\Users\11410\AppData\Local\Temp\cc67E3Sn.s 			page 1
  802              		.loc 1 274 18 discriminator 2 view .LVU262
  803 0046 26F81400 		strh	r0, [r6, r4, lsl #1]	@ movhi
  265:Core/Src/polyvec.c ****   {
-ARM GAS  C:\Users\11410\AppData\Local\Temp\cc67E3Sn.s 			page 22
+ARM GAS  C:\Users\11410\AppData\Local\Temp\ccIRHoyv.s 			page 22
 
 
  804              		.loc 1 265 21 is_stmt 1 discriminator 2 view .LVU263
@@ -1318,7 +1318,7 @@ ARM GAS  C:\Users\11410\AppData\Local\Temp\cc67E3Sn.s 			page 1
  842              		.loc 1 276 1 view .LVU279
  843              		.cfi_endproc
  844              	.LFE9:
-ARM GAS  C:\Users\11410\AppData\Local\Temp\cc67E3Sn.s 			page 23
+ARM GAS  C:\Users\11410\AppData\Local\Temp\ccIRHoyv.s 			page 23
 
 
  846              		.section	.text.polyvec_add,"ax",%progbits
@@ -1378,7 +1378,7 @@ ARM GAS  C:\Users\11410\AppData\Local\Temp\cc67E3Sn.s 			page 1
  886 0014 07EB4420 		add	r0, r7, r4, lsl #9
  887 0018 FFF7FEFF 		bl	poly_add
  888              	.LVL55:
-ARM GAS  C:\Users\11410\AppData\Local\Temp\cc67E3Sn.s 			page 24
+ARM GAS  C:\Users\11410\AppData\Local\Temp\ccIRHoyv.s 			page 24
 
 
  290:Core/Src/polyvec.c ****   for(i=0;i<KYBER_K;i++)
@@ -1412,28 +1412,28 @@ ARM GAS  C:\Users\11410\AppData\Local\Temp\cc67E3Sn.s 			page 1
  912              		.file 8 "Core/Inc/poly.h"
  913              		.file 9 "Core/Inc/polyvec.h"
  914              		.file 10 "Core/Inc/reduce.h"
-ARM GAS  C:\Users\11410\AppData\Local\Temp\cc67E3Sn.s 			page 25
+ARM GAS  C:\Users\11410\AppData\Local\Temp\ccIRHoyv.s 			page 25
 
 
 DEFINED SYMBOLS
                             *ABS*:00000000 polyvec.c
-C:\Users\11410\AppData\Local\Temp\cc67E3Sn.s:18     .text.polyvec_compress:00000000 $t
-C:\Users\11410\AppData\Local\Temp\cc67E3Sn.s:26     .text.polyvec_compress:00000000 polyvec_compress
-C:\Users\11410\AppData\Local\Temp\cc67E3Sn.s:226    .text.polyvec_compress:000000e4 $d
-C:\Users\11410\AppData\Local\Temp\cc67E3Sn.s:231    .text.polyvec_decompress:00000000 $t
-C:\Users\11410\AppData\Local\Temp\cc67E3Sn.s:238    .text.polyvec_decompress:00000000 polyvec_decompress
-C:\Users\11410\AppData\Local\Temp\cc67E3Sn.s:513    .text.polyvec_tobytes:00000000 $t
-C:\Users\11410\AppData\Local\Temp\cc67E3Sn.s:520    .text.polyvec_tobytes:00000000 polyvec_tobytes
-C:\Users\11410\AppData\Local\Temp\cc67E3Sn.s:568    .text.polyvec_frombytes:00000000 $t
-C:\Users\11410\AppData\Local\Temp\cc67E3Sn.s:575    .text.polyvec_frombytes:00000000 polyvec_frombytes
-C:\Users\11410\AppData\Local\Temp\cc67E3Sn.s:623    .text.polyvec_ntt:00000000 $t
-C:\Users\11410\AppData\Local\Temp\cc67E3Sn.s:630    .text.polyvec_ntt:00000000 polyvec_ntt
-C:\Users\11410\AppData\Local\Temp\cc67E3Sn.s:675    .text.polyvec_invntt:00000000 $t
-C:\Users\11410\AppData\Local\Temp\cc67E3Sn.s:682    .text.polyvec_invntt:00000000 polyvec_invntt
-C:\Users\11410\AppData\Local\Temp\cc67E3Sn.s:727    .text.polyvec_pointwise_acc:00000000 $t
-C:\Users\11410\AppData\Local\Temp\cc67E3Sn.s:734    .text.polyvec_pointwise_acc:00000000 polyvec_pointwise_acc
-C:\Users\11410\AppData\Local\Temp\cc67E3Sn.s:847    .text.polyvec_add:00000000 $t
-C:\Users\11410\AppData\Local\Temp\cc67E3Sn.s:854    .text.polyvec_add:00000000 polyvec_add
+C:\Users\11410\AppData\Local\Temp\ccIRHoyv.s:18     .text.polyvec_compress:00000000 $t
+C:\Users\11410\AppData\Local\Temp\ccIRHoyv.s:26     .text.polyvec_compress:00000000 polyvec_compress
+C:\Users\11410\AppData\Local\Temp\ccIRHoyv.s:226    .text.polyvec_compress:000000e4 $d
+C:\Users\11410\AppData\Local\Temp\ccIRHoyv.s:231    .text.polyvec_decompress:00000000 $t
+C:\Users\11410\AppData\Local\Temp\ccIRHoyv.s:238    .text.polyvec_decompress:00000000 polyvec_decompress
+C:\Users\11410\AppData\Local\Temp\ccIRHoyv.s:513    .text.polyvec_tobytes:00000000 $t
+C:\Users\11410\AppData\Local\Temp\ccIRHoyv.s:520    .text.polyvec_tobytes:00000000 polyvec_tobytes
+C:\Users\11410\AppData\Local\Temp\ccIRHoyv.s:568    .text.polyvec_frombytes:00000000 $t
+C:\Users\11410\AppData\Local\Temp\ccIRHoyv.s:575    .text.polyvec_frombytes:00000000 polyvec_frombytes
+C:\Users\11410\AppData\Local\Temp\ccIRHoyv.s:623    .text.polyvec_ntt:00000000 $t
+C:\Users\11410\AppData\Local\Temp\ccIRHoyv.s:630    .text.polyvec_ntt:00000000 polyvec_ntt
+C:\Users\11410\AppData\Local\Temp\ccIRHoyv.s:675    .text.polyvec_invntt:00000000 $t
+C:\Users\11410\AppData\Local\Temp\ccIRHoyv.s:682    .text.polyvec_invntt:00000000 polyvec_invntt
+C:\Users\11410\AppData\Local\Temp\ccIRHoyv.s:727    .text.polyvec_pointwise_acc:00000000 $t
+C:\Users\11410\AppData\Local\Temp\ccIRHoyv.s:734    .text.polyvec_pointwise_acc:00000000 polyvec_pointwise_acc
+C:\Users\11410\AppData\Local\Temp\ccIRHoyv.s:847    .text.polyvec_add:00000000 $t
+C:\Users\11410\AppData\Local\Temp\ccIRHoyv.s:854    .text.polyvec_add:00000000 polyvec_add
 
 UNDEFINED SYMBOLS
 freeze

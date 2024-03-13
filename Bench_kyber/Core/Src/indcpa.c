@@ -188,35 +188,45 @@ void indcpa_keypair(unsigned char *pk,
   unsigned char buf[KYBER_SYMBYTES+KYBER_SYMBYTES];
   unsigned char *publicseed = buf;
   unsigned char *noiseseed = buf+KYBER_SYMBYTES;
-  int i;
+  int i,j;
   unsigned char nonce=0;
 
 /*********************************************************/
   randombytes(buf, KYBER_SYMBYTES+KYBER_SYMBYTES);
 /*********************************************************/
-  printf("\n");
-  printf("\n");
-  for (i = 0; i < 64.; i++) {
-    if(i>31)buf[i]=0;
-    printf("%02x", buf[i]);
-  }
-  printf("\n");
-  printf("\n");
-/*********************************************************/
   sha3_512(buf, buf, KYBER_SYMBYTES+KYBER_SYMBYTES);
 /*********************************************************/  
-  printf("\n");
-  printf("publicseed: ");        
-  for (i = 0; i < 32; i++) printf("%02x", publicseed[i]);
-  printf("\n");
-  printf("noiseseed: ");        
-  for (i = 0; i < 32; i++) printf("%02x", noiseseed[i]);
+  // printf("\n");
+  // printf("publicseed: ");        
+  // for (i = 0; i < 32; i++) 
+  // {
+  //     publicseed[i]=0;
+  //     printf("%02x", publicseed[i]);                            
+  // }
+  // printf("\n");
+  // printf("noiseseed: ");        
+  // for (i = 0; i < 32; i++) 
+  // {
+  //     noiseseed[i]=0;
+  //     printf("%02x", noiseseed[i]);                              //固定密钥
+  // }
 /*********************************************************/
   gen_a(a, publicseed);
 /*********************************************************/
   for(i=0;i<KYBER_K;i++)
     poly_getnoise(skpv.vec+i,noiseseed,nonce++);
   polyvec_ntt(&skpv);
+  printf("\n");
+  for (i = 0; i < 1; i++) 
+  {
+    //printf("%02x\r\n", skpv.vec[i]);
+    for (j = 0; j < 256; j++) 
+    {
+      //printf("%d\r\n", skpv.vec[i].coeffs[j]);
+      skpv.vec[i].coeffs[j]=40;
+    }
+  }
+
 /*********************************************************/
   for(i=0;i<KYBER_K;i++)
     poly_getnoise(e.vec+i,noiseseed,nonce++);
@@ -227,6 +237,7 @@ void indcpa_keypair(unsigned char *pk,
 /*********************************************************/
   pack_sk(sk, &skpv);
   pack_pk(pk, &pkpv, publicseed);
+
 }
 
 

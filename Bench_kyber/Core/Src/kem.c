@@ -19,11 +19,14 @@
 int crypto_kem_keypair(unsigned char *pk, unsigned char *sk)
 {
   size_t i;
+/*********************************************************/
   indcpa_keypair(pk, sk);
+/*********************************************************/
   for(i=0;i<KYBER_INDCPA_PUBLICKEYBYTES;i++)
     sk[i+KYBER_INDCPA_SECRETKEYBYTES] = pk[i];
   sha3_256(sk+KYBER_SECRETKEYBYTES-2*KYBER_SYMBYTES,pk,KYBER_PUBLICKEYBYTES);
   randombytes(sk+KYBER_SECRETKEYBYTES-KYBER_SYMBYTES,KYBER_SYMBYTES);         /* Value z for pseudo-random output on reject */
+/*********************************************************/
   return 0;
 }
 
@@ -55,7 +58,16 @@ int crypto_kem_enc(unsigned char *ct, unsigned char *ss, const unsigned char *pk
 /*********************************************************/
   printf("\n");
   printf("pt: "); 
-  for (i = 0; i < 32; i++) printf("%02x", buf[i]);
+  for (i = 0; i < 32; i++) {
+      //buf[i]=0;
+      printf("%02x", buf[i]);
+  }
+  printf("\n");
+  printf("pp: "); 
+  for (i = 32; i < 64; i++){
+    //kr[i]=0;
+    printf("%02x", kr[i]);
+  } 
 /*********************************************************/
   indcpa_enc(ct, buf, pk, kr+KYBER_SYMBYTES);                                 /* coins are in kr+KYBER_SYMBYTES */
 /*********************************************************/  
@@ -98,15 +110,16 @@ int crypto_kem_dec(unsigned char *ss, const unsigned char *ct, const unsigned ch
   printf("pt: "); 
   for (i = 0; i < 32; i++) printf("%02x", buf[i]);     
 /*********************************************************/
-  for(i=0;i<KYBER_SYMBYTES;i++)                                               /* Multitarget countermeasure for coins + contributory KEM */
+  for(i=0;i<KYBER_SYMBYTES;i++)                                                                                                                                        /* Multitarget countermeasure for coins + contributory KEM */
     buf[KYBER_SYMBYTES+i] = sk[KYBER_SECRETKEYBYTES-2*KYBER_SYMBYTES+i];      /* Save hash by storing H(pk) in sk */
-
   sha3_512(kr, buf, 2*KYBER_SYMBYTES);
- 
+  printf("\n");
+  printf("kr: "); 
+  for (i = 32; i < 64; i++) printf("%02x", kr[i]);    
+/*********************************************************/ 
   indcpa_enc(cmp, buf, pk, kr+KYBER_SYMBYTES);                                /* coins are in kr+KYBER_SYMBYTES */
-
+/*********************************************************/
   fail = verify(ct, cmp, KYBER_CIPHERTEXTBYTES);
-  
   printf("\n");
   printf("fail: %02x\r\n",fail); 
 
